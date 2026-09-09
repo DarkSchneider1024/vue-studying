@@ -8,7 +8,8 @@ import {
   Code2, 
   Boxes,
   CheckCircle2,
-  X
+  X,
+  Rocket
 } from 'lucide-vue-next';
 
 const props = defineProps({
@@ -46,6 +47,8 @@ const groupedLessons = computed(() => {
 
 const getCategoryIcon = (category) => {
   switch (category) {
+    case '專案導讀與概念篇':
+      return Rocket;
     case '基礎入門篇':
       return Compass;
     case '條件與列表篇':

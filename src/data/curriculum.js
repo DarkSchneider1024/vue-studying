@@ -1,6 +1,178 @@
 // src/data/curriculum.js
 export const curriculum = [
   {
+    id: 'project-overview-setup',
+    category: '專案導讀與概念篇',
+    title: '00. Vue 專案全局導讀：架構、安裝與學習地圖',
+    summary: '在寫下第一行代碼前，先搞懂為什麼要學 Vue？專案裡面有哪些檔案？以及如何用 npm 安裝並啟動專案！',
+    readTime: '6 分鐘',
+    concept: `
+### 1. 為什麼要學 Vue？我們在解決什麼問題？
+在傳統 JavaScript 開發中，若想做一個「計數器」或「購物車」，你必須寫繁瑣的命令式 (Imperative) 代碼：
+\`\`\`javascript
+// 傳統 DOM 操作：手動尋找元素 -> 手動修改內容
+const btn = document.getElementById('btn');
+const text = document.getElementById('count');
+let count = 0;
+btn.addEventListener('click', () => {
+  count++;
+  text.innerText = count; // 一旦漏掉這行，畫面就不會更新！
+});
+\`\`\`
+當專案越來越大，到處都是 \`document.getElementById\`，程式碼很容易出錯且極難維護。
+
+而在 Vue 中，我們採用**資料驅動 (Data-Driven)** 理念：
+> **你只負責維護變數資料（Data / State），Vue 會自動幫你搞定畫面的同步與重繪！**
+
+---
+
+### 2. 一個標準的 Vue 專案長什麼樣子？
+當你使用現代工具建立一個 Vue 專案時，最關鍵的檔案架構如下：
+
+\`\`\`
+my-vue-app/
+├── index.html        # 網頁唯一的 HTML 入口容器 (<div id="app"></div>)
+├── package.json      # 專案套件設定檔與啟動腳本 (npm run dev)
+├── vite.config.js    # Vite 打包建置工具設定檔
+└── src/
+    ├── main.js       # 專案引擎啟動點 (createApp 並掛載到 #app)
+    ├── App.vue       # 專案的「根組件」
+    └── components/   # 存放可重複使用的各個自訂小組件
+\`\`\`
+
+#### 什麼是 \`.vue\` 檔案？（SFC 單文件組件）
+Vue 最強大的特色就是 **SFC (Single File Component)**，把一個介面需要的全部要素寫在同一個檔案內：
+1. **\`<template>\`**：寫 HTML 模板結構。
+2. **\`<script setup>\`**：寫 JavaScript 邏輯與響應式資料（Vue 3 Composition API）。
+3. **\`<style scoped>\`**：寫 CSS 樣式，\`scoped\` 保證樣式不會污染到其他組件！
+
+---
+
+### 3. 如何在自己電腦安裝並啟動 Vue？
+要在本機開發 Vue 專案，只需要 3 個步驟：
+
+#### 第一步：安裝 Node.js
+前往 [Node.js 官方網站](https://nodejs.org/) 下載並安裝 LTS 穩定版本（安裝後電腦就會具備 \`npm\` 指令）。
+
+#### 第二步：終端機執行建立指令
+打開終端機 (Terminal / PowerShell / CMD)，輸入官方建立指令：
+\`\`\`bash
+# 官方最新建立工具
+npm create vue@latest
+
+# 或者使用超快的 Vite 模板建立：
+npm create vite@latest my-vue-app -- --template vue
+\`\`\`
+依提示輸入專案名稱後，工具就會自動幫你生成整套專案結構！
+
+#### 第三步：安裝依賴並啟動本機伺服器
+\`\`\`bash
+cd my-vue-app     # 進入專案資料夾
+npm install       # 安裝所有相依套件
+npm run dev       # 啟動開發伺服器
+\`\`\`
+此時終端機會顯示 \`http://localhost:5173/\`，在瀏覽器打開就能立刻看到你的 Vue 網站！
+
+---
+
+### 4. 接下來的自學地圖（為什麼這樣安排？）
+為了避免初學者一開始就被複雜的打包設定嚇到，接下來的課程會循序漸進：
+- **階段 1（01 ~ 05 課）基礎語法**：學會如何把變數印出 (\`{{ }}\`)、綁定屬性 (\`:\`)、監聽按鈕 (\`@\`) 與表單輸入 (\`v-model\`)。
+- **階段 2（06 ~ 07 課）條件與迴圈**：學會隱藏/顯示元素 (\`v-if\`) 與遍歷清單 (\`v-for\`)。
+- **階段 3（08 ~ 10 課）響應式核心**：學會 Vue 3 的核心心臟 \`ref\`、\`reactive\`、\`computed\` 與 \`watch\`。
+- **階段 4（11 課後）組件化開發**：學會像組積木一樣組合大型應用程式！
+    `,
+    task: `
+**體驗任務：**
+1. 右側編輯器展示了一個標準的 Vue 3 核心運作實例。
+2. 找到 \`setup()\` 裡面的 \`frameworkInfo\`，將 \`learner\` 改成**你的暱稱或名字**！
+3. 點擊按鈕試試看，體驗 Vue 3 的資料響應性！
+    `,
+    starterCode: `<div id="app">
+  <!-- 這是標準 Vue 組件的模板區塊 -->
+  <div style="padding: 16px; border: 2px solid #42b883; border-radius: 8px; background: #f0fdf4;">
+    <h2 style="color: #35495e; margin-bottom: 8px;">
+      🚀 歡迎踏上 Vue 3 實戰自學之旅！
+    </h2>
+    <p>目前學習者：<strong style="color: #42b883; font-size: 1.1rem;">{{ learner }}</strong></p>
+    <p>核心學習心法：<em>{{ corePrinciple }}</em></p>
+    
+    <div style="margin-top: 15px;">
+      <button @click="levelUp" style="background: #42b883; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">
+        🔥 點我累積學習點數：{{ exp }} 點
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 這是標準 Vue 3 的核心邏輯 (Composition API)
+  const { createApp, ref } = Vue;
+
+  createApp({
+    setup() {
+      // 宣告響應式狀態變數
+      const learner = ref('Vue 新手小隊員');
+      const corePrinciple = ref('資料驅動視圖，再也不用寫 document.getElementById！');
+      const exp = ref(0);
+
+      const levelUp = () => {
+        exp.value += 10;
+      };
+
+      return {
+        learner,
+        corePrinciple,
+        exp,
+        levelUp
+      };
+    }
+  }).mount('#app');
+</script>`,
+    solutionCode: `<div id="app">
+  <div style="padding: 16px; border: 2px solid #42b883; border-radius: 8px; background: #f0fdf4;">
+    <h2 style="color: #35495e; margin-bottom: 8px;">
+      🚀 歡迎踏上 Vue 3 實戰自學之旅！
+    </h2>
+    <p>目前學習者：<strong style="color: #42b883; font-size: 1.1rem;">{{ learner }}</strong></p>
+    <p>核心學習心法：<em>{{ corePrinciple }}</em></p>
+    
+    <div style="margin-top: 15px;">
+      <button @click="levelUp" style="background: #42b883; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">
+        🔥 點我累積學習點數：{{ exp }} 點
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const { createApp, ref } = Vue;
+
+  createApp({
+    setup() {
+      const learner = ref('前端未來的架構大師');
+      const corePrinciple = ref('資料驅動視圖，再也不用寫 document.getElementById！');
+      const exp = ref(100);
+
+      const levelUp = () => {
+        exp.value += 10;
+      };
+
+      return {
+        learner,
+        corePrinciple,
+        exp,
+        levelUp
+      };
+    }
+  }).mount('#app');
+</script>`,
+    hints: [
+      '在 script 中將 learner 變數改為您的名字，例如 ref("Alex");',
+      '點擊預覽區塊中的按鈕，exp 點數會自動即時往上跳！'
+    ]
+  },
+  {
     id: 'intro-hello-world',
     category: '基礎入門篇',
     title: '01. 認識 Vue.js 與第一個應用',
