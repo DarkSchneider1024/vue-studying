@@ -13,7 +13,11 @@ import {
   Cpu,
   Server,
   FileText,
-  Globe
+  Globe,
+  FileCode,
+  Palette,
+  Braces,
+  Wrench
 } from 'lucide-vue-next';
 
 const props = defineProps({
@@ -53,8 +57,14 @@ const getCategoryIcon = (category) => {
   switch (category) {
     case '專案導讀與概念篇':
       return Rocket;
-    case '網頁基石先修篇':
-      return Globe;
+    case 'HTML 核心專題篇':
+      return FileCode;
+    case 'CSS 樣式專題篇':
+      return Palette;
+    case 'JavaScript 邏輯專題篇':
+      return Braces;
+    case '生態工具庫篇':
+      return Wrench;
     case '基礎入門篇':
       return Compass;
     case '條件與列表篇':

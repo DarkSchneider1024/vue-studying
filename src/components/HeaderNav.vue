@@ -25,7 +25,7 @@ const props = defineProps({
   },
   totalLessons: {
     type: Number,
-    default: 30
+    default: 47
   }
 });
 
@@ -56,8 +56,8 @@ const progressPercentage = computed(() => {
           </svg>
         </div>
         <div class="brand-text">
-          <span class="brand-title">Vue 3 實戰自學指南</span>
-          <span class="brand-badge">MDN 互動風格</span>
+          <span class="brand-title">Program Studying</span>
+          <span class="brand-badge">前端全方位實戰平台</span>
         </div>
       </div>
     </div>
