@@ -59,8 +59,17 @@ const formatMarkdown = (text) => {
     return `<div class="code-block-wrapper"><pre class="code-block"><code>${escaped.trim()}</code></pre></div>`;
   });
 
-  // 解析行內代碼 `code`
-  html = html.replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>');
+  // 解析行內代碼 `code`（必須跳脫 < > & 防止被瀏覽器當成真實 HTML 標籤解析而變成空白方塊）
+  html = html.replace(/`([^`]+)`/g, (match, code) => {
+    const escaped = code
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+    return `<code class="inline-code">${escaped}</code>`;
+  });
+
+  // 解析 #### 標題
+  html = html.replace(/^#### (.*$)/gim, '<h4 class="doc-h4">$1</h4>');
 
   // 解析 ### 標題
   html = html.replace(/^### (.*$)/gim, '<h3 class="doc-h3">$1</h3>');
@@ -74,11 +83,14 @@ const formatMarkdown = (text) => {
   // 解析粗體 **text**
   html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 
-  // 解析列表 - item
-  html = html.replace(/^- (.*$)/gim, '<li class="doc-li">$1</li>');
+  // 解析分割線 ---
+  html = html.replace(/^---+$/gim, '<hr class="doc-divider">');
 
-  // 將連續的 li 包裹在 ul
-  html = html.replace(/(<li[\s\S]*?<\/li>)/g, '<ul class="doc-ul">$1</ul>');
+  // 解析列表 - item 或 * item (支援前綴空格縮排)
+  html = html.replace(/^\s*[-*] (.*$)/gim, '<li class="doc-li">$1</li>');
+
+  // 將相鄰連續的 li 整合包裹在同一個 ul 中
+  html = html.replace(/((?:<li class="doc-li">[\s\S]*?<\/li>\s*)+)/g, '<ul class="doc-ul">$1</ul>');
 
   // 解析段落（換行）
   html = html.replace(/\n\n+/g, '</p><p class="doc-p">');
@@ -87,8 +99,9 @@ const formatMarkdown = (text) => {
   // 清除多餘包裹
   html = html.replace(/<p class="doc-p"><\/p>/g, '');
   html = html.replace(/<p class="doc-p">(<div[\s\S]*?<\/div>)<\/p>/g, '$1');
-  html = html.replace(/<p class="doc-p">(<h[23][\s\S]*?<\/h[23]>)<\/p>/g, '$1');
+  html = html.replace(/<p class="doc-p">(<h[234][\s\S]*?<\/h[234]>)<\/p>/g, '$1');
   html = html.replace(/<p class="doc-p">(<ul[\s\S]*?<\/ul>)<\/p>/g, '$1');
+  html = html.replace(/<p class="doc-p">(<hr[\s\S]*?>)<\/p>/g, '$1');
 
   return html;
 };
@@ -462,6 +475,19 @@ const formattedTask = computed(() => formatMarkdown(props.lesson.task));
   font-weight: 600;
   margin: 1.1rem 0 0.5rem;
   color: var(--text-main);
+}
+
+.markdown-body .doc-h4 {
+  font-size: 0.98rem;
+  font-weight: 700;
+  margin: 1rem 0 0.4rem;
+  color: var(--text-main);
+}
+
+.markdown-body .doc-divider {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 1.5rem 0;
 }
 
 .markdown-body .doc-p {
