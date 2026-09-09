@@ -22,7 +22,7 @@ export function trackPageView(pageTitle, pagePath) {
     const fullPath = pagePath.startsWith('/') ? pagePath : `/${pagePath}`;
     window.gtag('event', 'page_view', {
       page_title: pageTitle,
-      page_location: window.location.origin + window.location.pathname + '#' + fullPath,
+      page_location: window.location.href,
       page_path: fullPath
     });
   } catch (err) {

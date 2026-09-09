@@ -10,13 +10,62 @@ import { TRACKS, getCurriculumByTrack, findTrackByLessonId } from './data/tracks
 import { initVisitorTracker } from './services/firebase';
 import { Code2, BookOpen } from 'lucide-vue-next';
 import { trackPageView, trackLessonSelect, trackLessonComplete } from './services/analytics';
+import { updateSEO } from './services/seo';
 
 // 檢視模式 ('lessons' | 'glossary' | 'welcome')
 const currentView = ref('welcome');
+
+// 同步當前狀態至 URL Hash、SEO 與 GA4
+const syncRouteAndSEO = (replace = false) => {
+  let hash = '#/welcome';
+  let title = '歡迎首頁';
+  let desc = '全方位前端自學平台：涵蓋 HTML5、CSS3、JavaScript (ES6+)、Vue 3 與現代化企業架構，MDN 風格即打即測！';
+  let keywords = '前端, HTML, CSS, JavaScript, Vue3, 自學, 程式教學';
+  let virtualPath = '/welcome';
+
+  if (currentView.value === 'glossary') {
+    hash = '#/glossary';
+    title = '前端必懂名詞速查字典';
+    desc = '前端工程師必備字典：DOM、SFC、Reactivity、Hydration、Vite 等關鍵概念解析。';
+    virtualPath = '/glossary';
+  } else if (currentView.value === 'lessons') {
+    const lesson = currentLesson.value;
+    if (lesson) {
+      hash = `#/${currentTrack.value}/${lesson.id}`;
+      title = lesson.title;
+      desc = lesson.summary || desc;
+      keywords = `${currentTrack.value}, ${lesson.title}, 前端教學, 實戰練習`;
+      virtualPath = `/${currentTrack.value}/${lesson.id}`;
+    }
+  }
+
+  // 1. 同步瀏覽器網址列 Hash (讓用戶可複製專屬 URL，且支援上一頁/下一頁)
+  if (typeof window !== 'undefined') {
+    if (window.location.hash !== hash) {
+      if (replace) {
+        history.replaceState(null, '', hash);
+      } else {
+        history.pushState(null, '', hash);
+      }
+    }
+  }
+
+  // 2. 動態更新 SEO (Title, Meta, OG, Twitter, Canonical)
+  updateSEO({
+    title,
+    description: desc,
+    keywords,
+    hashPath: hash
+  });
+
+  // 3. 發送 Google Analytics 虛擬換頁與事件
+  trackPageView(`${title} - Program Studying`, virtualPath);
+};
+
 const setView = (view) => {
   currentView.value = view;
   localStorage.setItem('program-study-last-view', view);
-  trackPageView(`View: ${view} - Program Studying`, `/${view}`);
+  syncRouteAndSEO(false);
   // 切換檢視滾動回頂部
   if (view === 'welcome') {
     const welcomeWrap = document.querySelector('.welcome-wrapper');
@@ -83,6 +132,64 @@ const currentLesson = computed(() => {
 const hasPrev = computed(() => currentLessonIndex.value > 0);
 const hasNext = computed(() => currentLessonIndex.value < activeCurriculum.value.length - 1);
 
+// 從當前 URL 解析狀態 (Deep Link / Back-Forward 支援)
+const parseRouteFromHash = () => {
+  if (typeof window === 'undefined') return;
+  const hash = window.location.hash || '';
+
+  // 1. #/welcome 或空白
+  if (hash === '#/welcome' || hash === '#/' || !hash) {
+    if (!hash) {
+      const savedView = localStorage.getItem('program-study-last-view');
+      if (savedView === 'glossary') {
+        currentView.value = 'glossary';
+        syncRouteAndSEO(true);
+        return;
+      } else if (savedView === 'lessons') {
+        currentView.value = 'lessons';
+        syncRouteAndSEO(true);
+        return;
+      }
+    }
+    currentView.value = 'welcome';
+    syncRouteAndSEO(true);
+    return;
+  }
+
+  // 2. #/glossary
+  if (hash === '#/glossary') {
+    currentView.value = 'glossary';
+    syncRouteAndSEO(true);
+    return;
+  }
+
+  // 3. #/{track}/{lessonId} 或 #/{track}
+  const clean = hash.replace(/^#\/?/, '');
+  const parts = clean.split('/');
+  const track = parts[0];
+  const lessonId = parts[1];
+
+  if (TRACKS.some(t => t.id === track)) {
+    currentTrack.value = track;
+    localStorage.setItem('program-study-last-track', track);
+    currentView.value = 'lessons';
+
+    const curr = getCurriculumByTrack(track);
+    if (lessonId && curr.some(l => l.id === lessonId)) {
+      currentLessonId.value = lessonId;
+    } else if (curr.length > 0) {
+      currentLessonId.value = curr[0].id;
+    }
+    localStorage.setItem(`program-study-last-lesson-${track}`, currentLessonId.value);
+    syncRouteAndSEO(true);
+    return;
+  }
+
+  // 4. 無效路徑回歡迎頁
+  currentView.value = 'welcome';
+  syncRouteAndSEO(true);
+};
+
 // 領域切換邏輯
 const selectTrack = (trackId) => {
   currentTrack.value = trackId;
@@ -103,6 +210,7 @@ const selectTrack = (trackId) => {
     currentLessonId.value = trackCurr[0].id;
   }
 
+  syncRouteAndSEO(false);
   scrollDocToTop();
   closeSidebar();
 };
@@ -111,6 +219,7 @@ const selectTrack = (trackId) => {
 const startTrackFromWelcome = (trackId) => {
   selectTrack(trackId);
   currentView.value = 'lessons';
+  syncRouteAndSEO(false);
 };
 
 // 跨領域或導讀跳轉 (例如 Vue 導讀點擊 HTML/CSS/JS 卡片)
@@ -120,6 +229,7 @@ const handleJumpTrack = ({ track, lessonId }) => {
     localStorage.setItem('program-study-last-track', track);
   }
 
+  currentView.value = 'lessons';
   const trackCurr = getCurriculumByTrack(currentTrack.value);
   if (lessonId && trackCurr.some(l => l.id === lessonId)) {
     currentLessonId.value = lessonId;
@@ -128,6 +238,7 @@ const handleJumpTrack = ({ track, lessonId }) => {
   }
 
   localStorage.setItem(`program-study-last-lesson-${currentTrack.value}`, currentLessonId.value);
+  syncRouteAndSEO(false);
   scrollDocToTop();
   closeSidebar();
 };
@@ -140,17 +251,15 @@ const selectLesson = (id) => {
     localStorage.setItem('program-study-last-track', detectedTrack);
   }
 
+  currentView.value = 'lessons';
   currentLessonId.value = id;
   localStorage.setItem(`program-study-last-lesson-${currentTrack.value}`, id);
   localStorage.setItem('vue-study-last-lesson', id);
   closeSidebar();
   scrollDocToTop();
 
-  // 發送 GA4 事件
-  if (currentLesson.value) {
-    trackLessonSelect(currentTrack.value, id, currentLesson.value.title);
-    trackPageView(`${currentLesson.value.title} - Program Studying`, `/${currentTrack.value}/${id}`);
-  }
+  // 同步 URL Hash、更新 SEO 並發送 GA4 事件
+  syncRouteAndSEO(false);
 
   // 手機版切換單元時，預設顯示文檔
   if (!isDesktop.value) {
@@ -244,16 +353,16 @@ onMounted(() => {
   // 初始化 Firebase 即時線上人數與瀏覽量追蹤
   initVisitorTracker();
 
-  // 初始 Google Analytics 上報
-  if (currentView.value === 'welcome') {
-    trackPageView('歡迎首頁 - Program Studying', '/welcome');
-  } else if (currentLesson.value) {
-    trackPageView(`${currentLesson.value.title} - Program Studying`, `/${currentTrack.value}/${currentLessonId.value}`);
-  }
+  // 監聽瀏覽器上一頁/下一頁 (Back / Forward)
+  window.addEventListener('popstate', parseRouteFromHash);
+
+  // 解析初始 URL Hash 路由 (支援深連結直達與動態 SEO/GA4 上報)
+  parseRouteFromHash();
 });
 
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize);
+  window.removeEventListener('popstate', parseRouteFromHash);
 });
 </script>
 
