@@ -20,6 +20,7 @@ import {
   HardDrive,
   Eye
 } from 'lucide-vue-next';
+import SiteFooter from './SiteFooter.vue';
 
 const emit = defineEmits(['start-track', 'open-lessons']);
 
@@ -420,6 +421,12 @@ const handleReset = () => {
         </div>
       </div>
     </section>
+
+    <!-- 全站頁尾與版權宣告列 (參照設計) -->
+    <SiteFooter 
+      @start-track="(t) => emit('start-track', t)" 
+      @open-view="(v) => { if (v === 'welcome') { /* already here */ } else { emit('open-lessons'); } }" 
+    />
   </div>
 </template>
 

@@ -358,12 +358,12 @@ const getCategoryIcon = (category) => {
   color: var(--text-main);
 }
 
-/* 側邊欄全站捷徑與工具區塊 (將原本頂部超連結與設定收納於此) */
+/* 側邊欄全站捷徑與工具區塊 (僅在行動端抽屜顯示，桌機端已有頂部 HeaderNav 避免重複) */
 .sidebar-quick-nav {
+  display: none;
   padding: 0.65rem 0.85rem;
   background: var(--bg-subtle);
   border-bottom: 1px solid var(--border-color);
-  display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
@@ -707,6 +707,10 @@ const getCategoryIcon = (category) => {
   }
 
   .close-btn {
+    display: flex;
+  }
+
+  .sidebar-quick-nav {
     display: flex;
   }
 

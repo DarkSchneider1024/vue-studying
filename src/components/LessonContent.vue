@@ -45,71 +45,90 @@ const handleBodyClick = (e) => {
   }
 };
 
-// 簡單安全地解析概念文字為 HTML（支援標題、代碼塊、粗體、清單與區塊引用）
+// 完整安全地解析概念文字為 HTML（支援代碼塊、行內代碼、標題、引用、有序/無序列表、粗體、連結與換行）
 const formatMarkdown = (text) => {
   if (!text) return '';
   let html = text.trim();
 
-  // 解析代碼塊 ```lang ... ```
+  // 1. 先暫存代碼塊，避免其內部內容被 Markdown 規則干擾
+  const codeBlocks = [];
   html = html.replace(/```([a-z]*)\n([\s\S]*?)```/g, (match, lang, code) => {
     const escaped = code
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
-    return `<div class="code-block-wrapper"><pre class="code-block"><code>${escaped.trim()}</code></pre></div>`;
+    const placeholder = `___CODE_BLOCK_${codeBlocks.length}___`;
+    codeBlocks.push(`<div class="code-block-wrapper"><pre class="code-block"><code>${escaped.trim()}</code></pre></div>`);
+    return `\n\n${placeholder}\n\n`;
   });
 
-  // 解析行內代碼 `code`（必須跳脫 < > & 防止被瀏覽器當成真實 HTML 標籤解析而變成空白方塊）
+  // 2. 暫存行內代碼
+  const inlineCodes = [];
   html = html.replace(/`([^`]+)`/g, (match, code) => {
     const escaped = code
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
-    return `<code class="inline-code">${escaped}</code>`;
+    const placeholder = `___INLINE_CODE_${inlineCodes.length}___`;
+    inlineCodes.push(`<code class="inline-code">${escaped}</code>`);
+    return placeholder;
   });
 
-  // 解析 #### 標題
-  html = html.replace(/^#### (.*$)/gim, '<h4 class="doc-h4">$1</h4>');
+  // 3. 解析標題（前後確保雙換行）
+  html = html.replace(/^#### (.*$)/gim, '\n\n<h4 class="doc-h4">$1</h4>\n\n');
+  html = html.replace(/^### (.*$)/gim, '\n\n<h3 class="doc-h3">$1</h3>\n\n');
+  html = html.replace(/^## (.*$)/gim, '\n\n<h2 class="doc-h2">$1</h2>\n\n');
 
-  // 解析 ### 標題
-  html = html.replace(/^### (.*$)/gim, '<h3 class="doc-h3">$1</h3>');
+  // 4. 解析 > 引用提示塊
+  html = html.replace(/^> (.*$)/gim, '\n\n<div class="doc-callout">$1</div>\n\n');
 
-  // 解析 ## 標題
-  html = html.replace(/^## (.*$)/gim, '<h2 class="doc-h2">$1</h2>');
+  // 5. 解析分割線 ---
+  html = html.replace(/^---+$/gim, '\n\n<hr class="doc-divider">\n\n');
 
-  // 解析 > 引用提示塊
-  html = html.replace(/^> (.*$)/gim, '<div class="doc-callout">$1</div>');
+  // 6. 解析有序列表 1. item, 2. item ...
+  html = html.replace(/^\s*(\d+)\.\s+(.*$)/gim, '<li class="doc-oli" value="$1"><span class="oli-num">$1.</span> $2</li>');
+  html = html.replace(/((?:<li class="doc-oli"[\s\S]*?<\/li>\s*)+)/g, '\n\n<ol class="doc-ol">$1</ol>\n\n');
 
-  // 解析粗體 **text**
+  // 7. 解析無序列表 - item 或 * item (支援前綴空格縮排)
+  html = html.replace(/^\s*[-*] (.*$)/gim, '<li class="doc-li">$1</li>');
+  html = html.replace(/((?:<li class="doc-li">[\s\S]*?<\/li>\s*)+)/g, '\n\n<ul class="doc-ul">$1</ul>\n\n');
+
+  // 8. 解析粗體 **text**
   html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 
-  // 解析 Markdown 語法超連結 [文字](url)
+  // 9. 解析 Markdown 語法超連結 [文字](url)
   html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="doc-link">$1</a>');
 
-  // 解析裸露的純 URL 網址 (如：https://... 自動轉成可點擊連結)
+  // 10. 解析裸露的純 URL 網址 (如：https://... 自動轉成可點擊連結)
   html = html.replace(/(^|[\s：:、，(（])(https?:\/\/[^\s<"'\)\]]+)/g, (match, prefix, url) => {
     return `${prefix}<a href="${url}" target="_blank" rel="noopener noreferrer" class="doc-link">${url}</a>`;
   });
 
-  // 解析分割線 ---
-  html = html.replace(/^---+$/gim, '<hr class="doc-divider">');
+  // 11. 切分段落（\n\n+），段落內的單個 \n 轉為 <br>
+  const paragraphs = html.split(/\n\s*\n+/);
+  html = paragraphs
+    .map(p => {
+      const trimmed = p.trim();
+      if (!trimmed) return '';
+      // 如果已經是區塊元素（div, h2, h3, h4, hr, ul, ol, pre），就不額外包裹 <p>
+      if (/^<(div|h2|h3|h4|hr|ul|ol|pre|table|___CODE_BLOCK)/i.test(trimmed)) {
+        return trimmed;
+      }
+      // 段落內的單換行轉為 <br>
+      const withBr = trimmed.replace(/\n/g, '<br>');
+      return `<p class="doc-p">${withBr}</p>`;
+    })
+    .filter(Boolean)
+    .join('\n');
 
-  // 解析列表 - item 或 * item (支援前綴空格縮排)
-  html = html.replace(/^\s*[-*] (.*$)/gim, '<li class="doc-li">$1</li>');
+  // 12. 還原暫存的代碼塊與行內代碼
+  inlineCodes.forEach((code, idx) => {
+    html = html.replaceAll(`___INLINE_CODE_${idx}___`, code);
+  });
 
-  // 將相鄰連續的 li 整合包裹在同一個 ul 中
-  html = html.replace(/((?:<li class="doc-li">[\s\S]*?<\/li>\s*)+)/g, '<ul class="doc-ul">$1</ul>');
-
-  // 解析段落（換行）
-  html = html.replace(/\n\n+/g, '</p><p class="doc-p">');
-  html = `<p class="doc-p">${html}</p>`;
-
-  // 清除多餘包裹
-  html = html.replace(/<p class="doc-p"><\/p>/g, '');
-  html = html.replace(/<p class="doc-p">(<div[\s\S]*?<\/div>)<\/p>/g, '$1');
-  html = html.replace(/<p class="doc-p">(<h[234][\s\S]*?<\/h[234]>)<\/p>/g, '$1');
-  html = html.replace(/<p class="doc-p">(<ul[\s\S]*?<\/ul>)<\/p>/g, '$1');
-  html = html.replace(/<p class="doc-p">(<hr[\s\S]*?>)<\/p>/g, '$1');
+  codeBlocks.forEach((block, idx) => {
+    html = html.replaceAll(`___CODE_BLOCK_${idx}___`, block);
+  });
 
   return html;
 };
@@ -206,6 +225,15 @@ const formattedTask = computed(() => formatMarkdown(props.lesson.task));
         <ArrowRight :size="16" />
       </button>
     </footer>
+
+    <!-- 底部版權宣告列 (參照設計) -->
+    <div class="lesson-copyright-bar">
+      <span>&copy; 2026 網頁製作教學網站 版權所有。</span>
+      <span class="divider">|</span>
+      <span>開源學習專案 · 非營利教學指南</span>
+      <span class="divider">|</span>
+      <span>Designed for Modern Web Developers</span>
+    </div>
   </article>
 </template>
 
@@ -448,6 +476,23 @@ const formattedTask = computed(() => formatMarkdown(props.lesson.task));
   color: #ffffff;
 }
 
+.lesson-copyright-bar {
+  margin-top: 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.lesson-copyright-bar .divider {
+  opacity: 0.4;
+}
+
 @media (max-width: 640px) {
   .lesson-article {
     padding: 1rem;
@@ -564,5 +609,30 @@ const formattedTask = computed(() => formatMarkdown(props.lesson.task));
 .markdown-body .doc-li {
   margin-bottom: 0.35rem;
   line-height: 1.6;
+}
+
+.markdown-body .doc-ol {
+  list-style: none;
+  padding-left: 0;
+  margin: 0.75rem 0 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.markdown-body .doc-oli {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  line-height: 1.65;
+  color: var(--text-main);
+  padding: 0.25rem 0;
+}
+
+.markdown-body .oli-num {
+  font-weight: 700;
+  color: var(--primary);
+  flex-shrink: 0;
+  min-width: 1.4rem;
 }
 </style>
