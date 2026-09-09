@@ -23,7 +23,7 @@ const props = defineProps({
   },
   totalLessons: {
     type: Number,
-    default: 26
+    default: 29
   }
 });
 

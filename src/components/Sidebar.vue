@@ -12,7 +12,8 @@ import {
   Rocket,
   Cpu,
   Server,
-  FileText
+  FileText,
+  Globe
 } from 'lucide-vue-next';
 
 const props = defineProps({
@@ -52,6 +53,8 @@ const getCategoryIcon = (category) => {
   switch (category) {
     case '專案導讀與概念篇':
       return Rocket;
+    case '網頁基石先修篇':
+      return Globe;
     case '基礎入門篇':
       return Compass;
     case '條件與列表篇':
