@@ -12,7 +12,8 @@ import {
   Palette,
   FileCode,
   Braces,
-  Layers
+  Layers,
+  Sparkles
 } from 'lucide-vue-next';
 import { onlineCount, totalViews, isRealtimeConnected } from '../services/firebase';
 
@@ -115,6 +116,17 @@ const getTrackIcon = (id) => {
             <span class="stat-unit">次瀏覽</span>
           </div>
         </div>
+
+        <!-- 如何寫網站（新手導引歡迎頁）按鈕 -->
+        <button 
+          class="nav-toggle-btn welcome-nav-btn"
+          :class="{ 'is-active': currentView === 'welcome' }"
+          @click="emit('toggle-view', currentView === 'welcome' ? 'lessons' : 'welcome')"
+          title="新手導引：如何寫網站與前端全貌"
+        >
+          <Sparkles :size="15" />
+          <span class="nav-toggle-text">{{ currentView === 'welcome' ? '返回課程' : '如何寫網站' }}</span>
+        </button>
 
         <!-- 技術名詞字典切換按鈕 -->
         <button 

@@ -1,18 +1,35 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import HeaderNav from './components/HeaderNav.vue';
 import Sidebar from './components/Sidebar.vue';
 import LessonContent from './components/LessonContent.vue';
 import CodePlayground from './components/CodePlayground.vue';
 import GlossaryView from './components/GlossaryView.vue';
+import WelcomeView from './components/WelcomeView.vue';
 import { TRACKS, getCurriculumByTrack, findTrackByLessonId } from './data/tracks.js';
 import { initVisitorTracker } from './services/firebase';
-import { Code2 } from 'lucide-vue-next';
+import { Code2, BookOpen } from 'lucide-vue-next';
 
-// 檢視模式 ('lessons' | 'glossary')
+// 檢視模式 ('lessons' | 'glossary' | 'welcome')
 const currentView = ref('lessons');
 const setView = (view) => {
   currentView.value = view;
+  // 切換檢視滾動回頂部
+  if (view === 'welcome') {
+    const welcomeWrap = document.querySelector('.welcome-wrapper');
+    if (welcomeWrap) welcomeWrap.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+};
+
+// 手機端 RWD 標籤分頁 ('doc' | 'playground')
+const mobileTab = ref('doc');
+const isDesktop = ref(typeof window !== 'undefined' ? window.innerWidth > 960 : true);
+
+const handleResize = () => {
+  isDesktop.value = window.innerWidth > 960;
+  if (window.innerWidth <= 1024) {
+    sidebarOpen.value = false;
+  }
 };
 
 // 當前選中的技術領域 ('css' | 'html' | 'javascript' | 'vue')
@@ -68,6 +85,11 @@ const selectTrack = (trackId) => {
   currentTrack.value = trackId;
   localStorage.setItem('program-study-last-track', trackId);
 
+  // 如果目前在歡迎頁或字典，切回課程檢視
+  if (currentView.value !== 'lessons') {
+    currentView.value = 'lessons';
+  }
+
   const trackCurr = getCurriculumByTrack(trackId);
   const savedLesson = localStorage.getItem(`program-study-last-lesson-${trackId}`);
 
@@ -77,9 +99,14 @@ const selectTrack = (trackId) => {
     currentLessonId.value = trackCurr[0].id;
   }
 
-  // 滾動回頂部
   scrollDocToTop();
   closeSidebar();
+};
+
+// 從歡迎頁直接啟動特定領域
+const startTrackFromWelcome = (trackId) => {
+  selectTrack(trackId);
+  currentView.value = 'lessons';
 };
 
 // 跨領域或導讀跳轉 (例如 Vue 導讀點擊 HTML/CSS/JS 卡片)
@@ -103,7 +130,6 @@ const handleJumpTrack = ({ track, lessonId }) => {
 
 // 單元切換邏輯
 const selectLesson = (id) => {
-  // 自動偵測單元所屬領域，避免跨領域單元被誤選
   const detectedTrack = findTrackByLessonId(id);
   if (detectedTrack !== currentTrack.value) {
     currentTrack.value = detectedTrack;
@@ -115,6 +141,11 @@ const selectLesson = (id) => {
   localStorage.setItem('vue-study-last-lesson', id);
   closeSidebar();
   scrollDocToTop();
+
+  // 手機版切換單元時，預設顯示文檔
+  if (!isDesktop.value) {
+    mobileTab.value = 'doc';
+  }
 };
 
 const scrollDocToTop = () => {
@@ -158,6 +189,9 @@ const trackTotalLessons = computed(() => {
 });
 
 onMounted(() => {
+  window.addEventListener('resize', handleResize);
+  handleResize();
+
   // 讀取儲存的主題
   const savedTheme = localStorage.getItem('vue-study-theme');
   if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -190,13 +224,12 @@ onMounted(() => {
     }
   }
 
-  // 根據螢幕寬度初始側欄
-  if (window.innerWidth <= 1024) {
-    sidebarOpen.value = false;
-  }
-
   // 初始化 Firebase 即時線上人數與瀏覽量追蹤
   initVisitorTracker();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize);
 });
 </script>
 
@@ -217,14 +250,22 @@ onMounted(() => {
       @select-track="selectTrack"
     />
 
+    <!-- 新手導覽：如何寫網站（歡迎頁全螢幕檢視模式） -->
+    <div v-if="currentView === 'welcome'" class="welcome-wrapper">
+      <WelcomeView 
+        @start-track="startTrackFromWelcome" 
+        @open-lessons="currentView = 'lessons'" 
+      />
+    </div>
+
     <!-- 技術名詞字典全螢幕檢視模式 -->
-    <div v-if="currentView === 'glossary'" class="glossary-wrapper">
+    <div v-else-if="currentView === 'glossary'" class="glossary-wrapper">
       <GlossaryView @close="currentView = 'lessons'" />
     </div>
 
-    <!-- 主工作區 (左右分欄桌面佈局) -->
+    <!-- 主工作區 (左右雙欄桌面佈局，手機端支援 Tab 流暢切換) -->
     <div v-else class="main-workspace">
-      <!-- 左側章節目錄導覽列 -->
+      <!-- 左側章節目錄導覽列 (支援行動端滑出抽屜) -->
       <Sidebar 
         :curriculum="activeCurriculum"
         :current-lesson-id="currentLessonId"
@@ -238,42 +279,78 @@ onMounted(() => {
         @select-track="selectTrack"
       />
 
-      <!-- 核心雙欄工作台：左為教學說明，右為即時編輯與輸出 -->
-      <div class="workspace-split">
-        <!-- 左欄：教學課程文檔與任務 -->
-        <div class="doc-viewport">
-          <div class="doc-inner-container">
-            <LessonContent 
-              :lesson="currentLesson"
-              :is-completed="completedIds.includes(currentLesson.id)"
-              :has-prev="hasPrev"
-              :has-next="hasNext"
-              @prev-lesson="prevLesson"
-              @next-lesson="nextLesson"
-              @toggle-complete="toggleComplete"
-              @jump-track="handleJumpTrack"
-            />
-          </div>
+      <div class="workspace-main-area">
+        <!-- 行動端 / 平板端專屬切換分頁列 (<= 960px 顯示) -->
+        <div class="mobile-subnav-tabs" v-if="!isDesktop">
+          <button 
+            class="mobile-subnav-btn" 
+            :class="{ 'is-active': mobileTab === 'doc' }"
+            @click="mobileTab = 'doc'"
+          >
+            <BookOpen :size="15" />
+            <span>課程教學文檔</span>
+          </button>
+          <button 
+            class="mobile-subnav-btn" 
+            :class="{ 'is-active': mobileTab === 'playground' }"
+            @click="mobileTab = 'playground'"
+          >
+            <Code2 :size="15" />
+            <span>即時互動演練台</span>
+          </button>
         </div>
 
-        <!-- 右欄：常駐即時編輯器與預覽 (Playground) -->
-        <div class="playground-viewport">
-          <div class="playground-inner-container">
-            <!-- 演練區標頭 -->
-            <div class="playground-banner">
-              <div class="banner-title-wrap">
-                <Code2 :size="18" class="banner-icon" />
-                <span class="banner-title">即時互動演練台 (Live Playground)</span>
-              </div>
-              <span class="banner-subtext">邊看左側教學，邊在下方動手打代碼！</span>
-            </div>
+        <!-- 核心工作台視口 -->
+        <div class="workspace-split">
+          <!-- 左欄：教學課程文檔與任務 -->
+          <div 
+            class="doc-viewport" 
+            v-show="isDesktop || mobileTab === 'doc'"
+          >
+            <div class="doc-inner-container">
+              <LessonContent 
+                :lesson="currentLesson"
+                :is-completed="completedIds.includes(currentLesson.id)"
+                :has-prev="hasPrev"
+                :has-next="hasNext"
+                @prev-lesson="prevLesson"
+                @next-lesson="nextLesson"
+                @toggle-complete="toggleComplete"
+                @jump-track="handleJumpTrack"
+              />
 
-            <!-- 即時編輯核心 -->
-            <CodePlayground 
-              :starter-code="currentLesson.starterCode"
-              :solution-code="currentLesson.solutionCode"
-              :lesson-id="currentLesson.id"
-            />
+              <!-- 行動端文檔底部快捷切換按鈕 -->
+              <div class="mobile-quick-jump" v-if="!isDesktop">
+                <button class="quick-jump-btn" @click="mobileTab = 'playground'">
+                  <Code2 :size="16" />
+                  <span>動手打代碼：切換至即時演練台 &rarr;</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 右欄：常駐即時編輯器與預覽 (Playground) -->
+          <div 
+            class="playground-viewport" 
+            v-show="isDesktop || mobileTab === 'playground'"
+          >
+            <div class="playground-inner-container">
+              <!-- 演練區標頭 -->
+              <div class="playground-banner">
+                <div class="banner-title-wrap">
+                  <Code2 :size="18" class="banner-icon" />
+                  <span class="banner-title">即時互動演練台 (Live Playground)</span>
+                </div>
+                <span class="banner-subtext">邊看教學，邊在下方動手打代碼！</span>
+              </div>
+
+              <!-- 即時編輯核心 -->
+              <CodePlayground 
+                :starter-code="currentLesson.starterCode"
+                :solution-code="currentLesson.solutionCode"
+                :lesson-id="currentLesson.id"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -299,10 +376,78 @@ onMounted(() => {
   overflow: hidden;
 }
 
+.welcome-wrapper {
+  flex: 1;
+  height: calc(100vh - 90px);
+  overflow-y: auto;
+  background: var(--bg-app);
+}
+
 .glossary-wrapper {
   flex: 1;
   height: calc(100vh - 90px);
   overflow: hidden;
+}
+
+.workspace-main-area {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* 行動端專屬切換列 (RWD) */
+.mobile-subnav-tabs {
+  display: flex;
+  height: 42px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.mobile-subnav-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobile-subnav-btn.is-active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.mobile-quick-jump {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed var(--border-color);
+}
+
+.quick-jump-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  background: var(--primary);
+  color: white;
+  border-radius: var(--radius-md, 8px);
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(66, 184, 131, 0.3);
 }
 
 /* 雙欄工作台 */
@@ -325,7 +470,7 @@ onMounted(() => {
 }
 
 .doc-inner-container {
-  max-width: 760px;
+  max-width: 780px;
   margin: 0 auto;
   padding: 1.75rem 2rem 4rem;
 }
@@ -380,42 +525,25 @@ onMounted(() => {
   color: #94a3b8;
 }
 
-/* 響應式佈局 (平板與手機切換為單欄垂直佈局) */
-@media (max-width: 1024px) {
-  .main-workspace {
-    height: calc(100vh - 90px);
-    overflow-y: auto;
-  }
-
-  .workspace-split {
-    flex-direction: column;
-    height: auto;
-    overflow: visible;
-  }
-
+/* RWD 響應式優化 */
+@media (max-width: 960px) {
   .doc-viewport {
-    height: auto;
     border-right: none;
-    border-bottom: 1px solid var(--border-color);
-    overflow: visible;
+    min-width: 0;
   }
-
+  
   .doc-inner-container {
-    padding: 1.25rem 1.25rem 2rem;
+    padding: 1.25rem 1rem 3rem;
   }
 
-  .playground-viewport {
-    height: 720px;
-    flex: none;
+  .banner-subtext {
+    display: none;
   }
 }
 
 @media (max-width: 640px) {
-  .playground-viewport {
-    height: 640px;
-  }
-  .banner-subtext {
-    display: none;
+  .welcome-wrapper {
+    height: calc(100vh - 90px);
   }
 }
 </style>
