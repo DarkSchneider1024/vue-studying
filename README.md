@@ -1,8 +1,8 @@
-# Program Studying：前端全方位實戰自學指南 (Program Studying Platform)
+# 網頁製作教學網站：全方位實戰自學指南
 
-> 專為初學者與工程師打造的 **MDN Web Docs 風格** 全方位前端自學教學平台！涵蓋 HTML5、CSS3、JavaScript (ES6+) 惡補特訓專題，以及 Vue 3 核心語法與現代化企業級系統重構架構。邊讀中文教學觀念，邊在內建編輯器中動手寫代碼，並在 **Live output** 沙盒中即時體驗效果！
+> 專為初學者與工程師打造的 **MDN Web Docs 風格** 現代網頁製作自學教學平台！涵蓋 HTML5、CSS3、JavaScript (ES6+) 基礎特訓，以及 Vue 3 核心語法與現代化企業級系統實戰。邊讀中文教學觀念，邊在內建編輯器中動手寫代碼，並在 **Live output** 沙盒中即時體驗效果！
 
-![Program Studying Banner](https://vuejs.org/images/logo.png)
+![網頁製作教學網站 Banner](https://vuejs.org/images/logo.png)
 
 ## 核心特色
 
@@ -25,7 +25,7 @@
 
 ---
 
-## 課程目錄 (Curriculum - 全方位 47 單元)
+## 課程目錄 (Curriculum - 全方位 48 單元)
 
 1. **專案導讀與概念篇**
    - 00. Vue 專案全局導讀：架構、安裝與學習地圖

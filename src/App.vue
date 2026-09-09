@@ -19,8 +19,8 @@ const currentView = ref('welcome');
 const syncRouteAndSEO = (replace = false) => {
   let hash = '#/welcome';
   let title = '歡迎首頁';
-  let desc = '全方位前端自學平台：涵蓋 HTML5、CSS3、JavaScript (ES6+)、Vue 3 與現代化企業架構，MDN 風格即打即測！';
-  let keywords = '前端, HTML, CSS, JavaScript, Vue3, 自學, 程式教學';
+  let desc = '網頁製作教學網站：涵蓋 HTML5、CSS3、JavaScript (ES6+)、Vue 3 與現代化全端架構，MDN 風格即打即測！';
+  let keywords = '網頁製作, 網頁製作教學, 前端, HTML, CSS, JavaScript, Vue3, 自學, 程式教學';
   let virtualPath = '/welcome';
 
   if (currentView.value === 'glossary') {
@@ -34,7 +34,7 @@ const syncRouteAndSEO = (replace = false) => {
       hash = `#/${currentTrack.value}/${lesson.id}`;
       title = lesson.title;
       desc = lesson.summary || desc;
-      keywords = `${currentTrack.value}, ${lesson.title}, 前端教學, 實戰練習`;
+      keywords = `${currentTrack.value}, ${lesson.title}, 網頁製作教學, 實戰練習`;
       virtualPath = `/${currentTrack.value}/${lesson.id}`;
     }
   }
@@ -59,7 +59,7 @@ const syncRouteAndSEO = (replace = false) => {
   });
 
   // 3. 發送 Google Analytics 虛擬換頁與事件
-  trackPageView(`${title} - Program Studying`, virtualPath);
+  trackPageView(`${title} - 網頁製作教學網站`, virtualPath);
 };
 
 const setView = (view) => {
@@ -368,7 +368,7 @@ onUnmounted(() => {
 
 <template>
   <div class="app-layout">
-    <!-- 頂部導航 (包含 Program Studying 主標題與 CSS/HTML/Javascript/Vue 四大領域標籤) -->
+    <!-- 頂部導航 (包含「網頁製作教學網站」主標題與各領域標籤) -->
     <HeaderNav 
       :is-dark="isDark"
       :sidebar-open="sidebarOpen"

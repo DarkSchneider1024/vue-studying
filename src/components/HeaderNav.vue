@@ -86,7 +86,7 @@ const getTrackIcon = (id) => {
           <Menu :size="20" />
         </button>
 
-        <div class="brand" @click="emit('select-track', 'vue')" title="Program Studying - 前端全方位實戰指南">
+        <div class="brand" @click="emit('select-track', 'vue')" title="網頁製作教學網站 - 全方位實戰指南">
           <div class="brand-logo">
             <svg viewBox="0 0 261.76 226.69" width="24" height="24">
               <path d="M161.096.001l-30.225 52.35L100.647.001H-.005l130.877 226.688L261.749.001z" fill="#41b883"/>
@@ -94,7 +94,7 @@ const getTrackIcon = (id) => {
             </svg>
           </div>
           <div class="brand-text">
-            <span class="brand-title">Program Studying</span>
+            <span class="brand-title">網頁製作教學網站</span>
             <span class="brand-badge">全方位實戰</span>
           </div>
         </div>

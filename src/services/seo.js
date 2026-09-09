@@ -1,7 +1,7 @@
 // src/services/seo.js
 // 動態 SEO 標籤管理 (Title, Description, Open Graph, Canonical)
 
-const SITE_NAME = 'Program Studying 全方位前端自學指南';
+const SITE_NAME = '網頁製作教學網站';
 const BASE_URL = 'https://darkschneider1024.github.io/vue-studying/';
 
 function setMetaTag(attrName, attrValue, content) {
@@ -35,8 +35,8 @@ function setCanonical(url) {
 export function updateSEO({ title, description, keywords, hashPath }) {
   if (typeof document === 'undefined') return;
 
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
-  const desc = description || '全方位前端自學平台：涵蓋 HTML5、CSS3、JavaScript (ES6+)、Vue 3 與現代化企業架構，MDN 風格即打即測！';
+  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} - 全方位實戰自學指南`;
+  const desc = description || '網頁製作教學網站：涵蓋 HTML5、CSS3、JavaScript (ES6+)、Vue 3 與現代化全端架構，MDN 風格即打即測！';
   const fullUrl = hashPath ? `${BASE_URL}${hashPath}` : BASE_URL;
 
   // 1. 更新頁籤標題
