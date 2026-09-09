@@ -17,8 +17,16 @@ import {
   FileCode,
   Palette,
   Braces,
-  Wrench
+  Wrench,
+  Sparkles,
+  BookOpen,
+  ExternalLink,
+  Sun,
+  Moon,
+  Users,
+  Eye
 } from 'lucide-vue-next';
+import { onlineCount, totalViews, isRealtimeConnected } from '../services/firebase';
 
 const props = defineProps({
   curriculum: {
@@ -44,6 +52,14 @@ const props = defineProps({
   tracks: {
     type: Array,
     default: () => []
+  },
+  currentView: {
+    type: String,
+    default: 'lessons'
+  },
+  isDark: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -51,7 +67,19 @@ const currentTrackMeta = computed(() => {
   return props.tracks.find(t => t.id === props.currentTrack) || { label: '課程', count: props.curriculum.length };
 });
 
-const emit = defineEmits(['select-lesson', 'toggle-complete', 'close-sidebar', 'select-track']);
+const emit = defineEmits([
+  'select-lesson',
+  'toggle-complete',
+  'close-sidebar',
+  'select-track',
+  'toggle-view',
+  'toggle-theme'
+]);
+
+const handleNavigateView = (view) => {
+  emit('toggle-view', view);
+  emit('close-sidebar');
+};
 
 // 根據 category 分組
 const groupedLessons = computed(() => {
@@ -122,6 +150,76 @@ const getCategoryIcon = (category) => {
       >
         <X :size="18" />
       </button>
+    </div>
+
+    <!-- 全站功能導覽與快捷工具 (原頂部超連結與設定移至側欄抽屜) -->
+    <div class="sidebar-quick-nav">
+      <div class="quick-nav-header">
+        <span class="quick-nav-title">全站捷徑與設定</span>
+      </div>
+      <div class="quick-nav-grid">
+        <!-- 如何寫網站 (新手導引) -->
+        <button 
+          class="quick-nav-btn"
+          :class="{ 'is-active': currentView === 'welcome' }"
+          @click="handleNavigateView('welcome')"
+          title="新手入門：如何自己動手開始寫網站"
+        >
+          <Sparkles :size="14" class="quick-icon welcome-icon" />
+          <span class="quick-text">如何寫網站</span>
+        </button>
+
+        <!-- 前端技術名詞字典 -->
+        <button 
+          class="quick-nav-btn"
+          :class="{ 'is-active': currentView === 'glossary' }"
+          @click="handleNavigateView('glossary')"
+          title="前端專用名詞字典速查"
+        >
+          <BookOpen :size="14" class="quick-icon glossary-icon" />
+          <span class="quick-text">名詞字典</span>
+        </button>
+
+        <!-- Vue 官方文檔外鏈 -->
+        <a 
+          href="https://vuejs.org/guide/introduction.html" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="quick-nav-btn"
+          title="前往 Vue 3 官方權威手冊"
+        >
+          <Globe :size="14" class="quick-icon" />
+          <span class="quick-text">Vue 官網</span>
+          <ExternalLink :size="11" class="ext-icon" />
+        </a>
+
+        <!-- 深淺色主題切換 -->
+        <button 
+          class="quick-nav-btn theme-btn"
+          @click="emit('toggle-theme')"
+          :title="isDark ? '切換淺色模式' : '切換深色模式'"
+        >
+          <Sun v-if="isDark" :size="14" class="quick-icon sun-icon" />
+          <Moon v-else :size="14" class="quick-icon moon-icon" />
+          <span class="quick-text">{{ isDark ? '淺色模式' : '深色模式' }}</span>
+        </button>
+      </div>
+
+      <!-- 即時在線人數與訪客統計卡片 -->
+      <div class="sidebar-stats-badge">
+        <div class="sidebar-stat-item">
+          <span class="sidebar-pulse-dot" :class="{ 'is-active': isRealtimeConnected }"></span>
+          <Users :size="12" class="stat-icon" />
+          <span class="stat-val">{{ onlineCount }}</span>
+          <span class="stat-unit">在線</span>
+        </div>
+        <div class="sidebar-stat-divider"></div>
+        <div class="sidebar-stat-item">
+          <Eye :size="12" class="stat-icon" />
+          <span class="stat-val">{{ totalViews > 0 ? totalViews.toLocaleString() : '...' }}</span>
+          <span class="stat-unit">次瀏覽</span>
+        </div>
+      </div>
     </div>
     
     <!-- 領域切換快捷分段列 (方便手機與桌機在側邊欄直接跨科切換) -->
@@ -258,6 +356,135 @@ const getCategoryIcon = (category) => {
 .close-btn:hover {
   background: var(--bg-subtle);
   color: var(--text-main);
+}
+
+/* 側邊欄全站捷徑與工具區塊 (將原本頂部超連結與設定收納於此) */
+.sidebar-quick-nav {
+  padding: 0.65rem 0.85rem;
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quick-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.quick-nav-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.quick-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+
+.quick-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  color: var(--text-main);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.quick-nav-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.quick-nav-btn.is-active {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.quick-icon {
+  flex-shrink: 0;
+}
+
+.welcome-icon {
+  color: #10b981;
+}
+
+.glossary-icon {
+  color: #8b5cf6;
+}
+
+.sun-icon {
+  color: #f59e0b;
+}
+
+.moon-icon {
+  color: #6366f1;
+}
+
+.ext-icon {
+  opacity: 0.6;
+}
+
+/* 側邊欄訪客與在線狀態儀表 */
+.sidebar-stats-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  font-size: 0.72rem;
+}
+
+.sidebar-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-muted);
+}
+
+.sidebar-stat-divider {
+  width: 1px;
+  height: 12px;
+  background: var(--border-color);
+}
+
+.sidebar-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #94a3b8;
+}
+
+.sidebar-pulse-dot.is-active {
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+}
+
+.sidebar-stats-badge .stat-val {
+  font-weight: 700;
+  color: var(--text-main);
+  font-family: monospace;
 }
 
 /* 側邊欄領域切換分段列 */
@@ -464,12 +691,15 @@ const getCategoryIcon = (category) => {
 @media (max-width: 860px) {
   .sidebar {
     position: fixed;
-    top: 60px;
+    top: 0;
     left: 0;
     bottom: 0;
-    height: calc(100vh - 60px);
+    width: 290px;
+    max-width: 85vw;
+    height: 100vh;
     transform: translateX(-100%);
     box-shadow: var(--shadow-lg);
+    z-index: 100;
   }
 
   .sidebar.is-open {
@@ -483,10 +713,10 @@ const getCategoryIcon = (category) => {
   .sidebar-backdrop {
     position: fixed;
     inset: 0;
-    top: 60px;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(2px);
-    z-index: 35;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    z-index: 90;
   }
 }
 </style>

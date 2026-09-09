@@ -108,6 +108,12 @@ const toggleTheme = () => {
 // 側欄狀態
 const sidebarOpen = ref(true);
 const toggleSidebar = () => {
+  if (currentView.value !== 'lessons') {
+    currentView.value = 'lessons';
+    sidebarOpen.value = true;
+    syncRouteAndSEO(false);
+    return;
+  }
   sidebarOpen.value = !sidebarOpen.value;
 };
 const closeSidebar = () => {
@@ -406,10 +412,14 @@ onUnmounted(() => {
         :is-open="sidebarOpen"
         :current-track="currentTrack"
         :tracks="TRACKS"
+        :current-view="currentView"
+        :is-dark="isDark"
         @select-lesson="selectLesson"
         @toggle-complete="toggleComplete"
         @close-sidebar="closeSidebar"
         @select-track="selectTrack"
+        @toggle-view="setView"
+        @toggle-theme="toggleTheme"
       />
 
       <div class="workspace-main-area">

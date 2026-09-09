@@ -1019,42 +1019,83 @@ import DeviceService from './DeviceService.js';
     `,
     task: `
 任務指引：
-1. 觀察右側編輯器中展示的模組化拆分概念。
-2. 體驗透過 import/export 組織程式碼，實現高內聚低耦合的現代軟工架構。
-    `,
+1. 觀察右側模擬的模組化拆分架構（獨立的 \`deviceModule\` 封裝）。
+2. **動手實戰模組方法實作**：
+   - 在 \`deviceModule\` 物件內新增 \`calculateEfficiency(inKw, outKw)\` 方法。
+   - 計算並回傳運轉效率百分比字串，例如：\`((outKw / inKw) * 100).toFixed(1) + '%'\`。
+3. 點擊「計算機台轉換效率」按鈕或點擊「套用解答」，在輸出面板觀察模組化呼叫的精準運算成果！
+`,
     starterCode: `<div style="font-family: sans-serif; padding: 16px; background: white; border: 1px solid #cbd5e1; border-radius: 8px;">
-  <h3 style="margin-top: 0; color: #1e293b;">ES Modules 模組化規範展示</h3>
+  <h3 style="margin-top: 0; color: #1e293b;">ES Modules 模組化封裝實戰</h3>
 
-  <div style="background: #0f172a; color: #e2e8f0; padding: 14px; border-radius: 6px; font-family: monospace; font-size: 13px;">
-    <div style="color: #94a3b8;">// utils/telemetry.js</div>
-    <span style="color: #f43f5e;">export const</span> <span style="color: #38bdf8;">calculateEfficiency</span> = (inKw, outKw) => (outKw / inKw) * 100;<br><br>
-    
-    <div style="color: #94a3b8;">// main.js (Vue 3 組件引用)</div>
-    <span style="color: #f43f5e;">import</span> { <span style="color: #38bdf8;">calculateEfficiency</span> } <span style="color: #f43f5e;">from</span> <span style="color: #a7f3d0;">'./utils/telemetry.js'</span>;
-  </div>
+  <p style="font-size: 13px; color: #64748b; margin-top: 0;">
+    輸入功率：500 kW | 輸出功率：465 kW
+  </p>
 
-  <div style="margin-top: 14px; font-size: 14px; color: #334155;">
-    模組化使各檔案作用域完全隔離，徹底告別 window 全域變數衝突。
+  <button id="calc-btn" style="padding: 8px 14px; background: #2563eb; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
+    計算機台轉換效率 &rarr;
+  </button>
+
+  <div id="output" style="margin-top: 14px; padding: 12px; background: #0f172a; color: #38bdf8; border-radius: 6px; font-family: monospace; font-size: 14px;">
+    點擊上方按鈕執行模組方法...
   </div>
-</div>`,
+</div>
+
+<script>
+  // 模擬獨立模組 (utils/deviceModule.js)
+  const deviceModule = {
+    moduleName: '機電遙測模組 v1.0',
+    // TODO: 請在此處實作 calculateEfficiency(inKw, outKw) 方法
+  };
+
+  // 主程式調用 (main.js)
+  document.getElementById('calc-btn').addEventListener('click', () => {
+    if (typeof deviceModule.calculateEfficiency !== 'function') {
+      document.getElementById('output').innerHTML = '<span style="color: #f87171;">❌ 尚未實作 calculateEfficiency 方法！請在模組中加入。</span>';
+      return;
+    }
+    const rate = deviceModule.calculateEfficiency(500, 465);
+    document.getElementById('output').innerHTML = 
+      '<span style="color: #94a3b8;">// 模組調用成功：' + deviceModule.moduleName + '</span><br>' +
+      '輸入 500 kW / 輸出 465 kW &rarr; <strong style="color: #4ade80;">轉換效率：' + rate + '</strong>';
+  });
+</script>`,
     solutionCode: `<div style="font-family: sans-serif; padding: 16px; background: white; border: 1px solid #cbd5e1; border-radius: 8px;">
-  <h3 style="margin-top: 0; color: #1e293b;">ES Modules 模組化規範展示</h3>
+  <h3 style="margin-top: 0; color: #1e293b;">ES Modules 模組化封裝實戰</h3>
 
-  <div style="background: #0f172a; color: #e2e8f0; padding: 14px; border-radius: 6px; font-family: monospace; font-size: 13px;">
-    <div style="color: #94a3b8;">// utils/telemetry.js</div>
-    <span style="color: #f43f5e;">export const</span> <span style="color: #38bdf8;">calculateEfficiency</span> = (inKw, outKw) => (outKw / inKw) * 100;<br><br>
-    
-    <div style="color: #94a3b8;">// main.js (Vue 3 組件引用)</div>
-    <span style="color: #f43f5e;">import</span> { <span style="color: #38bdf8;">calculateEfficiency</span> } <span style="color: #f43f5e;">from</span> <span style="color: #a7f3d0;">'./utils/telemetry.js'</span>;
-  </div>
+  <p style="font-size: 13px; color: #64748b; margin-top: 0;">
+    輸入功率：500 kW | 輸出功率：465 kW
+  </p>
 
-  <div style="margin-top: 14px; font-size: 14px; color: #334155;">
-    模組化使各檔案作用域完全隔離，徹底告別 window 全域變數衝突。
+  <button id="calc-btn" style="padding: 8px 14px; background: #2563eb; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
+    計算機台轉換效率 &rarr;
+  </button>
+
+  <div id="output" style="margin-top: 14px; padding: 12px; background: #0f172a; color: #38bdf8; border-radius: 6px; font-family: monospace; font-size: 14px;">
+    點擊上方按鈕執行模組方法...
   </div>
-</div>`,
+</div>
+
+<script>
+  // 模擬獨立模組 (utils/deviceModule.js)
+  const deviceModule = {
+    moduleName: '機電遙測模組 v1.0',
+    calculateEfficiency(inKw, outKw) {
+      return ((outKw / inKw) * 100).toFixed(1) + '%';
+    }
+  };
+
+  // 主程式調用 (main.js)
+  document.getElementById('calc-btn').addEventListener('click', () => {
+    const rate = deviceModule.calculateEfficiency(500, 465);
+    document.getElementById('output').innerHTML = 
+      '<span style="color: #94a3b8;">// 模組調用成功：' + deviceModule.moduleName + '</span><br>' +
+      '輸入 500 kW / 輸出 465 kW &rarr; <strong style="color: #4ade80;">轉換效率：' + rate + '</strong>';
+  });
+</script>`,
     hints: [
-      'export 具名匯出在引用時必須加上花括號 import { name }。',
-      '現代打包器 Vite 便是原生利用瀏覽器的 ES Modules 特性實現秒級熱更新。'
+      '模組化能將不同領域的商務邏輯封裝在獨立檔案中，只匯出需要的介面 (API)。',
+      '在真實專案中，我們會使用 export const calculateEfficiency = ...，並在組件中使用 import 引入。'
     ]
   }
 ];

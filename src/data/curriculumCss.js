@@ -802,9 +802,12 @@ h1 {
     `,
     task: `
 任務指引：
-1. 觀察右側編輯器中的儀表板狀態指示燈。
-2. 體驗透過 @keyframes 動態呼吸燈與 CSS 變數切換打造的現代工控質感介面！
-    `,
+1. 觀察右側編輯器中的儀表板狀態指示燈（基於 @keyframes 動態呼吸）。
+2. **動手實戰平滑轉場 (Transitions)**：
+   - 為卡片底部的「查看即時遙測」按鈕 \`.telemetry-btn\` 加上 \`transition: all 0.25s ease;\`。
+   - 加上懸停樣式 \`.telemetry-btn:hover\`：讓按鈕微幅上浮 \`transform: translateY(-2px);\`，並加上藍色光暈陰影 \`box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4);\`！
+3. 懸停滑鼠或點擊「套用解答」，親身體驗高級質感的微動態轉場！
+`,
     starterCode: `<style>
   :root {
     --brand-blue: #0284c7;
@@ -812,15 +815,9 @@ h1 {
   }
 
   @keyframes breathing {
-    0% {
-      box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
-    }
-    70% {
-      box-shadow: 0 0 0 8px rgba(22, 163, 74, 0);
-    }
-    100% {
-      box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
-    }
+    0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); }
+    70% { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
   }
 
   .device-monitor-card {
@@ -840,6 +837,21 @@ h1 {
     display: inline-block;
     animation: breathing 2s infinite;
   }
+
+  .telemetry-btn {
+    width: 100%;
+    margin-top: 14px;
+    padding: 8px;
+    background: var(--brand-blue);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    /* TODO: 請在此處加入 transition: all 0.25s ease; */
+  }
+
+  /* TODO: 請在此處加入 .telemetry-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4); } */
 </style>
 
 <div class="device-monitor-card">
@@ -850,6 +862,10 @@ h1 {
       <span style="font-size: 12px; color: #94a3b8;">即時連線中</span>
     </div>
   </div>
+
+  <button class="telemetry-btn" onclick="alert('載入即時遙測數據...');">
+    查看即時遙測 &rarr;
+  </button>
 </div>`,
     solutionCode: `<style>
   :root {
@@ -858,15 +874,9 @@ h1 {
   }
 
   @keyframes breathing {
-    0% {
-      box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
-    }
-    70% {
-      box-shadow: 0 0 0 8px rgba(22, 163, 74, 0);
-    }
-    100% {
-      box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
-    }
+    0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); }
+    70% { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
   }
 
   .device-monitor-card {
@@ -886,6 +896,27 @@ h1 {
     display: inline-block;
     animation: breathing 2s infinite;
   }
+
+  .telemetry-btn {
+    width: 100%;
+    margin-top: 14px;
+    padding: 8px;
+    background: var(--brand-blue);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    /* 加入平滑轉場 */
+    transition: all 0.25s ease;
+  }
+
+  /* 懸停動態：微幅浮起與光暈陰影 */
+  .telemetry-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4);
+    filter: brightness(1.1);
+  }
 </style>
 
 <div class="device-monitor-card">
@@ -896,6 +927,10 @@ h1 {
       <span style="font-size: 12px; color: #94a3b8;">即時連線中</span>
     </div>
   </div>
+
+  <button class="telemetry-btn" onclick="alert('載入即時遙測數據...');">
+    查看即時遙測 &rarr;
+  </button>
 </div>`,
     hints: [
       'CSS Variables (--名稱) 可在任何地方透過 var(--名稱) 取用，實現全站主題色統一管理。',

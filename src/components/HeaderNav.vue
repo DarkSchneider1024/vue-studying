@@ -235,6 +235,7 @@ const getShortLabel = (id, label) => {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  min-width: 0;
 }
 
 .brand {
@@ -244,6 +245,8 @@ const getShortLabel = (id, label) => {
   user-select: none;
   cursor: pointer;
   transition: opacity 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .brand:hover {
@@ -254,12 +257,14 @@ const getShortLabel = (id, label) => {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .brand-text {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  white-space: nowrap;
 }
 
 .brand-title {
@@ -267,6 +272,7 @@ const getShortLabel = (id, label) => {
   font-size: 1.05rem;
   letter-spacing: -0.01em;
   color: var(--text-main);
+  white-space: nowrap;
 }
 
 .brand-badge {
@@ -616,10 +622,43 @@ const getShortLabel = (id, label) => {
   }
 }
 
+/* 行動端：標題橫向凍結、其他設定與超連結移至左側側邊欄抽屜 */
+@media (max-width: 768px) {
+  .visitor-stats-badge,
+  .welcome-nav-btn,
+  .header-right .nav-toggle-btn,
+  .header-right .nav-link {
+    display: none !important;
+  }
+
+  .header-left {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .brand {
+    max-width: 100%;
+  }
+
+  .brand-title {
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
 @media (max-width: 640px) {
   .header-top-row {
-    padding: 0 0.5rem;
+    padding: 0 0.6rem;
+    height: 46px;
   }
+
+  .brand-title {
+    font-size: 0.95rem;
+    letter-spacing: -0.02em;
+  }
+
   .header-tags-row {
     padding: 0 0.4rem;
     height: 44px;
@@ -666,17 +705,6 @@ const getShortLabel = (id, label) => {
     min-width: 16px;
     text-align: center;
     border-radius: 6px;
-  }
-
-  .visitor-stats-badge {
-    padding: 0.2rem 0.45rem;
-    gap: 0.3rem;
-  }
-  .stat-unit {
-    display: none;
-  }
-  .nav-toggle-text {
-    display: none;
   }
 }
 </style>

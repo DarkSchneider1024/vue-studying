@@ -421,16 +421,7 @@ HTML 提供了六個等級的標題：
     />
   </div>
 
-  <div style="margin-bottom: 12px;">
-    <label for="priority" style="display: block; font-size: 13px; font-weight: bold; margin-bottom: 4px; color: #334155;">
-      優先等級：
-    </label>
-    <select id="priority" style="width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 4px; background: white;">
-      <option value="low">一般保養</option>
-      <option value="urgent" selected>緊急維修 (優先處理)</option>
-      <option value="critical">重大停機事故</option>
-    </select>
-  </div>
+  <!-- TODO: 請在此處加入選取維修等級的 <select id="priority"> 下拉選單，包含「一般保養」、「緊急維修」與「重大停機事故」三個選項 -->
 
   <button 
     type="submit" 
@@ -561,12 +552,7 @@ HTML 提供了六個等級的標題：
         <td style="padding: 10px; color: #ea580c; font-weight: bold;">保養待機</td>
       </tr>
     </tbody>
-    <tfoot>
-      <tr style="background: #f8fafc; font-weight: bold;">
-        <td colspan="3" style="padding: 10px; text-align: right; color: #475569;">已監控機台統計：</td>
-        <td style="padding: 10px; color: #0284c7;">2 台設備</td>
-      </tr>
-    </tfoot>
+    <!-- TODO: 請在下方加入 <tfoot> 表尾，並在 <td> 使用 colspan="3" 合併「已監控機台統計：」，最後一欄呈現「2 台設備」 -->
   </table>
 </div>`,
     solutionCode: `<div style="font-family: sans-serif; padding: 16px; background: white; border: 1px solid #cbd5e1; border-radius: 8px;">
