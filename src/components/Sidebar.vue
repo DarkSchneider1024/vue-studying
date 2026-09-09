@@ -9,7 +9,10 @@ import {
   Boxes,
   CheckCircle2,
   X,
-  Rocket
+  Rocket,
+  Cpu,
+  Server,
+  FileText
 } from 'lucide-vue-next';
 
 const props = defineProps({
@@ -55,8 +58,15 @@ const getCategoryIcon = (category) => {
       return Layers;
     case '核心響應式篇':
       return Code2;
+    case '進階組件篇':
     case '進階與組件篇':
       return Boxes;
+    case '系統現代化篇':
+      return Cpu;
+    case '架構實戰篇':
+      return Server;
+    case '決策與匯報篇':
+      return FileText;
     default:
       return Compass;
   }
