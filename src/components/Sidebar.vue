@@ -51,7 +51,7 @@ const currentTrackMeta = computed(() => {
   return props.tracks.find(t => t.id === props.currentTrack) || { label: '課程', count: props.curriculum.length };
 });
 
-const emit = defineEmits(['select-lesson', 'toggle-complete', 'close-sidebar']);
+const emit = defineEmits(['select-lesson', 'toggle-complete', 'close-sidebar', 'select-track']);
 
 // 根據 category 分組
 const groupedLessons = computed(() => {
@@ -121,6 +121,24 @@ const getCategoryIcon = (category) => {
         aria-label="關閉選單"
       >
         <X :size="18" />
+      </button>
+    </div>
+    
+    <!-- 領域切換快捷分段列 (方便手機與桌機在側邊欄直接跨科切換) -->
+    <div class="sidebar-track-tabs" v-if="tracks.length > 0">
+      <button 
+        v-for="t in tracks" 
+        :key="t.id"
+        class="sidebar-track-tab-btn"
+        :class="{ 
+          'is-active': currentTrack === t.id,
+          [`tab-${t.id}`]: true 
+        }"
+        @click="emit('select-track', t.id)"
+        :title="t.title"
+      >
+        <span class="tab-label">{{ t.id === 'javascript' ? 'JS' : t.label }}</span>
+        <span class="tab-badge">{{ t.count }}</span>
       </button>
     </div>
 
@@ -240,6 +258,75 @@ const getCategoryIcon = (category) => {
 .close-btn:hover {
   background: var(--bg-subtle);
   color: var(--text-main);
+}
+
+/* 側邊欄領域切換分段列 */
+.sidebar-track-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-track-tab-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 5px 2px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sidebar-track-tab-btn:hover {
+  color: var(--text-main);
+  border-color: #94a3b8;
+}
+
+.sidebar-track-tab-btn.is-active {
+  color: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar-track-tab-btn.tab-css.is-active {
+  background: #2563eb;
+  border-color: #1d4ed8;
+}
+
+.sidebar-track-tab-btn.tab-html.is-active {
+  background: #ea580c;
+  border-color: #c2410c;
+}
+
+.sidebar-track-tab-btn.tab-javascript.is-active {
+  background: #d97706;
+  border-color: #b45309;
+}
+
+.sidebar-track-tab-btn.tab-vue.is-active {
+  background: #059669;
+  border-color: #047857;
+}
+
+.sidebar-track-tab-btn .tab-badge {
+  font-size: 0.65rem;
+  padding: 0 4px;
+  border-radius: 9999px;
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+}
+
+.sidebar-track-tab-btn.is-active .tab-badge {
+  background: rgba(255, 255, 255, 0.25);
+  color: white;
 }
 
 .sidebar-content {

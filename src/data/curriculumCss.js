@@ -472,61 +472,152 @@ CSS (Cascading Style Sheets，階層樣式表) 的核心在於「選取目標」
   {
     id: 'css-06-rwd-mediaqueries',
     category: 'CSS 樣式專題篇',
-    title: 'CSS 06. 響應式網頁設計 (RWD) 與媒體查詢 (Media Queries)',
-    summary: '一套代碼適應手機、平板與桌機！掌握 Mobile-First 設計哲學、常用斷點切換與 rem/vw 流體排版策略。',
-    readTime: '9 分鐘',
+    title: 'CSS 06. 響應式網頁設計 (RWD) 現代全攻略：從 Viewport、斷點設計到流體佈局與元件改造',
+    summary: '一套代碼通吃手機、平板與桌機！深度剖析 Viewport 視窗命脈、Mobile-First 設計哲學、主流斷點劃分、無 Query 流體排版與常見元件（導航、分頁籤、表格）的行動端改造實戰。',
+    readTime: '12 分鐘',
     concept: `
 ### 1. 什麼是響應式網頁設計 (RWD, Responsive Web Design)？
-在行動網路普及前，很多公司會做兩套網站：一套桌面版、一套手機版 (m.domain.com)。這導致維護成本翻倍且資料容易不同步。
-現代標準做法是：**單一 HTML 代碼，由 CSS 根據不同螢幕寬度自動切換排版版型**！
+在行動裝置普及初期，很多企業會架設兩套獨立網站：
+- 電腦版：\`www.example.com\`
+- 手機版：\`m.example.com\`
+
+這種作法帶來極高維護成本（兩套代碼、兩套邏輯、資料易不同步，SEO 權重也會被分散）。  
+現代業界的唯一黃金標準是 **RWD (Responsive Web Design)**：  
+> **「同一份 HTML 結構，透過 CSS 智能感知螢幕寬度與裝置特性，自動呈現最合適的排版與互動體驗！」**
 
 ---
 
-### 2. 媒體查詢 (Media Queries) 語法
+### 2. RWD 的生死命脈：Viewport Meta 標籤
+很多人剛學 RWD 時，寫好了媒體查詢，用電腦瀏覽器縮小視窗測試都正常，但一把網址發到真正的手機打開，**所有字體竟然縮到小如螞蟻、整頁縮小塞在手機螢幕裡！**
+
+#### 為什麼會這樣？
+早期智慧型手機為了能瀏覽傳統未針對手機優化的桌機網頁，瀏覽器預設會假裝自己是一個 **980px 寬的虛擬桌機螢幕**，把整頁縮小塞進手機裡。
+
+#### 唯一的解法：在 HTML \`<head>\` 加入 Viewport 宣告！
+\`\`\`html
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+\`\`\`
+- **\`width=device-width\`**：指令告訴手機瀏覽器「請將視窗寬度嚴格對齊手機真實的實體像素寬度（如 390px、414px）」，不再自作主張縮放。
+- **\`initial-scale=1.0\`**：設定初始縮放比例為 100%（不放大、不縮小）。
+> **關鍵鐵律：** 任何未加這行 Meta 的網頁，CSS 媒體查詢在真實手機上一律失效！
+
+---
+
+### 3. Mobile-First（手機優先）vs Desktop-First 設計哲學
+
+在撰寫媒體查詢時，業界有兩種思維：
+
+| 維度 | Desktop-First (桌機優先) | Mobile-First (手機優先，業界推薦 ★★★★★) |
+| :--- | :--- | :--- |
+| **查詢語法** | 使用 \`@media (max-width: ...)\` 往下扣 | 使用 \`@media (min-width: ...)\` 往上加 |
+| **預設樣式** | 寫複雜的 3 欄、4 欄桌面樣式 | 寫最乾淨、最輕量的單欄流體樣式 |
+| **手機端效能** | 手機必須下載並解析桌機樣式後，再一行行被覆寫掉 | 手機端只執行最基礎 CSS，極致輕快！ |
+| **代碼複雜度** | 不斷用 \`float: none\`、\`display: block\` 去重設桌機屬性 | 代碼呈「加法」，大螢幕按需疊加增強特性 |
+
+#### Mobile-First 代碼典範：
 \`\`\`css
-/* 1. 基礎預設樣式：以手機版為基礎 (Mobile-First) */
-.dashboard-container {
-  display: flex;
-  flex-direction: column; /* 手機上單欄直排 */
+/* 1. 預設樣式：完全為手機打造（不用寫任何 media query） */
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* 手機單欄 */
+  gap: 12px;
   padding: 12px;
 }
 
-/* 2. 平板斷點：螢幕寬度 >= 768px */
+/* 2. 平板以上（寬度 >= 768px）增強為 2 欄 */
 @media (min-width: 768px) {
-  .dashboard-container {
-    flex-direction: row; /* 平板以上切換為左右橫排 */
-    padding: 24px;
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 20px;
   }
 }
 
-/* 3. 桌面大螢幕斷點：螢幕寬度 >= 1024px */
+/* 3. 桌機大螢幕（寬度 >= 1024px）增強為 4 欄 */
 @media (min-width: 1024px) {
-  .dashboard-container {
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr);
     max-width: 1200px;
-    margin: 0 auto; /* 水平居中 */
+    margin: 0 auto; /* 水平置中 */
   }
 }
 \`\`\`
 
 ---
 
-### 3. 現代相對單位
-- **\`rem\`**：相對於 \`<html>\` 根元素的字級大小（預設 1rem = 16px）。使用者在手機調整無障礙字體時會自動等比放大，比寫死 \`px\` 更親和。
-- **\`vw\` / \`vh\`**：視窗寬度 (Viewport Width) 與高度的百分比（100vw = 螢幕滿寬）。
-- **\`clamp(最小值, 理想值, 最大值)\`**：例如 \`font-size: clamp(14px, 2.5vw, 24px)\`，字體隨螢幕寬度平滑流體縮放，且不低於 14px、不高於 24px。
+### 4. 業界主流斷點 (Breakpoints) 標準速查手冊
+
+不要為每種手機型號（如 iPhone 14、Pixel 7）個別寫斷點！我們應該依據**「設備類型級距」**來劃分：
+
+- **\`< 640px\`（超小螢幕 / 手機直向 Portrait）**：
+  - 單欄垂直排列、底部固定按鈕、漢堡選單。
+- **\`641px ~ 768px\`（大尺寸手機 / 小平板）**：
+  - 雙欄排列、緊湊型側邊欄。
+- **\`769px ~ 1024px\`（平板橫向 Landscape / 輕薄筆電）**：
+  - 側邊欄常駐或 2 ~ 3 欄式儀表板。
+- **\`> 1024px\`（桌面大螢幕 / 4K 螢幕）**：
+  - 完整多欄導航、限制最大寬度（如 \`max-width: 1280px\`）避免在大螢幕上過度拉伸變形。
 
 ---
 
-### 4. 權威延伸學習資源
-- **MDN Web Docs - 響應式網頁設計基礎**：https://developer.mozilla.org/zh-TW/docs/Learn_web_development/Core/CSS_layout/Responsive_Design
-- **MDN Web Docs - 使用媒體查詢 (Media Queries)**：https://developer.mozilla.org/zh-TW/docs/Web/CSS/CSS_media_queries/Using_media_queries
-    `,
+### 5. 現代高階 RWD 技巧：告別 Media Query 的自適應排版
+
+現代 CSS 提供了很多「天生自帶響應式」的強大特徵，甚至一行媒體查詢都不用寫：
+
+#### (1) 彈性圖片防爆版
+任何圖片或影片，務必加上：
+\`\`\`css
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+\`\`\`
+
+#### (2) Grid 自動換行流體網格 (\`repeat(auto-fit, minmax(...))\`)
+不需要為平板桌機寫任何斷點，卡片自動依容器寬度換行：
+\`\`\`css
+.card-container {
+  display: grid;
+  /* 每個卡片最小 280px，空間足夠時自動均分滿格 */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+\`\`\`
+
+#### (3) \`clamp()\` 流體字體與間距
+告別手機字太小、桌機字太大的斷點切換，讓字級隨螢幕寬度平滑線性呼吸：
+\`\`\`css
+/* 最小 16px，理想值隨螢幕佔 2.5vw，最大不超過 24px */
+h1 {
+  font-size: clamp(1.25rem, 2.5vw + 1rem, 2.5rem);
+}
+\`\`\`
+
+---
+
+### 6. 常見 UI 元件在手機端的 4 大 RWD 改造套路
+
+在真實專案開發中，不同元件在手機小螢幕上通常有固定的優雅降級方案：
+
+1. **頂部導航列 (Navbar)**：
+   - 💻 桌機：水平排開 6 ~ 8 個導覽連結。
+   - 📱 手機：收納為左上/右上角的 **「漢堡選單按鈕 (Hamburger Menu)」**，點擊後滑出全螢幕或抽屜式側邊欄。
+2. **分頁籤列 (Tabs)**：
+   - 💻 桌機：水平寬鬆排列，包含長標籤文字與課堂數。
+   - 📱 手機：改為 **等寬分段器 (Segmented Control)**，簡寫標籤（如 Javascript 簡寫為 JS），4 等分均分整行寬度，**徹底杜絕水平滑動**！
+3. **數據表格 (Data Table)**：
+   - 💻 桌機：10 欄寬表格，水平伸展。
+   - 📱 手機：橫向捲動極易卡死，最佳做法是透過 CSS 將表格列轉化為 **獨立卡片式垂直排列 (Card-based Stack)**。
+4. **觸控按鈕規範 (Touch Target)**：
+   - 根據 Apple 與 Google 規範，手機點擊區域最小不能小於 **44px × 44px**（Google 建議 48px），按鈕之間必須留有適度間距避免拇指誤觸！
+`,
     task: `
 任務指引：
-1. 觀察右側編輯器中的響應式佈局代碼。
-2. 了解 @media (min-width: 600px) 如何在寬度足夠時將單欄切換為雙欄並排。
-3. 體會 Mobile-First（手機優先）的優雅之處。
-    `,
+1. 觀察右側編輯器展示的「響應式設備監控儀表板」。
+2. 嘗試調整右側預覽區的寬度，觀察卡片如何在窄螢幕時為單欄直排，在寬螢幕時無縫切換為雙欄並排！
+3. 嘗試在 CSS 中為 \`.rwd-card\` 加上 \`clamp()\` 流體字體，體驗現代 RWD 的強大適配力！
+`,
     starterCode: `<style>
   .rwd-demo-box {
     display: flex;

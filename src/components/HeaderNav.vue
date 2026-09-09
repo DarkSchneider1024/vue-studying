@@ -71,6 +71,11 @@ const getTrackIcon = (id) => {
       return Layers;
   }
 };
+
+const getShortLabel = (id, label) => {
+  if (id === 'javascript') return 'JS';
+  return label;
+};
 </script>
 
 <template>
@@ -176,8 +181,14 @@ const getTrackIcon = (id) => {
           :title="track.title + '：' + (track.description || '')"
         >
           <component :is="getTrackIcon(track.id)" :size="14" class="track-tag-icon" />
-          <span class="track-tag-name">{{ track.label }}</span>
-          <span class="track-tag-count">{{ track.count }} 課</span>
+          <span class="track-tag-name">
+            <span class="full-name">{{ track.label }}</span>
+            <span class="short-name">{{ getShortLabel(track.id, track.label) }}</span>
+          </span>
+          <span class="track-tag-count">
+            <span class="count-num">{{ track.count }}</span>
+            <span class="count-unit"> 課</span>
+          </span>
         </button>
       </div>
 
@@ -577,6 +588,18 @@ const getTrackIcon = (id) => {
   transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.short-name {
+  display: none;
+}
+
+.full-name {
+  display: inline;
+}
+
+.count-unit {
+  display: inline;
+}
+
 /* 響應式佈局 */
 @media (max-width: 860px) {
   .mobile-menu-btn {
@@ -595,11 +618,56 @@ const getTrackIcon = (id) => {
 
 @media (max-width: 640px) {
   .header-top-row {
-    padding: 0 0.75rem;
+    padding: 0 0.5rem;
   }
   .header-tags-row {
-    padding: 0 0.75rem;
+    padding: 0 0.4rem;
+    height: 44px;
+    overflow-x: visible; /* 關閉水平滾動，一屏 4 等分全顯！ */
   }
+
+  .track-tags-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+
+  .track-tag-item {
+    justify-content: center;
+    padding: 6px 2px;
+    gap: 4px;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 0.78rem;
+    border-width: 1.5px;
+  }
+
+  .track-tag-icon {
+    display: none;
+  }
+
+  .full-name {
+    display: none;
+  }
+
+  .short-name {
+    display: inline;
+    font-weight: 700;
+  }
+
+  .count-unit {
+    display: none;
+  }
+
+  .track-tag-count {
+    padding: 0 4px;
+    font-size: 0.65rem;
+    min-width: 16px;
+    text-align: center;
+    border-radius: 6px;
+  }
+
   .visitor-stats-badge {
     padding: 0.2rem 0.45rem;
     gap: 0.3rem;
