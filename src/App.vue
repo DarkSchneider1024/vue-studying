@@ -4,8 +4,15 @@ import HeaderNav from './components/HeaderNav.vue';
 import Sidebar from './components/Sidebar.vue';
 import LessonContent from './components/LessonContent.vue';
 import CodePlayground from './components/CodePlayground.vue';
+import GlossaryView from './components/GlossaryView.vue';
 import { curriculum } from './data/curriculum';
 import { Code2, BookOpen, Columns, Maximize2 } from 'lucide-vue-next';
+
+// 檢視模式 ('lessons' | 'glossary')
+const currentView = ref('lessons');
+const setView = (view) => {
+  currentView.value = view;
+};
 
 // 主題切換 (Dark / Light)
 const isDark = ref(false);
@@ -116,14 +123,21 @@ onMounted(() => {
     <HeaderNav 
       :is-dark="isDark"
       :sidebar-open="sidebarOpen"
+      :current-view="currentView"
       :completed-ids="completedIds"
       :total-lessons="curriculum.length"
       @toggle-theme="toggleTheme"
       @toggle-sidebar="toggleSidebar"
+      @toggle-view="setView"
     />
 
+    <!-- 技術名詞字典全螢幕檢視模式 -->
+    <div v-if="currentView === 'glossary'" class="glossary-wrapper">
+      <GlossaryView @close="currentView = 'lessons'" />
+    </div>
+
     <!-- 主工作區 (左右分欄桌面佈局) -->
-    <div class="main-workspace">
+    <div v-else class="main-workspace">
       <!-- 左側章節目錄導覽列 -->
       <Sidebar 
         :curriculum="curriculum"
@@ -192,6 +206,12 @@ onMounted(() => {
   width: 100%;
   height: calc(100vh - 60px);
   position: relative;
+  overflow: hidden;
+}
+
+.glossary-wrapper {
+  flex: 1;
+  height: calc(100vh - 60px);
   overflow: hidden;
 }
 

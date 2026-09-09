@@ -13,17 +13,21 @@ import {
 const props = defineProps({
   isDark: Boolean,
   sidebarOpen: Boolean,
+  currentView: {
+    type: String,
+    default: 'lessons'
+  },
   completedIds: {
     type: Array,
     default: () => []
   },
   totalLessons: {
     type: Number,
-    default: 11
+    default: 26
   }
 });
 
-const emit = defineEmits(['toggle-theme', 'toggle-sidebar']);
+const emit = defineEmits(['toggle-theme', 'toggle-sidebar', 'toggle-view']);
 
 const progressPercentage = computed(() => {
   if (!props.totalLessons) return 0;
@@ -57,7 +61,7 @@ const progressPercentage = computed(() => {
     </div>
 
     <!-- 學習進度條 -->
-    <div class="progress-section">
+    <div class="progress-section" v-if="currentView === 'lessons'">
       <div class="progress-info">
         <span class="progress-label">
           <CheckCircle2 :size="15" class="progress-icon" />
@@ -71,6 +75,17 @@ const progressPercentage = computed(() => {
     </div>
 
     <div class="header-right">
+      <!-- 技術名詞字典切換按鈕 -->
+      <button 
+        class="nav-toggle-btn"
+        :class="{ 'is-active': currentView === 'glossary' }"
+        @click="emit('toggle-view', currentView === 'glossary' ? 'lessons' : 'glossary')"
+        title="切換至技術名詞字典（附發音與比喻）"
+      >
+        <BookOpen :size="16" />
+        <span>{{ currentView === 'glossary' ? '返回課程學習' : '技術名詞字典' }}</span>
+      </button>
+
       <a 
         href="https://vuejs.org/guide/introduction.html" 
         target="_blank" 
@@ -78,7 +93,6 @@ const progressPercentage = computed(() => {
         class="nav-link"
         title="前往 Vue 官方文檔"
       >
-        <BookOpen :size="16" />
         <span class="nav-link-text">Vue 官網</span>
         <ExternalLink :size="13" class="external-icon" />
       </a>
@@ -192,6 +206,33 @@ const progressPercentage = computed(() => {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+}
+
+.nav-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-toggle-btn:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.nav-toggle-btn.is-active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
 }
 
 .nav-link {
