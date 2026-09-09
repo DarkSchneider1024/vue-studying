@@ -615,8 +615,11 @@ h1 {
     task: `
 任務指引：
 1. 觀察右側編輯器展示的「響應式設備監控儀表板」。
-2. 嘗試調整右側預覽區的寬度，觀察卡片如何在窄螢幕時為單欄直排，在寬螢幕時無縫切換為雙欄並排！
-3. 嘗試在 CSS 中為 \`.rwd-card\` 加上 \`clamp()\` 流體字體，體驗現代 RWD 的強大適配力！
+2. 嘗試調整右側預覽區的寬度，觀察卡片如何在窄螢幕時為單欄直排，在大螢幕 (>= 500px) 時切換為雙欄並排！
+3. **動手實戰流體屬性**：
+   - 為 \`.rwd-card\` 加上流體內距：\`padding: clamp(12px, 3vw, 24px);\`
+   - 為數據數值 \`.data-num\` 加上流體字級：\`font-size: clamp(20px, 4vw, 32px);\`
+4. 拖曳縮放視窗寬度，親身體驗字體與卡片隨螢幕平滑縮放的現代 RWD 魅力！
 `,
     starterCode: `<style>
   .rwd-demo-box {
@@ -629,9 +632,16 @@ h1 {
   .rwd-card {
     background: #ffffff;
     border: 1px solid #cbd5e1;
-    border-radius: 6px;
+    border-radius: 8px;
+    /* TODO 1: 請嘗試改用 clamp(12px, 3vw, 24px) 打造流體內距 */
     padding: 16px;
     flex: 1;
+  }
+
+  .data-num {
+    /* TODO 2: 請嘗試改用 clamp(20px, 4vw, 32px) 打造流體字級 */
+    font-size: 22px;
+    font-weight: bold;
   }
 
   /* 平板與桌面以上：橫向並排 (雙欄) */
@@ -650,11 +660,11 @@ h1 {
   <div class="rwd-demo-box">
     <div class="rwd-card">
       <h4 style="margin: 0 0 6px 0; color: #1e293b;">即時監控數據區</h4>
-      <span style="font-size: 22px; font-weight: bold; color: #2563eb;">238 V</span>
+      <span class="data-num" style="color: #2563eb;">238 V</span>
     </div>
     <div class="rwd-card">
       <h4 style="margin: 0 0 6px 0; color: #1e293b;">今日累積發電量</h4>
-      <span style="font-size: 22px; font-weight: bold; color: #16a34a;">1,420 kWh</span>
+      <span class="data-num" style="color: #16a34a;">1,420 kWh</span>
     </div>
   </div>
 </div>`,
@@ -669,11 +679,19 @@ h1 {
   .rwd-card {
     background: #ffffff;
     border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    padding: 16px;
+    border-radius: 8px;
+    /* 現代 RWD：流體內距（最小 12px，隨螢幕 3vw 動態變化，最大 24px） */
+    padding: clamp(12px, 3vw, 24px);
     flex: 1;
   }
 
+  .data-num {
+    /* 現代 RWD：流體字級（最小 20px，隨螢幕 4vw 動態縮放，最大 32px） */
+    font-size: clamp(20px, 4vw, 32px);
+    font-weight: bold;
+  }
+
+  /* 平板與桌面以上：橫向並排 (雙欄) */
   @media (min-width: 500px) {
     .rwd-demo-box {
       flex-direction: row;
@@ -689,17 +707,18 @@ h1 {
   <div class="rwd-demo-box">
     <div class="rwd-card">
       <h4 style="margin: 0 0 6px 0; color: #1e293b;">即時監控數據區</h4>
-      <span style="font-size: 22px; font-weight: bold; color: #2563eb;">238 V</span>
+      <span class="data-num" style="color: #2563eb;">238 V</span>
     </div>
     <div class="rwd-card">
       <h4 style="margin: 0 0 6px 0; color: #1e293b;">今日累積發電量</h4>
-      <span style="font-size: 22px; font-weight: bold; color: #16a34a;">1,420 kWh</span>
+      <span class="data-num" style="color: #16a34a;">1,420 kWh</span>
     </div>
   </div>
 </div>`,
     hints: [
-      'Mobile-First 思維是：先寫手機版樣式，再使用 min-width 漸進增強為平板與桌機。',
-      'HTML <head> 中的 meta viewport 宣告是所有 RWD 效果得以在手機上生效的前提。'
+      'clamp() 是 CSS 的「屬性值（函數）」，不能單獨寫成一行屬性名稱！正確用法例如：font-size: clamp(20px, 4vw, 32px);',
+      '語法結構為 clamp(最小值, 理想動態值, 最大值)，例如 padding: clamp(12px, 3vw, 24px); 能讓內距隨視窗寬度平滑適配。',
+      'Mobile-First 思維：先寫手機版直排樣式，再使用 @media (min-width: 500px) 在大螢幕時切換為橫向雙欄。'
     ]
   },
   {
