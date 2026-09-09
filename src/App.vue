@@ -5,6 +5,7 @@ import Sidebar from './components/Sidebar.vue';
 import LessonContent from './components/LessonContent.vue';
 import CodePlayground from './components/CodePlayground.vue';
 import { curriculum } from './data/curriculum';
+import { Code2, BookOpen, Columns, Maximize2 } from 'lucide-vue-next';
 
 // 主題切換 (Dark / Light)
 const isDark = ref(false);
@@ -25,7 +26,7 @@ const toggleSidebar = () => {
   sidebarOpen.value = !sidebarOpen.value;
 };
 const closeSidebar = () => {
-  if (window.innerWidth <= 860) {
+  if (window.innerWidth <= 1024) {
     sidebarOpen.value = false;
   }
 };
@@ -46,8 +47,12 @@ const selectLesson = (id) => {
   currentLessonId.value = id;
   localStorage.setItem('vue-study-last-lesson', id);
   closeSidebar();
-  // 平滑滾動至頂部
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  
+  // 文檔區滾動回頂部
+  const docContainer = document.querySelector('.doc-viewport');
+  if (docContainer) {
+    docContainer.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 };
 
 const prevLesson = () => {
@@ -99,7 +104,7 @@ onMounted(() => {
   }
 
   // 根據螢幕寬度初始側欄
-  if (window.innerWidth <= 860) {
+  if (window.innerWidth <= 1024) {
     sidebarOpen.value = false;
   }
 });
@@ -117,9 +122,9 @@ onMounted(() => {
       @toggle-sidebar="toggleSidebar"
     />
 
-    <!-- 主體雙欄排版 -->
-    <div class="main-container">
-      <!-- 左側導覽列 -->
+    <!-- 主工作區 (左右分欄桌面佈局) -->
+    <div class="main-workspace">
+      <!-- 左側章節目錄導覽列 -->
       <Sidebar 
         :curriculum="curriculum"
         :current-lesson-id="currentLessonId"
@@ -130,96 +135,178 @@ onMounted(() => {
         @close-sidebar="closeSidebar"
       />
 
-      <!-- 右側學習與實作區 -->
-      <main class="content-viewport">
-        <div class="learning-container">
-          <!-- 教學文檔解說 -->
-          <LessonContent 
-            :lesson="currentLesson"
-            :is-completed="completedIds.includes(currentLesson.id)"
-            :has-prev="hasPrev"
-            :has-next="hasNext"
-            @prev-lesson="prevLesson"
-            @next-lesson="nextLesson"
-            @toggle-complete="toggleComplete"
-          />
+      <!-- 核心雙欄工作台：左為教學說明，右為即時編輯與輸出 -->
+      <div class="workspace-split">
+        <!-- 左欄：教學課程文檔與任務 -->
+        <div class="doc-viewport">
+          <div class="doc-inner-container">
+            <LessonContent 
+              :lesson="currentLesson"
+              :is-completed="completedIds.includes(currentLesson.id)"
+              :has-prev="hasPrev"
+              :has-next="hasNext"
+              @prev-lesson="prevLesson"
+              @next-lesson="nextLesson"
+              @toggle-complete="toggleComplete"
+            />
+          </div>
+        </div>
 
-          <!-- 核心即時互動編輯器 (Live Playground) -->
-          <section class="playground-section">
-            <div class="playground-intro">
-              <h2 class="playground-heading">不要光是看：動手試試看！</h2>
-              <p class="playground-desc">
-                編輯下面輸入區域中的代碼，嘗試修改或完成上方任務。你可以在上面的 <strong>Live output</strong> 即時看到渲染出的變化。
-                如果一不小心打錯了，可以點擊 <strong>Reset</strong> 重置；如果卡關了，也可以點擊 <strong>Show solution</strong> 參考解答！
-              </p>
+        <!-- 右欄：常駐即時編輯器與預覽 (Playground) -->
+        <div class="playground-viewport">
+          <div class="playground-inner-container">
+            <!-- 演練區標頭 -->
+            <div class="playground-banner">
+              <div class="banner-title-wrap">
+                <Code2 :size="18" class="banner-icon" />
+                <span class="banner-title">即時互動演練台 (Live Playground)</span>
+              </div>
+              <span class="banner-subtext">邊看左側教學，邊在下方動手打代碼！</span>
             </div>
 
+            <!-- 即時編輯核心 -->
             <CodePlayground 
               :starter-code="currentLesson.starterCode"
               :solution-code="currentLesson.solutionCode"
               :lesson-id="currentLesson.id"
             />
-          </section>
+          </div>
         </div>
-      </main>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
 .app-layout {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   background-color: var(--bg-app);
+  overflow: hidden;
 }
 
-.main-container {
+.main-workspace {
   display: flex;
   flex: 1;
   width: 100%;
+  height: calc(100vh - 60px);
   position: relative;
+  overflow: hidden;
 }
 
-.content-viewport {
-  flex: 1;
-  min-width: 0;
+/* 雙欄工作台 */
+.workspace-split {
   display: flex;
-  justify-content: center;
+  flex: 1;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* 左欄：教學文檔 */
+.doc-viewport {
+  flex: 1;
+  min-width: 380px;
+  height: 100%;
   overflow-y: auto;
+  border-right: 1px solid var(--border-color);
+  background: var(--bg-app);
 }
 
-.learning-container {
+.doc-inner-container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem 3rem;
+}
+
+/* 右欄：即時演練與編輯器 */
+.playground-viewport {
+  flex: 1.15;
+  min-width: 440px;
+  height: 100%;
+  overflow-y: auto;
+  background: var(--bg-surface);
+  padding: 1rem 1.25rem 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.playground-inner-container {
+  max-width: 900px;
   width: 100%;
-  max-width: 960px;
-  padding: 1.5rem 1.25rem 4rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
-.playground-section {
-  max-width: 800px;
-  margin: 1.5rem auto 2rem;
+.playground-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 1rem;
+  background: var(--primary-light);
+  border: 1px solid rgba(66, 184, 131, 0.25);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.85rem;
 }
 
-.playground-intro {
-  margin-bottom: 0.75rem;
+.banner-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.playground-heading {
-  font-size: 1.35rem;
+.banner-icon {
+  color: var(--primary);
+}
+
+.banner-title {
   font-weight: 700;
-  color: var(--text-main);
-  margin-bottom: 0.5rem;
-}
-
-.playground-desc {
   font-size: 0.9rem;
-  color: var(--text-muted);
-  line-height: 1.6;
+  color: var(--text-main);
 }
 
-@media (max-width: 768px) {
-  .learning-container {
-    padding: 0.75rem 0.5rem 3rem;
+.banner-subtext {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* 平板與手機版響應式切換為上下堆疊 */
+@media (max-width: 1024px) {
+  .app-layout {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+
+  .main-workspace {
+    height: auto;
+    overflow: visible;
+  }
+
+  .workspace-split {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+
+  .doc-viewport {
+    min-width: 100%;
+    height: auto;
+    overflow: visible;
+    border-right: none;
+    border-bottom: 2px dashed var(--border-color);
+  }
+
+  .playground-viewport {
+    min-width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .banner-subtext {
+    display: none;
   }
 }
 </style>
