@@ -2,6 +2,7 @@
 // 專業技術術語字典資料庫：專為前端自學者與系統架構評估設計
 export const glossaryCategories = [
   { id: 'all', name: '全部術語條目' },
+  { id: 'tools-ecosystem', name: '常用工具庫與樣式生態' },
   { id: 'vue-core', name: 'Vue 3 核心語法與響應式' },
   { id: 'component', name: '組件化設計與通訊' },
   { id: 'router-spa', name: '單頁應用 (SPA) 與路由' },
@@ -10,6 +11,28 @@ export const glossaryCategories = [
 ];
 
 export const glossaryTerms = [
+  // 0. 常用工具庫與樣式生態
+  {
+    id: 'jquery',
+    category: 'tools-ecosystem',
+    en: 'jQuery',
+    zh: 'jQuery (傳統 DOM 操作霸主)',
+    phonetic: '/ˈdʒeɪkwɪəri/',
+    pinyin: '勾-扣-瑞',
+    definition: '於 2006 年發布的革命性 JavaScript 工具函式庫，以「$」符號與鏈式調用聞名。透過封裝跨瀏覽器相容性，極大簡化了 HTML DOM 操作、事件監聽與 Ajax 網路通訊。然而因其依賴「命令式手動抓取並修改 DOM」，在現代以「狀態驅動視圖」為核心的 Vue 時代已退居幕後，是舊系統現代化重構時最關鍵的替換標的。',
+    analogy: '【手動到每盞燈前撥動開關 vs 智慧家庭中控面板】—— 以前要讓客廳燈亮，得拿梯子去每一盞燈手動開關 (jQuery 手動抓 DOM 節點改文字)；現代智慧家庭只要在面板按一下「回家模式」(Vue 變更狀態資料)，所有燈光自動依狀態點亮。'
+  },
+  {
+    id: 'tailwind-css',
+    category: 'tools-ecosystem',
+    en: 'Tailwind CSS',
+    zh: 'Tailwind CSS (原子化 / 功能優先樣式框架)',
+    phonetic: '/ˈteɪlwɪnd siː-ɛs-ɛs/',
+    pinyin: '貼-爾-溫德 C-S-S',
+    definition: '一種 Utility-First (功能類優先 / 原子化) 的現代 CSS 框架。開發者無需在 .css 檔案中發明冗長的 class 名稱，而是直接在 HTML 標籤上組合諸如 "flex"、"items-center"、"p-4"、"bg-blue-600" 等微型工具類。具備 JIT (即時編譯) 引擎，能根據原始碼實際使用到的類別生成體積極小的生產環境 CSS，並透過 "md:"、"hover:" 前綴原生支援響應式與狀態變化。',
+    analogy: '【標準化樂高積木顆粒 vs 每次手工開模做塑膠零件】—— 傳統 CSS 就像每次要做新按鈕都要手工開一個專屬模具命名；Tailwind 則是直接給你紅藍黃綠、不同長寬的標準積木顆粒，在 HTML 上隨拼隨用，既快速又不會產生重複堆疊的 CSS 廢料。'
+  },
+
   // 1. Vue 核心語法與響應式
   {
     id: 'reactivity',

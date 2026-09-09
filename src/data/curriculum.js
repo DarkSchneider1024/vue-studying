@@ -500,6 +500,185 @@ async function loadData() {
     ]
   },
   {
+    id: 'foundation-tools',
+    category: '網頁基石先修篇',
+    title: '前置 04. 生態演進導讀：jQuery 傳統王者與 Tailwind CSS 現代原子化',
+    summary: '了解前端歷史里程碑：看懂舊系統常見的 jQuery ($) 命令式操作，以及現代前端最流行的 Tailwind CSS 原子化樣式開發思維。',
+    readTime: '6 分鐘',
+    concept: `
+### 1. 為什麼需要認識這兩套工具庫？
+在真實企業軟體開發中，我們很少從完全空白的專案開始。
+- **老舊既有系統**：多數充斥著歷史悠久的 **jQuery ($)** 代碼。
+- **現代現代化專案**：越來越多團隊採用 **Tailwind CSS** 快速構建設計系統。
+
+理解這兩者的核心精神，能幫助您在評估「舊系統如何翻新為 Vue」以及「現代樣式如何排版」時擁有清晰全貌。
+
+---
+
+### 2. jQuery：昔日霸主與舊系統維護必備
+
+#### (1) jQuery 的核心定位
+jQuery 誕生於 2006 年，口號是 **"Write Less, Do More"**。
+當時各大瀏覽器（IE、Firefox、Chrome）的原生 JavaScript API 互不相容且冗長，jQuery 透過全域符號 \`$\` 提供了一致且極簡的 API：
+
+\`\`\`javascript
+// 傳統原生 JS
+var el = document.getElementById('status-text');
+el.innerHTML = '運轉中';
+el.style.color = 'green';
+
+// jQuery 簡化寫法（鏈式調用）
+$('#status-text').html('運轉中').css('color', 'green');
+\`\`\`
+
+#### (2) 舊系統中常見的 jQuery 影子
+- **DOM 選取與修改**：\`$('#id')\`、\`$('.class')\`、\`$(parent).find('.child')\`。
+- **事件監聽**：\`$('#btn').click(fn)\` 或 \`$(document).on('click', '.item', fn)\`。
+- **舊式非同步請求**：\`$.ajax({ url: '/api/data', success: function(res) { ... } })\`。
+
+#### (3) 為什麼現代 Vue 取代了 jQuery？
+- **jQuery 是命令式 (Imperative)**：狀態改變時，工程師必須「手動尋找每個 DOM 節點並逐一指派修改」。當系統規模變大，各個按鈕和 AJAX 回呼互相修改 DOM，容易演變成難以維護的「義大利麵代碼」。
+- **Vue 是宣告式 (Declarative)**：工程師只要負責管理「資料狀態」。狀態一變，Vue 的虛擬 DOM 引擎會精準自動更新對應畫面，不再需要任何手動抓 DOM 的程式碼！
+
+---
+
+### 3. Tailwind CSS：現代原子化樣式新寵
+
+#### (1) Tailwind CSS 的核心理念：Utility-First（功能類優先）
+傳統寫 CSS 需要為每個區塊發明 class 名字，例如 \`.device-monitor-card-header\`，然後在獨立的 CSS 檔案寫下一堆屬性。
+
+Tailwind CSS 反其道而行，提供數千個高度語意化的**微型原子類別 (Utility Classes)**，開發者直接在 HTML / Vue 模板中拼裝：
+
+\`\`\`html
+<!-- 傳統 CSS：需要跳到 .css 檔寫十幾行樣式 -->
+<div class="user-card">...</div>
+
+<!-- Tailwind CSS：直接在模板中組合原子類別 -->
+<div class="flex items-center justify-between p-4 bg-slate-800 text-white rounded-lg shadow-md hover:bg-slate-700">
+  <span class="text-sm font-semibold">1 號設備</span>
+  <span class="px-2 py-1 bg-green-500 text-xs rounded-full">在線</span>
+</div>
+\`\`\`
+
+#### (2) Tailwind CSS 的三大威力
+1. **擺脫命名痛苦**：不必再為 class 名稱絞盡腦汁。
+2. **極小生產打包體積**：內建 JIT (即時編譯) 引擎，只打包專案有使用到的類別，CSS 通常不到 10KB。
+3. **響應式與偽類超直覺**：前綴即可支援斷點與狀態，例如 \`md:flex\`（平板以上為 flex）、\`hover:bg-blue-600\`（滑鼠移過變色）、\`dark:bg-gray-900\`（深色模式）。
+
+---
+
+### 4. 延伸進階學習資源推薦
+- **jQuery 官方學習中心 (Learning Center)**：https://learn.jquery.com/
+- **W3Schools jQuery 基礎教學**：https://www.w3schools.com/jquery/
+- **Tailwind CSS 官方文檔 (英文/繁中推薦資源)**：https://tailwindcss.com/docs
+- **Tailwind CSS 中文手冊**：https://www.tailwindcss.cn/
+    `,
+    task: `
+任務指引：
+1. 觀察右側編輯器：上方展示了傳統 jQuery 風格的「手動指令修改 DOM」邏輯；下方展示了類似 Tailwind 原子化 Class 的彈性排版結構。
+2. 點擊「模擬 jQuery 指令操作」按鈕，體驗命令式手動修改畫面的流程。
+3. 體會為什麼 Vue 倡導「用資料驅動畫面」，以及原子化樣式如何讓排版高度直覺。
+    `,
+    starterCode: `<div style="padding: 16px; font-family: sans-serif; max-width: 500px;">
+  <h3 style="margin-top: 0; color: #1e293b;">工具庫與現代演進對比</h3>
+
+  <!-- 傳統 jQuery 命令式體驗區塊 -->
+  <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 14px; margin-bottom: 16px; background: #f8fafc;">
+    <div style="font-size: 13px; font-weight: bold; color: #64748b; margin-bottom: 8px;">
+      傳統 jQuery 思維：命令式手動修改 DOM
+    </div>
+    
+    <div id="device-card" style="padding: 10px; background: white; border-radius: 6px; border: 1px solid #e2e8f0;">
+      <span id="device-title" style="font-weight: bold;">主機 #01</span>：
+      <span id="device-status" style="color: #ea580c; font-weight: bold;">待機中</span>
+    </div>
+
+    <button id="jquery-btn" style="margin-top: 10px; padding: 6px 12px; background: #0284c7; color: white; border: none; border-radius: 4px; cursor: pointer;">
+      模擬執行：$('#device-status').text('已連線')
+    </button>
+  </div>
+
+  <!-- Tailwind CSS 原子化風格體驗區塊 -->
+  <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 14px; background: #0f172a; color: white;">
+    <div style="font-size: 13px; font-weight: bold; color: #94a3b8; margin-bottom: 8px;">
+      Tailwind CSS 思維：原子化 class 直接組合
+    </div>
+
+    <!-- 模擬 Tailwind 原子類效果 (flex, items-center, justify-between, p-3, rounded-md, bg-slate-800) -->
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #1e293b; border-radius: 6px;">
+      <div>
+        <div style="font-weight: 600; font-size: 14px;">冰水主機泵浦</div>
+        <div style="font-size: 12px; color: #94a3b8;">電力負載 42 kW</div>
+      </div>
+      <span style="font-size: 12px; padding: 4px 10px; border-radius: 9999px; background: #16a34a; color: white; font-weight: 600;">
+        運轉中
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 模擬 jQuery 舊專案的命令式操作
+  document.getElementById('jquery-btn').addEventListener('click', function() {
+    const statusEl = document.getElementById('device-status');
+    statusEl.innerText = '運轉中 (已連線)';
+    statusEl.style.color = '#16a34a';
+    
+    const cardEl = document.getElementById('device-card');
+    cardEl.style.borderColor = '#16a34a';
+  });
+</script>`,
+    solutionCode: `<div style="padding: 16px; font-family: sans-serif; max-width: 500px;">
+  <h3 style="margin-top: 0; color: #1e293b;">工具庫與現代演進對比</h3>
+
+  <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 14px; margin-bottom: 16px; background: #f8fafc;">
+    <div style="font-size: 13px; font-weight: bold; color: #64748b; margin-bottom: 8px;">
+      傳統 jQuery 思維：命令式手動修改 DOM
+    </div>
+    
+    <div id="device-card" style="padding: 10px; background: white; border-radius: 6px; border: 1px solid #e2e8f0;">
+      <span id="device-title" style="font-weight: bold;">主機 #01</span>：
+      <span id="device-status" style="color: #ea580c; font-weight: bold;">待機中</span>
+    </div>
+
+    <button id="jquery-btn" style="margin-top: 10px; padding: 6px 12px; background: #0284c7; color: white; border: none; border-radius: 4px; cursor: pointer;">
+      模擬執行：$('#device-status').text('已連線')
+    </button>
+  </div>
+
+  <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 14px; background: #0f172a; color: white;">
+    <div style="font-size: 13px; font-weight: bold; color: #94a3b8; margin-bottom: 8px;">
+      Tailwind CSS 思維：原子化 class 直接組合
+    </div>
+
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #1e293b; border-radius: 6px;">
+      <div>
+        <div style="font-weight: 600; font-size: 14px;">冰水主機泵浦</div>
+        <div style="font-size: 12px; color: #94a3b8;">電力負載 42 kW</div>
+      </div>
+      <span style="font-size: 12px; padding: 4px 10px; border-radius: 9999px; background: #16a34a; color: white; font-weight: 600;">
+        運轉中
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('jquery-btn').addEventListener('click', function() {
+    const statusEl = document.getElementById('device-status');
+    statusEl.innerText = '運轉中 (已連線)';
+    statusEl.style.color = '#16a34a';
+    
+    const cardEl = document.getElementById('device-card');
+    cardEl.style.borderColor = '#16a34a';
+  });
+</script>`,
+    hints: [
+      '舊系統重構的核心，就是把 jQuery 的命令式 DOM 抓取，轉換為 Vue 的資料響應式驅動。',
+      'Tailwind CSS 讓樣式直接在 template class 拼裝，省去頻繁在 vue 檔與 css 檔切換的時間。'
+    ]
+  },
+  {
     id: 'intro-hello-world',
     category: '基礎入門篇',
     title: '01. 認識 Vue.js 與第一個應用',

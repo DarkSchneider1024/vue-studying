@@ -19,12 +19,12 @@
   - 具備學習進度追蹤（自動保存在 LocalStorage，刷新不遺失）。
   - 支援行動裝置與平板響應式選單。
 - **技術專業術語手冊 (Technical Glossary)**：
-  - 內建 24 個關鍵架構術語（如 SPA、Reactive、Composable、Pinia、Virtual DOM 等）。
+  - 內建 26 個關鍵架構術語（包含 jQuery、Tailwind CSS、SPA、Reactive、Composable、Pinia、Virtual DOM 等）。
   - 提供國際音標 (IPA)、中文近似發音諧音、真實 Web Speech API 語音發音朗讀、工程定義與生活化比喻。
 
 ---
 
-## 課程目錄 (Curriculum - 共 29 單元)
+## 課程目錄 (Curriculum - 共 30 單元)
 
 1. **專案導讀與概念篇**
    - 00. Vue 專案全局導讀：架構、安裝與學習地圖
@@ -32,6 +32,7 @@
    - 前置 01. HTML 結構基石：標籤骨架、語意化與表單控制元件
    - 前置 02. CSS 樣式視覺：選擇器、盒子模型 (Box Model) 與 Flexbox 現代彈性佈局
    - 前置 03. JavaScript 邏輯引擎：變數、箭頭函式、陣列方法與非同步 Promise
+   - 前置 04. 生態演進導讀：jQuery 傳統王者與 Tailwind CSS 現代原子化
 3. **基礎入門篇**
    - 01. 認識 Vue.js 與第一個應用（宣告式渲染、`createApp`、`.mount()`）
    - 02. 雙花括號與文字插值（`{{ }}` Mustache 語法與 JavaScript 表達式）
