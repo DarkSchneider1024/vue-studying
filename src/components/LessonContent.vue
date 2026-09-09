@@ -83,6 +83,14 @@ const formatMarkdown = (text) => {
   // 解析粗體 **text**
   html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 
+  // 解析 Markdown 語法超連結 [文字](url)
+  html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="doc-link">$1</a>');
+
+  // 解析裸露的純 URL 網址 (如：https://... 自動轉成可點擊連結)
+  html = html.replace(/(^|[\s：:、，(（])(https?:\/\/[^\s<"'\)\]]+)/g, (match, prefix, url) => {
+    return `${prefix}<a href="${url}" target="_blank" rel="noopener noreferrer" class="doc-link">${url}</a>`;
+  });
+
   // 解析分割線 ---
   html = html.replace(/^---+$/gim, '<hr class="doc-divider">');
 
@@ -493,6 +501,20 @@ const formattedTask = computed(() => formatMarkdown(props.lesson.task));
 .markdown-body .doc-p {
   margin-bottom: 0.9rem;
   line-height: 1.7;
+}
+
+.markdown-body .doc-link {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  word-break: break-all;
+}
+
+.markdown-body .doc-link:hover {
+  color: var(--primary-hover, #33a06f);
+  text-decoration-thickness: 2px;
 }
 
 .markdown-body .inline-code {
