@@ -81,7 +81,7 @@ FIREBASE: `))}restoreState_(){this.tryAuth(),this.tryAppCheck();for(let e of thi
   ${r.value||``}
 </body>
 </html>
-  `;i.value.srcdoc=e};zn(()=>n.lessonId,e=>{if(!e)return;let t=localStorage.getItem(`vue-study-code-${e}`);t?r.value=t:r.value=n.starterCode,u.value=!1,c.value=null,s.value=[],bn(()=>{w()})},{immediate:!0});let te=null,ne=()=>{localStorage.setItem(`vue-study-code-${n.lessonId}`,r.value),d.value&&(clearTimeout(te),te=setTimeout(()=>{w()},450))},T=e=>{if(e.key===`Tab`){e.preventDefault();let t=e.target,n=t.selectionStart,i=t.selectionEnd;r.value=r.value.substring(0,n)+`  `+r.value.substring(i),setTimeout(()=>{t.selectionStart=t.selectionEnd=n+2,ne()},0)}},re=e=>{e.data&&(e.data.type===`SANDBOX_ERROR`?c.value=e.data.message:e.data.type===`SANDBOX_LOG`&&s.value.push(e.data.content))};xr(()=>{window.addEventListener(`message`,re),h(),window.addEventListener(`resize`,h),w()}),Tr(()=>{window.removeEventListener(`message`,re),window.removeEventListener(`resize`,h),document.body.style.overflow=``});let ie=()=>{r.value=n.starterCode,localStorage.removeItem(`vue-study-code-${n.lessonId}`),u.value=!1,w()},ae=()=>{r.value=n.solutionCode,u.value=!0,w()},oe=async()=>{try{await navigator.clipboard.writeText(r.value),l.value=!0,setTimeout(()=>{l.value=!1},2e3)}catch(e){console.error(`複製失敗`,e)}};return(e,t)=>(P(),F(`div`,{class:E([`interactive-panel`,`view-${v.value}`])},[I(`div`,hS,[I(`div`,gS,[I(`button`,{class:E([`mode-pill-btn`,{"is-active":v.value===`editor`}]),onClick:t[0]||=e=>v.value=`editor`,title:`全螢幕專注編輯代碼`},[L(M(_s),{size:13}),t[9]||=I(`span`,null,`程式碼`,-1)],2),I(`button`,{class:E([`mode-pill-btn`,{"is-active":v.value===`output`}]),onClick:t[1]||=e=>v.value=`output`,title:`全螢幕預覽執行成果`},[L(M(Cs),{size:13}),t[10]||=I(`span`,null,`預覽畫面`,-1)],2),I(`button`,{class:E([`mode-pill-btn desktop-only`,{"is-active":v.value===`split`}]),onClick:t[2]||=e=>v.value=`split`,title:`上下並排對照`},[L(M(vs),{size:13}),t[11]||=I(`span`,null,`並排檢視`,-1)],2)]),I(`div`,_S,[I(`button`,{class:`icon-tool-btn`,onClick:x,title:`縮小代碼字體`},[L(M(Ys),{size:13})]),I(`span`,vS,D(y.value)+`px`,1),I(`button`,{class:`icon-tool-btn`,onClick:b,title:`放大代碼字體`},[L(M(Js),{size:13})])])]),Nn(I(`div`,yS,[I(`div`,bS,[t[13]||=I(`div`,{class:`panel-title-wrap`},[I(`span`,{class:`pulse-dot`}),I(`h3`,{class:`panel-title`},`即時輸出 (Live output)`)],-1),I(`div`,xS,[I(`button`,{class:`run-play-btn`,onClick:w,title:`手動重新執行程式碼`},[L(M(Ns),{size:13,fill:`currentColor`}),t[12]||=I(`span`,null,`執行 (Play)`,-1)])])]),c.value?(P(),F(`div`,SS,[L(M(ps),{size:15,class:`err-icon`}),I(`span`,CS,`執行時錯誤：`+D(c.value),1)])):ma(``,!0),I(`div`,wS,[I(`iframe`,{ref_key:`iframeRef`,ref:i,class:`sandbox-iframe`,sandbox:`allow-scripts`},null,512)]),s.value.length?(P(),F(`div`,TS,[I(`div`,{class:`console-drawer-header`,onClick:t[3]||=e=>f.value=!f.value},[I(`div`,ES,[L(M(Vs),{size:13}),I(`span`,null,`Console 輸出 (`+D(s.value.length)+`)`,1)]),f.value?(P(),ia(M(us),{key:0,size:14})):(P(),ia(M(fs),{key:1,size:14}))]),f.value?(P(),F(`div`,DS,[(P(!0),F(N,null,Fr(s.value,(e,t)=>(P(),F(`div`,{key:t,class:`console-line`},` > `+D(e),1))),128))])):ma(``,!0)])):ma(``,!0)],512),[[eo,v.value===`output`||v.value===`split`]]),Nn(I(`div`,OS,[I(`div`,kS,[t[17]||=I(`div`,{class:`panel-title-wrap`},[I(`h3`,{class:`panel-title`},`程式碼編輯區`),I(`span`,{class:`editor-hint-badge`},`Vue 3 + HTML`)],-1),I(`div`,AS,[I(`label`,jS,[Nn(I(`input`,{type:`checkbox`,"onUpdate:modelValue":t[4]||=e=>d.value=e},null,512),[[Lo,d.value]]),t[14]||=I(`span`,null,`即時預覽`,-1)]),I(`button`,{class:`tool-btn`,onClick:oe,title:l.value?`已複製！`:`複製代碼`},[l.value?(P(),ia(M(ls),{key:0,size:13,class:`copy-success`})):(P(),ia(M(bs),{key:1,size:13}))],8,MS),I(`button`,{class:`tool-btn`,onClick:ie,title:`重置為初始題目`},[L(M(Fs),{size:13}),t[15]||=I(`span`,null,`Reset`,-1)]),I(`button`,{class:`tool-btn solution-btn`,onClick:ae,title:`查看並直接套用參考解答`},[L(M(Rs),{size:13}),t[16]||=I(`span`,null,`套用解答`,-1)])])]),Nn(I(`div`,NS,[I(`div`,PS,[(P(),F(N,null,Fr(C,(e,t)=>I(`button`,{key:t,class:`symbol-chip`,onMousedown:Uo(t=>ee(e,t),[`prevent`]),onTouchstart:Uo(t=>ee(e,t),[`prevent`])},D(e.label),41,FS)),64))])],512),[[eo,!p.value||m.value]]),I(`div`,{class:`editor-wrapper`,style:pe({fontSize:`${y.value}px`})},[I(`div`,IS,[(P(!0),F(N,null,Fr(S.value,e=>(P(),F(`span`,{key:e,class:`gutter-num`},D(e),1))),128))]),Nn(I(`textarea`,{ref_key:`textareaRef`,ref:a,class:`code-textarea font-mono`,"onUpdate:modelValue":t[5]||=e=>r.value=e,onInput:ne,onKeydown:T,spellcheck:`false`,readonly:p.value&&!m.value,placeholder:`在此輸入 Vue 與 HTML 程式碼...`},null,40,LS),[[Io,r.value]]),p.value&&!m.value?(P(),F(`div`,{key:0,class:`mobile-edit-overlay`,onClick:g},[I(`div`,RS,[L(M(_s),{size:18}),t[18]||=I(`span`,null,`點擊此處開始編輯程式碼`,-1)])])):ma(``,!0)],4),u.value?(P(),F(`div`,zS,[...t[19]||=[I(`span`,null,[fa(`已載入參考解答，您可以點擊 `),I(`strong`,null,`Reset`),fa(` 重新自己挑戰！`)],-1)]])):ma(``,!0)],512),[[eo,v.value===`editor`||v.value===`split`]]),(P(),ia(er,{to:`body`},[m.value?(P(),F(`div`,BS,[I(`div`,{class:`mobile-fs-toolbar`},[t[20]||=I(`div`,{class:`mobile-fs-toolbar-left`},[I(`span`,{class:`mobile-fs-title`},`全螢幕編輯模式`)],-1),I(`div`,{class:`mobile-fs-toolbar-right`},[I(`button`,{class:`mobile-fs-done-btn`,onClick:_},` 完成編輯 `)])]),I(`div`,VS,[I(`div`,HS,[(P(),F(N,null,Fr(C,(e,t)=>I(`button`,{key:t,class:`symbol-chip`,onMousedown:Uo(t=>ee(e,t),[`prevent`]),onTouchstart:Uo(t=>ee(e,t),[`prevent`])},D(e.label),41,US)),64))])]),I(`div`,{class:`mobile-fs-editor-wrapper`,style:pe({fontSize:`${y.value}px`})},[I(`div`,WS,[(P(!0),F(N,null,Fr(S.value,e=>(P(),F(`span`,{key:e,class:`gutter-num`},D(e),1))),128))]),Nn(I(`textarea`,{ref_key:`mobileTextareaRef`,ref:o,class:`code-textarea font-mono`,"onUpdate:modelValue":t[6]||=e=>r.value=e,onInput:ne,onKeydown:T,spellcheck:`false`,placeholder:`在此輸入 Vue 與 HTML 程式碼...`},null,544),[[Io,r.value]])],4)])):ma(``,!0)])),v.value===`editor`?(P(),F(`button`,{key:0,class:`floating-view-toggle`,onClick:t[7]||=e=>v.value=`output`,title:`查看執行成果`},[L(M(Cs),{size:15}),t[21]||=I(`span`,null,`查看成果 →`,-1)])):v.value===`output`?(P(),F(`button`,{key:1,class:`floating-view-toggle`,onClick:t[8]||=e=>v.value=`editor`,title:`返回修改代碼`},[L(M(_s),{size:15}),t[22]||=I(`span`,null,`繼續改代碼 →`,-1)])):ma(``,!0)],2))}},[[`__scopeId`,`data-v-83e0bbd8`]]),KS=[{id:`all`,name:`全部術語條目`},{id:`tools-ecosystem`,name:`常用工具庫與樣式生態`},{id:`vue-core`,name:`Vue 3 核心語法與響應式`},{id:`component`,name:`組件化設計與通訊`},{id:`router-spa`,name:`單頁應用 (SPA) 與路由`},{id:`state-api`,name:`狀態管理與網路請求`},{id:`architecture`,name:`架構演進與工程化實戰`}],qS=[{id:`jquery`,category:`tools-ecosystem`,en:`jQuery`,zh:`jQuery (傳統 DOM 操作霸主)`,phonetic:`/ˈdʒeɪkwɪəri/`,pinyin:`勾-扣-瑞`,definition:`於 2006 年發布的革命性 JavaScript 工具函式庫，以「$」符號與鏈式調用聞名。透過封裝跨瀏覽器相容性，極大簡化了 HTML DOM 操作、事件監聽與 Ajax 網路通訊。然而因其依賴「命令式手動抓取並修改 DOM」，在現代以「狀態驅動視圖」為核心的 Vue 時代已退居幕後，是舊系統現代化重構時最關鍵的替換標的。`,analogy:`【手動到每盞燈前撥動開關 vs 智慧家庭中控面板】—— 以前要讓客廳燈亮，得拿梯子去每一盞燈手動開關 (jQuery 手動抓 DOM 節點改文字)；現代智慧家庭只要在面板按一下「回家模式」(Vue 變更狀態資料)，所有燈光自動依狀態點亮。`},{id:`tailwind-css`,category:`tools-ecosystem`,en:`Tailwind CSS`,zh:`Tailwind CSS (原子化 / 功能優先樣式框架)`,phonetic:`/ˈteɪlwɪnd siː-ɛs-ɛs/`,pinyin:`貼-爾-溫德 C-S-S`,definition:`一種 Utility-First (功能類優先 / 原子化) 的現代 CSS 框架。開發者無需在 .css 檔案中發明冗長的 class 名稱，而是直接在 HTML 標籤上組合諸如 "flex"、"items-center"、"p-4"、"bg-blue-600" 等微型工具類。具備 JIT (即時編譯) 引擎，能根據原始碼實際使用到的類別生成體積極小的生產環境 CSS，並透過 "md:"、"hover:" 前綴原生支援響應式與狀態變化。`,analogy:`【標準化樂高積木顆粒 vs 每次手工開模做塑膠零件】—— 傳統 CSS 就像每次要做新按鈕都要手工開一個專屬模具命名；Tailwind 則是直接給你紅藍黃綠、不同長寬的標準積木顆粒，在 HTML 上隨拼隨用，既快速又不會產生重複堆疊的 CSS 廢料。`},{id:`reactivity`,category:`vue-core`,en:`Reactivity`,zh:`響應性 / 響應式系統`,phonetic:`/ˌriːækˈtɪvəti/`,pinyin:`瑞-愛克-替-維-提`,definition:`一種程式設計範式，當底層資料狀態 (State) 發生變化時，依賴該資料的視圖 (DOM) 或衍生計算會由框架自動即時同步更新，無需開發者手動編寫命令式 DOM 操作。`,analogy:`【試算表 Excel 公式自動連動】—— 當你在 A1 格填入 10，B1 格公式是「=A1*2」，只要 A1 變成 20，B1 瞬間自動變成 40，完全不需要你手動去重寫 B1 的內容。`},{id:`declarative-rendering`,category:`vue-core`,en:`Declarative Rendering`,zh:`宣告式渲染`,phonetic:`/dɪˈklærətɪv ˈrɛndərɪŋ/`,pinyin:`地-克賴-惹-替夫 潤-德-令`,definition:`相對於傳統命令式 (Imperative) 操作（如 document.getElementById），宣告式只專注描述「最終畫面應該長成什麼樣」，具體如何操作底層 DOM、如何比對差異，全交由框架引擎處理。`,analogy:`【餐廳點餐 vs 親自下廚】—— 命令式就像走進廚房一步一步指示：開火、倒油、炒菜；而宣告式就像直接跟服務生點單「我要一份牛肉麵」，廚房會自動為你做好呈上來。`},{id:`single-file-component`,category:`vue-core`,en:`Single File Component (SFC)`,zh:`單文件組件 (.vue 檔)`,phonetic:`/ˈsɪŋɡl faɪl kəmˈpoʊnənt/`,pinyin:`辛-狗 伐-偶 肯-剖-能特`,definition:`Vue 特有的檔案組織格式（副檔名為 .vue），在同一個檔案內封裝了結構 (<template>)、邏輯 (<script>) 與專屬樣式 (<style scoped>)，實現高內聚的組件模組化開發。`,analogy:`【獨立封裝的樂高功能積木】—— 每一塊積木自己內部就自帶了骨架、電路開關與外觀顏色，直接插上主機就能運作，彼此互不干擾。`},{id:`composition-api`,category:`vue-core`,en:`Composition API`,zh:`組合式 API`,phonetic:`/ˌkɒmpəˈzɪʃn eɪ-piː-aɪ/`,pinyin:`康-珀-力-選 A-P-I`,definition:`Vue 3 推出的全新程式碼組織方式，透過 setup() 函式與 ref、reactive 等原語，讓開發者能夠依據「業務功能邏輯」將相關的代碼聚合在一起，取代舊版 Options API 依資料/方法切割導致的上下滾動跳躍痛點。`,analogy:`【按專案分類的檔案夾 vs 按文具種類放的大抽屜】—— 舊版像是所有筆放在一抽屜、所有紙放另一抽屜；組合式 API 則是把同一個客戶的所有文件、合約、發票打包在同一個專案袋，一拿就是完整一套。`},{id:`ref-and-reactive`,category:`vue-core`,en:`Ref & Reactive`,zh:`響應式參考與代理物件`,phonetic:`/rɛf ænd riˈæktɪv/`,pinyin:`瑞夫 安德 瑞-愛克-替夫`,definition:`Vue 3 宣告響應式狀態的兩大核心手段。ref() 接受任何型別並包裝成具備 .value 的物件，在模板中自動解包；reactive() 透過 ES6 Proxy 代理將整個純 JavaScript 物件轉換為深層響應式。`,analogy:`【帶有感測晶片的容器】—— ref 就像把普通數值放進一個智慧感測保溫杯，只要杯子裡的溫度改變，底座的感測器立刻通報大樓中控台。`},{id:`computed-property`,category:`vue-core`,en:`Computed Property`,zh:`計算屬性`,phonetic:`/kəmˈpjuːtɪd ˈprɒpəti/`,pinyin:`肯-偏-替德 普絡-珀-提`,definition:`基於其所依賴的響應式狀態進行計算的屬性。具備快取機制 (Cache)，只有當其依賴的來源狀態改變時才會重新執行運算，多次讀取時直接返回快取結果，效能顯著優於普通方法呼叫。`,analogy:`【收銀機的購物車總計欄】—— 只要購物車裡的商品種類和數量沒變，收銀螢幕上的總金額就一直保持原樣顯示，只有你新增或拿掉一件商品時，螢幕才會瞬間重新加總。`},{id:`watcher`,category:`vue-core`,en:`Watcher (watch / watchEffect)`,zh:`偵聽器 / 副作用監聽`,phonetic:`/ˈwɒtʃər/`,pinyin:`握-特-扯`,definition:`當特定響應式狀態改變時，主動執行自訂回呼函式以產生「副作用 (Side Effects)」的機制，常見於非同步網路請求、寫入 LocalStorage、修改 DOM 或發送日誌。`,analogy:`【大樓火災煙霧偵測器】—— 平常安靜無聲，只要監測到煙霧濃度數值超標，立即自動觸發一連串動作：警報響起、噴灑灑水系統、自動撥號報警。`},{id:`props`,category:`component`,en:`Props (Properties)`,zh:`父傳子屬性`,phonetic:`/prɒps/`,pinyin:`普絡-普斯`,definition:`父組件向子組件由外向內單向傳遞資料的自訂屬性。子組件僅具備唯讀權限，嚴格禁止直接竄改 Prop 數值，以確保單向資料流的可預測性。`,analogy:`【工廠配發給員工的規格工作單】—— 主管 (父層) 指派規格參數給員工 (子組件)，員工只能依照規格執行任務，不能私自塗改工作單上的標準。`},{id:`emits`,category:`component`,en:`Emits (Event Emitter)`,zh:`子傳父事件發射`,phonetic:`/iˈmɪts/`,pinyin:`依-密-次`,definition:`子組件向父組件發出通知的自訂事件通道。當子組件內部發生特定互動（如按鈕點擊、表單送出）時，透過 emit(eventName, payload) 通知父組件並傳遞參數。`,analogy:`【對講機回報頻道】—— 前線人員 (子組件) 發現異常狀況時，按下通話鈕向總指揮中心 (父層) 回報：「報告長官，閥門已開啟！」，由指揮中心決定下一步處置。`},{id:`slot`,category:`component`,en:`Slot`,zh:`組件插槽`,phonetic:`/slɒt/`,pinyin:`斯-絡特`,definition:`Vue 提供的內容分發機制，子組件在模板中以 <slot></slot> 作為佔位出口，允許父組件在呼叫時向其注入自訂的 HTML 片段或子組件，極度適合封裝通用外框。`,analogy:`【相框的留白窗口】—— 相框製造商 (子組件) 負責把木質邊框、壓克力保護板和吊繩做好，中間留空；買相框的人 (父層) 想放風景照、家庭照還是證書都可以自由填入。`},{id:`composable`,category:`component`,en:`Composable`,zh:`組合式函式 / 邏輯封裝`,phonetic:`/kəmˈpoʊzəbl/`,pinyin:`肯-剖-惹-伯`,definition:`在 Vue 3 中封裝具有響應式狀態的獨立功能函式（命名慣例為 useXxx）。相較於舊式 Mixins，具有明確的輸入輸出、無命名衝突且便於單元測試。`,analogy:`【瑞士軍刀的外接擴充模組】—— 想要有溫度計功能就插上 useTemperature，想要有藍牙連線就插上 useBluetooth，隨插即用且完全不會搞混。`},{id:`virtual-dom`,category:`component`,en:`Virtual DOM (VDOM)`,zh:`虛擬 DOM`,phonetic:`/ˈvɜːrtʃuəl dɒm/`,pinyin:`威-秋-偶 滴-歐-姆`,definition:`在記憶體中以輕量純 JavaScript 物件結構模擬真實 HTML DOM 樹的技術。每次狀態變更時，先在記憶體中比對前後差異 (Diffing 演算法)，最後只將真正改變的部分打補丁 (Patch) 到真實 DOM 上。`,analogy:`【室內裝潢設計藍圖】—— 如果你想挪動客廳沙發的位置，不需要直接把真的百公斤沙發搬來搬去試位置；先在平板藍圖上移好位置確定最佳方案，最後工人只需進去搬動一次到位。`},{id:`spa`,category:`router-spa`,en:`Single Page Application (SPA)`,zh:`單頁應用程式`,phonetic:`/ˈsɪŋɡl peɪdʒ ˌæplɪˈkeɪʃn/`,pinyin:`辛-狗 胚-居 愛-普-哩-肯-選`,definition:`一種現代 Web 架構，整座網站僅載入單一 index.html 頁面，後續所有畫面切換皆由 JavaScript 攔截路由並動態局部抽換內容，瀏覽器不觸發整頁重新整理，提供如原生桌面 App 般絲滑的操作體驗。`,analogy:`【現代投影片簡報播放器 vs 傳統每看一頁就換一本新書】—— 整個演講都在同一個螢幕前進行，切換章節時只是簡報頁面平滑淡入淡出，不需要把整個演講廳拆掉重蓋。`},{id:`iframe-architecture`,category:`router-spa`,en:`Iframe Architecture`,zh:`Iframe 巢狀導航架構 (傳統舊架構)`,phonetic:`/ˈaɪfreɪm ˈɑːrkɪtɛktʃər/`,pinyin:`愛-服-瑞姆 阿-客-替克-扯`,definition:`傳統後台常見做法，外框 index.html 內嵌 <iframe> 標籤加載各子頁面。其致命缺點包括：阻斷 RWD 媒體查詢響應、子頁無法感知外部視窗尺寸、跨頁通信被迫使用 window.parent 形成高耦合技術債。`,analogy:`【在潛水艇內部架設電視機看外景】—— 電視機 (iframe) 裡面的畫面完全不知道潛水艇外部的真實天氣與水壓，彼此隔著一道厚牆，傳遞信號極度困難且笨重。`},{id:`hash-history`,category:`router-spa`,en:`Hash History (createWebHashHistory)`,zh:`雜湊路由模式`,phonetic:`/hæʃ ˈhɪstri/`,pinyin:`海-許 希-斯-翠`,definition:`利用 URL 中 # 符號（井字號錨點）實現前端路由的方式。# 後方的路徑改變不會被瀏覽器發送至後端 Web 伺服器，因此在沒有設定 SPA Rewrite 規則的舊式伺服器環境中，頁面刷新絕對不會拋出 404 錯誤。`,analogy:`【百科全書的書籤夾頁】—— 你在同一本書第 50 頁夾了「#設備」書籤，只是給讀者自己眼睛看跳到哪一章，不需要跑去圖書館櫃檯重新登記換借一本新書。`},{id:`navigation-guard`,category:`router-spa`,en:`Navigation Guard (beforeEach)`,zh:`路由導航守衛`,phonetic:`/ˌnævɪˈɡeɪʃn ɡɑːrd/`,pinyin:`奈-維-給-選 尬-爾-德`,definition:`Vue Router 提供的全域/路由級攔截鉤子。在每次路由跳轉發生前進行前置檢查，若未登入或無權限，可立即攔截並轉址至登入頁面，同時記錄原始目標路由以便登入後精準還原。`,analogy:`【高鐵月台剪票閘門】—— 乘客想要走到月台 (目標頁面)，閘門 (beforeEach) 會先掃描車票憑證 (Token)，有票放行；沒票自動引導至補票售票處 (登入頁)。`},{id:`pinia`,category:`state-api`,en:`Pinia (State Management)`,zh:`Pinia 全局狀態管理庫`,phonetic:`/piˈnjɑː/`,pinyin:`皮-尼-亞`,definition:`Vue 官方推薦的現代狀態管理庫，取代舊版 Vuex。專門存放跨組件、跨頁面需要共享的全局資料（如使用者 Token、個人權限、即時設備清單），支援 TypeScript 自動推導且結構極度簡潔。`,analogy:`【社區管理委員會的中央公告欄】—— 誰當選主委、目前停水停電通知都在中控公布欄更新，各棟住戶打開門看一眼就知道最新狀況，不用一家一家敲門傳話。`},{id:`interceptor`,category:`state-api`,en:`Axios Interceptor`,zh:`HTTP 請求/回應攔截器`,phonetic:`/ˌɪntərˈsɛptər/`,pinyin:`硬-特-誰-普-特`,definition:`在 HTTP 請求送出前 (Request) 或收到後端回應後 (Response) 預先進行全域處理的管道。常見用途包括：自動在請求頭補上 Authorization Token、統一攔截 401 憑證過期並強制登出、統一過濾錯誤格式。`,analogy:`【國際機場的海關與安檢通道】—— 出境時 (Request) 安檢員檢查所有人護照並蓋核准章；入境時 (Response) 檢查行李，發現違禁品立即沒收遣返。`},{id:`mock-mode`,category:`state-api`,en:`Mock Mode`,zh:`模擬假資料開發模式`,phonetic:`/mɒk moʊd/`,pinyin:`莫-克 某-德`,definition:`在後端 API 尚未開發完成或現場硬體設備無法連線時，前端在本地端透過模擬資料結構進行介面開發與互動驗證的工程化機制。藉由環境變數開關切換，上線時無痛接入真實 API。`,analogy:`【飛行員的地面座艙模擬器】—— 不必冒險把真的飛機開上天，在地面模擬器中就能把起飛、降落、遭遇亂流的儀表板操作訓練得滾瓜爛熟。`},{id:`websocket-stomp`,category:`state-api`,en:`WebSocket & STOMP`,zh:`全雙工長連線與訊息發布訂閱協定`,phonetic:`/ˈwɛbˌsɒkɪt stɒmp/`,pinyin:`網-巴-克特 斯-燙-普`,definition:`WebSocket 建立客戶端與伺服器之間的 TCP 長連線雙向管道；STOMP 則是運行於其上的文字導向訊息協定，提供如 /topic/xxx 的標準「發布/訂閱 (Pub/Sub)」機制，實現感測器數值的秒級即時推播。`,analogy:`【警用無線電廣播頻道】—— 基地台與警車保持全天候連線通話，指揮中心一發布特定頻道的廣播，所有收聽該頻道的員警耳機瞬間同時收到最新指令。`},{id:`strangler-pattern`,category:`architecture`,en:`Strangler Pattern`,zh:`絞殺者架構遷移模式`,phonetic:`/ˈstræŋɡlər ˈpætərn/`,pinyin:`斯-寸-格-勒 拍-騰`,definition:`經典的系統現代化改造架構模式。不推翻重寫既有營運中的舊系統，而是建立新系統與舊系統「並存」運作，透過抽出共用 API、逐步將頁面由舊轉新，最終如同絞殺藤纏繞古樹般無痛替換完成。`,analogy:`【行駛中的火車在軌道上逐節更換現代化車廂】—— 火車保持穩定前進不耽誤旅客行程，工程團隊趁停靠站時一節一節更換成高鐵車廂，不知不覺中整列車換新完畢。`},{id:`design-tokens`,category:`architecture`,en:`Design Tokens (CSS Variables)`,zh:`設計代碼 / 設計變數體系`,phonetic:`/dɪˈzaɪn ˈtoʊkənz/`,pinyin:`地-賽 偷-肯-斯`,definition:`將介面設計規範中的原子化屬性（顏色、字級、圓角、間距）抽象為標準變數（如 --primary, --surface-bg）。系統只需切換最頂層的變數值，全站所有元件即可自動切換多品牌或深淺色主題。`,analogy:`【連鎖便利商店的企業識別手冊 (CIS)】—— 定義好標準色號代碼，全台幾千家分店的招牌、制服、宣傳單只要套用該代碼，改色時只需總部改一份參數。`},{id:`mobile-first`,category:`architecture`,en:`Mobile-First Design`,zh:`行動端優先設計`,phonetic:`/ˈmoʊbl fɜːrst dɪˈzaɪn/`,pinyin:`某-波 佛-斯特 地-賽`,definition:`一種由小螢幕向大螢幕漸進增強的介面設計思維。優先考量行動裝置上的拇指觸控熱區 (最小 44x44px)、防止 iOS 自動放大的輸入框字級 (>=16px)、以及瀏海/底線的安全區 (safe-area-inset)。`,analogy:`【先設計瑞士刀隨身工具，再擴充為整套維修工具箱】—— 確保在最極端受限的手機掌中環境依然順手可用，放到大桌面上只會更游刃有餘。`},{id:`pwa-service-worker`,category:`architecture`,en:`PWA (Progressive Web App)`,zh:`漸進式網頁應用`,phonetic:`/proʊˈɡrɛsɪv wɛb æp/`,pinyin:`普絡-貴-西夫 網-愛普`,definition:`利用現代瀏覽器技術讓 Web 網頁具備類似原生 App 體驗的一系列標準。包含可新增至桌面圖示 (Manifest) 與離線資源快取 (Service Worker)，但在瀏覽器資安限制下，必須在 HTTPS 安全上下文環境方能完全啟用。`,analogy:`【自備離線急救包與專屬通行證的網頁】—— 只要拜訪過一次，急救物資就放在背包 (快取)，就算走到沒有手機信號的地下室，依然能拿出地圖離線查看。`}],JS={class:`glossary-container`},YS={class:`glossary-header`},XS={class:`header-main-row`},ZS={class:`glossary-brand`},QS={class:`search-control-bar`},$S={class:`search-input-wrap`},eC={class:`cat-nav-pills`},tC=[`onClick`],nC={class:`cat-badge`},rC={class:`terms-viewport`},iC={class:`terms-grid`},aC={class:`term-header`},oC={class:`term-name-group`},sC={class:`term-en`},cC={class:`term-zh`},lC=[`onClick`,`title`],uC={class:`pronunciation-bar`},dC={class:`phonetic-code`},fC={class:`pinyin-text`},pC={class:`term-section`},mC={class:`section-text definition-text`},hC={class:`term-section analogy-box`},gC={class:`section-text analogy-text`},_C={key:0,class:`empty-results`},vC=cx({__name:`GlossaryView`,emits:[`close`],setup(e,{emit:t}){let n=t,r=j(``),i=j(`all`),a=j(null),o=typeof window<`u`&&`speechSynthesis`in window,s=e=>{if(!o)return;window.speechSynthesis.cancel();let t=new SpeechSynthesisUtterance(e);t.lang=`en-US`,t.rate=.9,t.onstart=()=>{a.value=e},t.onend=()=>{a.value=null},t.onerror=()=>{a.value=null},window.speechSynthesis.speak(t)},c=()=>{o&&(window.speechSynthesis.cancel(),a.value=null)};Tr(()=>{o&&window.speechSynthesis.cancel()});let l=R(()=>{let e=r.value.trim().toLowerCase();return qS.filter(t=>i.value!==`all`&&t.category!==i.value?!1:!e||t.en.toLowerCase().includes(e)||t.zh.toLowerCase().includes(e)||t.pinyin.toLowerCase().includes(e)||t.definition.toLowerCase().includes(e)||t.analogy.toLowerCase().includes(e))}),u=e=>e===`all`?qS.length:qS.filter(t=>t.category===e).length;return(e,t)=>(P(),F(`div`,JS,[I(`header`,YS,[I(`div`,XS,[I(`div`,ZS,[L(M(os),{size:22,class:`brand-icon`}),t[2]||=I(`div`,{class:`brand-titles`},[I(`h2`,{class:`glossary-title`},`前端與系統架構專業名詞字典`),I(`span`,{class:`glossary-subtitle`},`附真人發音、軟工核心定義與白話生活比喻`)],-1)]),I(`button`,{class:`close-glossary-btn`,onClick:t[0]||=e=>n(`close`),title:`返回課程學習`},[L(M(Ks),{size:18}),t[3]||=I(`span`,null,`返回課程`,-1)])]),I(`div`,QS,[I(`div`,$S,[L(M(Is),{size:16,class:`search-icon`}),Nn(I(`input`,{type:`search`,"onUpdate:modelValue":t[1]||=e=>r.value=e,placeholder:`搜尋英文術語、中文意義或比喻關鍵字...`,class:`search-input`},null,512),[[Io,r.value]])]),a.value?(P(),F(`button`,{key:0,class:`stop-tts-btn`,onClick:c,title:`停止當前語音朗讀`},[L(M(Ws),{size:15}),t[4]||=I(`span`,null,`停止朗讀`,-1)])):ma(``,!0)]),I(`nav`,eC,[(P(!0),F(N,null,Fr(M(KS),e=>(P(),F(`button`,{key:e.id,class:E([`cat-pill`,{active:i.value===e.id}]),onClick:t=>i.value=e.id},[I(`span`,null,D(e.name),1),I(`span`,nC,D(u(e.id)),1)],10,tC))),128))])]),I(`main`,rC,[I(`div`,iC,[(P(!0),F(N,null,Fr(l.value,e=>(P(),F(`article`,{key:e.id,class:`term-card`},[I(`div`,aC,[I(`div`,oC,[I(`h3`,sC,D(e.en),1),I(`span`,cC,D(e.zh),1)]),I(`button`,{class:E([`speak-btn`,{"is-speaking":a.value===e.en}]),onClick:t=>s(e.en),title:`朗讀 `+e.en+` 發音`},[L(M(Us),{size:16}),t[5]||=I(`span`,{class:`speak-label`},`發音`,-1)],10,lC)]),I(`div`,uC,[t[6]||=I(`span`,{class:`tag-label`},`發音`,-1),I(`code`,dC,D(e.phonetic),1),I(`span`,fC,`(`+D(e.pinyin)+`)`,1)]),I(`div`,pC,[t[7]||=I(`div`,{class:`section-label-row`},[I(`span`,{class:`section-badge badge-definition`},`軟工意義`)],-1),I(`p`,mC,D(e.definition),1)]),I(`div`,hC,[t[8]||=I(`div`,{class:`section-label-row`},[I(`span`,{class:`section-badge badge-analogy`},`通俗比喻`)],-1),I(`p`,gC,D(e.analogy),1)])]))),128))]),l.value.length===0?(P(),F(`div`,_C,[I(`p`,null,`查無符合「`+D(r.value)+`」的專業術語，請嘗試其他關鍵字。`,1)])):ma(``,!0)])]))}},[[`__scopeId`,`data-v-85c943e3`]]),yC={class:`welcome-container`},bC={class:`welcome-hero`},xC={class:`hero-badge`},SC={class:`hero-actions`},CC={class:`info-section`},wC={class:`pipeline-grid`},TC={class:`pipeline-step`},EC={class:`step-icon-wrap icon-code`},DC={class:`pipeline-arrow`},OC={class:`pipeline-step`},kC={class:`step-icon-wrap icon-parse`},AC={class:`pipeline-arrow`},jC={class:`pipeline-step`},MC={class:`step-icon-wrap icon-paint`},NC={class:`pipeline-arrow`},PC={class:`pipeline-step`},FC={class:`step-icon-wrap icon-engine`},IC={class:`info-section`},LC={class:`roles-cards-grid`},RC={class:`role-card-top`},zC={class:`role-icon-box`},BC={class:`role-footer-action`},VC={class:`role-card-top`},HC={class:`role-icon-box`},UC={class:`role-footer-action`},WC={class:`role-card-top`},GC={class:`role-icon-box`},KC={class:`role-footer-action`},qC={class:`role-card-top`},JC={class:`role-icon-box`},YC={class:`role-footer-action`},XC={class:`info-section interactive-demo-section`},ZC={class:`interactive-sandbox`},QC={class:`sandbox-controls`},$C={class:`control-toggle`},ew={class:`toggle-name`},tw={class:`control-toggle`},nw=[`disabled`],rw={class:`toggle-name`},iw={class:`control-toggle`},aw=[`disabled`],ow={class:`toggle-name`},sw={class:`sandbox-stage`},cw={key:0,class:`empty-stage-state`},lw={key:1,class:`raw-html-preview`},uw={key:2,class:`styled-preview-card`},dw={class:`preview-card-body`},fw={class:`preview-counter-display`},pw={class:`counter-val-wrap`},mw={class:`counter-num`},hw={class:`preview-card-footer`},gw={class:`welcome-cta`},_w={class:`cta-inner`},vw={class:`cta-buttons`},yw=cx({__name:`WelcomeView`,emits:[`start-track`,`open-lessons`],setup(e,{emit:t}){let n=t,r=j(!0),i=j(!0),a=j(!0),o=j(10),s=()=>{a.value&&(o.value+=5)},c=()=>{a.value&&(o.value=0)};return(e,t)=>(P(),F(`div`,yC,[I(`section`,bC,[I(`div`,xC,[L(M(Rs),{size:14,class:`badge-icon`}),t[11]||=I(`span`,null,`新手前端導引入門`,-1)]),t[14]||=I(`h1`,{class:`hero-title`},`如何寫出你的第一個網站？`,-1),t[15]||=I(`p`,{class:`hero-subtitle`},` 拋開艱澀的技術術語。用最清晰直觀的方式，搞懂網頁在瀏覽器裡的運作原理，以及 HTML、CSS、JavaScript 與 Vue 如何協力打造現代網路世界！ `,-1),I(`div`,SC,[I(`button`,{class:`primary-action-btn`,onClick:t[0]||=e=>n(`start-track`,`vue`)},[L(M(Ns),{size:16}),t[12]||=I(`span`,null,`直接進入 Vue 3 實戰課程`,-1)]),I(`button`,{class:`secondary-action-btn`,onClick:t[1]||=e=>n(`start-track`,`html`)},[L(M(os),{size:16}),t[13]||=I(`span`,null,`從 HTML 基礎開始打底`,-1)])])]),I(`section`,CC,[t[28]||=I(`div`,{class:`section-header`},[I(`div`,{class:`section-tag`},`核心底層觀念`),I(`h2`,{class:`section-title`},`1. 網頁是怎麼在瀏覽器跑起來的？`),I(`p`,{class:`section-desc`},` 你在電腦上寫的網頁，本質上只是純文字檔案。瀏覽器就像一位技藝高超的建築師，負責將這些文字轉譯成你在螢幕上看到的豐富畫面。 `)],-1),I(`div`,wC,[I(`div`,TC,[t[16]||=I(`div`,{class:`step-num`},`01`,-1),I(`div`,EC,[L(M(ws),{size:24})]),t[17]||=I(`h3`,{class:`step-title`},`撰寫文字源碼`,-1),t[18]||=I(`p`,{class:`step-desc`},[fa(` 工程師使用編輯器，編寫以 `),I(`code`,null,`.html`),fa(`、`),I(`code`,null,`.css`),fa(`、`),I(`code`,null,`.js`),fa(` 為結尾的純文字檔案。 `)],-1)]),I(`div`,DC,[L(M(as),{size:20})]),I(`div`,OC,[t[19]||=I(`div`,{class:`step-num`},`02`,-1),I(`div`,kC,[L(M(Es),{size:24})]),t[20]||=I(`h3`,{class:`step-title`},`瀏覽器解析結構`,-1),t[21]||=I(`p`,{class:`step-desc`},` 瀏覽器讀入 HTML 生成骨架（DOM 樹），讀入 CSS 建立樣式規則（CSSOM 樹），並將兩者合成為渲染樹。 `,-1)]),I(`div`,AC,[L(M(as),{size:20})]),I(`div`,jC,[t[22]||=I(`div`,{class:`step-num`},`03`,-1),I(`div`,MC,[L(M(As),{size:24})]),t[23]||=I(`h3`,{class:`step-title`},`排版與繪製畫面`,-1),t[24]||=I(`p`,{class:`step-desc`},` 計算每個元素在螢幕上的精確座標與幾何尺寸（Layout），最後把顏色、文字與陰影逐像素繪製出來（Paint）。 `,-1)]),I(`div`,NC,[L(M(as),{size:20})]),I(`div`,PC,[t[25]||=I(`div`,{class:`step-num`},`04`,-1),I(`div`,FC,[L(M(xs),{size:24})]),t[26]||=I(`h3`,{class:`step-title`},`JavaScript 注入靈魂`,-1),t[27]||=I(`p`,{class:`step-desc`},` JS 引擎隨時待命，當使用者點擊按鈕、輸入文字或滾動滑鼠時，即時更新資料並重新驅動畫面變換！ `,-1)])])]),I(`section`,IC,[t[49]||=I(`div`,{class:`section-header`},[I(`div`,{class:`section-tag`},`分工與定位`),I(`h2`,{class:`section-title`},`2. 前端四劍客各自在做什麼？`),I(`p`,{class:`section-desc`},` 如果把建立一個網站比喻成「建造一棟現代智慧住宅」，那麼四套技術的分工一目了然： `)],-1),I(`div`,LC,[I(`div`,{class:`role-card card-html`,onClick:t[2]||=e=>n(`start-track`,`html`)},[I(`div`,RC,[I(`div`,zC,[L(M(ws),{size:22})]),t[29]||=I(`span`,{class:`role-sublabel`},`骨架與磚瓦`,-1)]),t[31]||=I(`h3`,{class:`role-name`},`HTML`,-1),t[32]||=I(`div`,{class:`role-metaphor`},`負責定義網頁「有什麼內容」`,-1),t[33]||=I(`p`,{class:`role-body`},[fa(` 負責建立房屋的樑柱、隔間與樓層。在網頁中用來標註文章標題（`),I(`code`,null,`h1`),fa(`）、段落文字（`),I(`code`,null,`p`),fa(`）、按鈕（`),I(`code`,null,`button`),fa(`）與表單輸入欄位。 `)],-1),I(`div`,BC,[t[30]||=I(`span`,null,`探索 HTML 專題 (5 單元)`,-1),L(M(as),{size:14})])]),I(`div`,{class:`role-card card-css`,onClick:t[3]||=e=>n(`start-track`,`css`)},[I(`div`,VC,[I(`div`,HC,[L(M(Ms),{size:22})]),t[34]||=I(`span`,{class:`role-sublabel`},`裝潢與外觀`,-1)]),t[36]||=I(`h3`,{class:`role-name`},`CSS`,-1),t[37]||=I(`div`,{class:`role-metaphor`},`負責定義網頁「長什麼模樣」`,-1),t[38]||=I(`p`,{class:`role-body`},` 負責房間的粉刷配色、壁紙挑選、採光與家具擺放排版（Flexbox 與 Grid）。讓網頁不只美觀，還能自動適應手機與電腦螢幕（RWD 響應式）。 `,-1),I(`div`,UC,[t[35]||=I(`span`,null,`探索 CSS 專題 (7 單元)`,-1),L(M(as),{size:14})])]),I(`div`,{class:`role-card card-js`,onClick:t[4]||=e=>n(`start-track`,`javascript`)},[I(`div`,WC,[I(`div`,GC,[L(M(cs),{size:22})]),t[39]||=I(`span`,{class:`role-sublabel`},`水電智慧神經`,-1)]),t[41]||=I(`h3`,{class:`role-name`},`JavaScript`,-1),t[42]||=I(`div`,{class:`role-metaphor`},`負責定義網頁「如何動態互動」`,-1),t[43]||=I(`p`,{class:`role-body`},` 就像房屋裡的智慧開關與水電網絡。點擊電燈會發光、自動感應門會開啟、冷氣會依室溫調整。在網頁中負責處理點擊、算錢、驗證與傳輸資料。 `,-1),I(`div`,KC,[t[40]||=I(`span`,null,`探索 JS 專題 (8 單元)`,-1),L(M(as),{size:14})])]),I(`div`,{class:`role-card card-vue`,onClick:t[5]||=e=>n(`start-track`,`vue`)},[I(`div`,qC,[I(`div`,JC,[L(M(Ds),{size:22})]),t[44]||=I(`span`,{class:`role-sublabel`},`現代工業化引擎`,-1)]),t[46]||=I(`h3`,{class:`role-name`},`Vue 3`,-1),t[47]||=I(`div`,{class:`role-metaphor`},`用「資料驅動」擺脫繁瑣手工操作`,-1),t[48]||=I(`p`,{class:`role-body`},` 傳統 JS 每次資料改變都要手動查找 DOM 節點並逐一修改。Vue 引入「響應式資料 (Reactivity)」：只要狀態變了，畫面自動精密同步更新，是現代大型專案的標準利器！ `,-1),I(`div`,YC,[t[45]||=I(`span`,null,`探索 Vue 3 核心 (27 單元)`,-1),L(M(as),{size:14})])])])]),I(`section`,XC,[t[62]||=I(`div`,{class:`section-header`},[I(`div`,{class:`section-tag`},`動手親身體會`),I(`h2`,{class:`section-title`},`3. 網頁三要素疊加威力演示`),I(`p`,{class:`section-desc`},` 切換下方的開關，親眼觀察「只有骨架」、「加上樣式」以及「賦予動態響應」的畫面演進過程！ `)],-1),I(`div`,ZC,[I(`div`,QC,[I(`label`,$C,[Nn(I(`input`,{type:`checkbox`,"onUpdate:modelValue":t[6]||=e=>r.value=e},null,512),[[Lo,r.value]]),I(`span`,ew,[L(M(ws),{size:15}),t[50]||=fa(` 1. HTML 骨架 `,-1)])]),I(`label`,tw,[Nn(I(`input`,{type:`checkbox`,"onUpdate:modelValue":t[7]||=e=>i.value=e,disabled:!r.value},null,8,nw),[[Lo,i.value]]),I(`span`,rw,[L(M(Ms),{size:15}),t[51]||=fa(` 2. CSS 裝潢樣式 `,-1)])]),I(`label`,iw,[Nn(I(`input`,{type:`checkbox`,"onUpdate:modelValue":t[8]||=e=>a.value=e,disabled:!r.value},null,8,aw),[[Lo,a.value]]),I(`span`,ow,[L(M(qs),{size:15}),t[52]||=fa(` 3. JS / Vue 響應動能 `,-1)])])]),I(`div`,sw,[r.value?i.value?(P(),F(`div`,uw,[t[61]||=I(`div`,{class:`preview-card-header`},[I(`div`,{class:`preview-badge-status`},[I(`span`,{class:`status-dot`}),I(`span`,null,`系統運轉中`)]),I(`span`,{class:`preview-chip`},`現代設計系統`)],-1),I(`div`,dw,[t[59]||=I(`h3`,{class:`preview-title`},`儲能與發電監控儀表`,-1),t[60]||=I(`p`,{class:`preview-desc`},`透過 CSS 彈性排版與漸層配色，將原本單調的文字轉化為極具質感的科技介面。`,-1),I(`div`,fw,[t[58]||=I(`span`,{class:`counter-label`},`即時電力回饋點數`,-1),I(`div`,pw,[I(`span`,mw,D(o.value),1),t[57]||=I(`span`,{class:`counter-unit`},`kW`,-1)])])]),I(`div`,hw,[I(`button`,{class:E([`btn-interactive`,{"is-disabled":!a.value}]),onClick:s},[L(M(qs),{size:15}),I(`span`,null,D(a.value?`點我增加 +5 點（Vue 驅動）`:`JS 未啟動（按鈕無反應）`),1)],2),I(`button`,{class:E([`btn-reset`,{"is-disabled":!a.value}]),onClick:c},` 重設 `,2)])])):(P(),F(`div`,lw,[t[54]||=I(`div`,{class:`raw-note`},`提示：這是只有 HTML 的狀態（無任何 CSS 樣式修飾）`,-1),t[55]||=I(`h1`,null,`設備能源監控卡片`,-1),t[56]||=I(`p`,null,`主機狀態：運轉中 (已連線)`,-1),I(`p`,null,`累計發電功率點數：`+D(o.value)+` 點`,1),I(`button`,{onClick:s},` 點我累積功率 (`+D(a.value?`JS 動態響應有效`:`無 JS，點擊無反應`)+`) `,1),I(`button`,{onClick:c,style:{"margin-left":`5px`}},`歸零`)])):(P(),F(`div`,cw,[L(M(_s),{size:32,class:`empty-icon`}),t[53]||=I(`p`,null,`沒有 HTML，畫面就是一片虛無，不存在任何可見的內容或結構。`,-1)]))])])]),t[67]||=pa(`<section class="info-section" data-v-6c7f1e57><div class="section-header" data-v-6c7f1e57><div class="section-tag" data-v-6c7f1e57>實戰起步路線</div><h2 class="section-title" data-v-6c7f1e57>4. 如何自己動手開始寫網站？</h2><p class="section-desc" data-v-6c7f1e57> 寫網頁的門檻比你想像的還要低！你不需要昂貴的付費軟體，只需要按照以下三步驟即可展開旅程： </p></div><div class="start-steps-grid" data-v-6c7f1e57><div class="start-step-card" data-v-6c7f1e57><div class="step-card-header" data-v-6c7f1e57><span class="step-badge" data-v-6c7f1e57>第一步：最簡單起手式</span><span class="step-tool" data-v-6c7f1e57>零門檻安裝</span></div><h3 class="step-card-title" data-v-6c7f1e57>建立一個 index.html 檔案</h3><p class="step-card-body" data-v-6c7f1e57> 在電腦桌面建立一個純文字檔案，將檔名改為 <code data-v-6c7f1e57>index.html</code>。用記事本打開，貼上一段 <code data-v-6c7f1e57>&lt;h1&gt;哈囉世界&lt;/h1&gt;</code>，存檔後對著它雙擊滑鼠左鍵，瀏覽器就會立刻為你打開第一個網頁！ </p></div><div class="start-step-card" data-v-6c7f1e57><div class="step-card-header" data-v-6c7f1e57><span class="step-badge" data-v-6c7f1e57>第二步：工欲善其事</span><span class="step-tool" data-v-6c7f1e57>標準工程工具</span></div><h3 class="step-card-title" data-v-6c7f1e57>下載 VS Code 專業編輯器</h3><p class="step-card-body" data-v-6c7f1e57> 前往微軟官方下載免費的 <strong data-v-6c7f1e57>VS Code</strong> 編輯器，並安裝 <strong data-v-6c7f1e57>Live Server</strong> 擴充套件。它能讓你每次儲存代碼時，瀏覽器自動即時重新整理，體驗流暢的寫代碼節奏！ </p></div><div class="start-step-card" data-v-6c7f1e57><div class="step-card-header" data-v-6c7f1e57><span class="step-badge" data-v-6c7f1e57>第三步：邁向現代化</span><span class="step-tool" data-v-6c7f1e57>企業級標準</span></div><h3 class="step-card-title" data-v-6c7f1e57>安裝 Node.js 與啟動 Vite + Vue 3</h3><p class="step-card-body" data-v-6c7f1e57> 下載 Node.js LTS 穩定版，在終端機輸入 <code data-v-6c7f1e57>npm create vite@latest my-app -- --template vue</code>，你就擁有了包含熱重載（Hot Reload）、組件化與最新打包工具的現代化專業前端環境！ </p></div></div></section>`,1),I(`section`,gw,[I(`div`,_w,[t[65]||=I(`h2`,{class:`cta-title`},`準備好開啟你的前端學習之旅了嗎？`,-1),t[66]||=I(`p`,{class:`cta-desc`},` 本平台提供完整的「左側觀念文檔 + 右側即時互動代碼演練台 (Live Playground)」，無須在本機安裝任何環境，在瀏覽器裡就能邊看邊寫邊出結果！ `,-1),I(`div`,vw,[I(`button`,{class:`cta-btn cta-btn-vue`,onClick:t[9]||=e=>n(`start-track`,`vue`)},[L(M(Ds),{size:18}),t[63]||=I(`span`,null,`前往 Vue 3 實戰課程 (27 單元)`,-1)]),I(`button`,{class:`cta-btn cta-btn-base`,onClick:t[10]||=e=>n(`start-track`,`html`)},[L(M(ws),{size:18}),t[64]||=I(`span`,null,`先修基礎：HTML (5) / CSS (7) / JS (8)`,-1)])])])])]))}},[[`__scopeId`,`data-v-6c7f1e57`]]),bw=[{id:`html-01-structure`,category:`HTML 核心專題篇`,title:`HTML 01. 網頁標準骨架與 DOM 樹建構觀念`,summary:`從 DOCTYPE 到 body，全面理解 HTML 文件的底層骨架，以及瀏覽器如何將標籤解析為記憶體中的 DOM 樹狀結構。`,readTime:`7 分鐘`,concept:`
+  `;i.value.srcdoc=e};zn(()=>n.lessonId,e=>{if(!e)return;let t=localStorage.getItem(`vue-study-code-${e}`);t?r.value=t:r.value=n.starterCode,u.value=!1,c.value=null,s.value=[],bn(()=>{w()})},{immediate:!0});let te=null,ne=()=>{localStorage.setItem(`vue-study-code-${n.lessonId}`,r.value),d.value&&(clearTimeout(te),te=setTimeout(()=>{w()},450))},T=e=>{if(e.key===`Tab`){e.preventDefault();let t=e.target,n=t.selectionStart,i=t.selectionEnd;r.value=r.value.substring(0,n)+`  `+r.value.substring(i),setTimeout(()=>{t.selectionStart=t.selectionEnd=n+2,ne()},0)}},re=e=>{e.data&&(e.data.type===`SANDBOX_ERROR`?c.value=e.data.message:e.data.type===`SANDBOX_LOG`&&s.value.push(e.data.content))};xr(()=>{window.addEventListener(`message`,re),h(),window.addEventListener(`resize`,h),w()}),Tr(()=>{window.removeEventListener(`message`,re),window.removeEventListener(`resize`,h),document.body.style.overflow=``});let ie=()=>{r.value=n.starterCode,localStorage.removeItem(`vue-study-code-${n.lessonId}`),u.value=!1,w()},ae=()=>{r.value=n.solutionCode,u.value=!0,w()},oe=async()=>{try{await navigator.clipboard.writeText(r.value),l.value=!0,setTimeout(()=>{l.value=!1},2e3)}catch(e){console.error(`複製失敗`,e)}};return(e,t)=>(P(),F(`div`,{class:E([`interactive-panel`,`view-${v.value}`])},[I(`div`,hS,[I(`div`,gS,[I(`button`,{class:E([`mode-pill-btn`,{"is-active":v.value===`editor`}]),onClick:t[0]||=e=>v.value=`editor`,title:`全螢幕專注編輯代碼`},[L(M(_s),{size:13}),t[9]||=I(`span`,null,`程式碼`,-1)],2),I(`button`,{class:E([`mode-pill-btn`,{"is-active":v.value===`output`}]),onClick:t[1]||=e=>v.value=`output`,title:`全螢幕預覽執行成果`},[L(M(Cs),{size:13}),t[10]||=I(`span`,null,`預覽畫面`,-1)],2),I(`button`,{class:E([`mode-pill-btn desktop-only`,{"is-active":v.value===`split`}]),onClick:t[2]||=e=>v.value=`split`,title:`上下並排對照`},[L(M(vs),{size:13}),t[11]||=I(`span`,null,`並排檢視`,-1)],2)]),I(`div`,_S,[I(`button`,{class:`icon-tool-btn`,onClick:x,title:`縮小代碼字體`},[L(M(Ys),{size:13})]),I(`span`,vS,D(y.value)+`px`,1),I(`button`,{class:`icon-tool-btn`,onClick:b,title:`放大代碼字體`},[L(M(Js),{size:13})])])]),Nn(I(`div`,yS,[I(`div`,bS,[t[13]||=I(`div`,{class:`panel-title-wrap`},[I(`span`,{class:`pulse-dot`}),I(`h3`,{class:`panel-title`},`即時輸出 (Live output)`)],-1),I(`div`,xS,[I(`button`,{class:`run-play-btn`,onClick:w,title:`手動重新執行程式碼`},[L(M(Ns),{size:13,fill:`currentColor`}),t[12]||=I(`span`,null,`執行 (Play)`,-1)])])]),c.value?(P(),F(`div`,SS,[L(M(ps),{size:15,class:`err-icon`}),I(`span`,CS,`執行時錯誤：`+D(c.value),1)])):ma(``,!0),I(`div`,wS,[I(`iframe`,{ref_key:`iframeRef`,ref:i,class:`sandbox-iframe`,sandbox:`allow-scripts`},null,512)]),s.value.length?(P(),F(`div`,TS,[I(`div`,{class:`console-drawer-header`,onClick:t[3]||=e=>f.value=!f.value},[I(`div`,ES,[L(M(Vs),{size:13}),I(`span`,null,`Console 輸出 (`+D(s.value.length)+`)`,1)]),f.value?(P(),ia(M(us),{key:0,size:14})):(P(),ia(M(fs),{key:1,size:14}))]),f.value?(P(),F(`div`,DS,[(P(!0),F(N,null,Fr(s.value,(e,t)=>(P(),F(`div`,{key:t,class:`console-line`},` > `+D(e),1))),128))])):ma(``,!0)])):ma(``,!0)],512),[[eo,v.value===`output`||v.value===`split`]]),Nn(I(`div`,OS,[I(`div`,kS,[t[17]||=I(`div`,{class:`panel-title-wrap`},[I(`h3`,{class:`panel-title`},`程式碼編輯區`),I(`span`,{class:`editor-hint-badge`},`Vue 3 + HTML`)],-1),I(`div`,AS,[I(`label`,jS,[Nn(I(`input`,{type:`checkbox`,"onUpdate:modelValue":t[4]||=e=>d.value=e},null,512),[[Lo,d.value]]),t[14]||=I(`span`,null,`即時預覽`,-1)]),I(`button`,{class:`tool-btn`,onClick:oe,title:l.value?`已複製！`:`複製代碼`},[l.value?(P(),ia(M(ls),{key:0,size:13,class:`copy-success`})):(P(),ia(M(bs),{key:1,size:13}))],8,MS),I(`button`,{class:`tool-btn`,onClick:ie,title:`重置為初始題目`},[L(M(Fs),{size:13}),t[15]||=I(`span`,null,`Reset`,-1)]),I(`button`,{class:`tool-btn solution-btn`,onClick:ae,title:`查看並直接套用參考解答`},[L(M(Rs),{size:13}),t[16]||=I(`span`,null,`套用解答`,-1)])])]),Nn(I(`div`,NS,[I(`div`,PS,[(P(),F(N,null,Fr(C,(e,t)=>I(`button`,{key:t,class:`symbol-chip`,onMousedown:Uo(t=>ee(e,t),[`prevent`]),onTouchstart:Uo(t=>ee(e,t),[`prevent`])},D(e.label),41,FS)),64))])],512),[[eo,!p.value||m.value]]),I(`div`,{class:`editor-wrapper`,style:pe({fontSize:`${y.value}px`})},[I(`div`,IS,[(P(!0),F(N,null,Fr(S.value,e=>(P(),F(`span`,{key:e,class:`gutter-num`},D(e),1))),128))]),Nn(I(`textarea`,{ref_key:`textareaRef`,ref:a,class:`code-textarea font-mono`,"onUpdate:modelValue":t[5]||=e=>r.value=e,onInput:ne,onKeydown:T,spellcheck:`false`,readonly:p.value&&!m.value,placeholder:`在此輸入 Vue 與 HTML 程式碼...`},null,40,LS),[[Io,r.value]]),p.value&&!m.value?(P(),F(`div`,{key:0,class:`mobile-edit-overlay`,onClick:g},[I(`div`,RS,[L(M(_s),{size:18}),t[18]||=I(`span`,null,`點擊此處開始編輯程式碼`,-1)])])):ma(``,!0)],4),u.value?(P(),F(`div`,zS,[...t[19]||=[I(`span`,null,[fa(`已載入參考解答，您可以點擊 `),I(`strong`,null,`Reset`),fa(` 重新自己挑戰！`)],-1)]])):ma(``,!0)],512),[[eo,v.value===`editor`||v.value===`split`]]),(P(),ia(er,{to:`body`},[m.value?(P(),F(`div`,BS,[I(`div`,{class:`mobile-fs-toolbar`},[t[20]||=I(`div`,{class:`mobile-fs-toolbar-left`},[I(`span`,{class:`mobile-fs-title`},`全螢幕編輯模式`)],-1),I(`div`,{class:`mobile-fs-toolbar-right`},[I(`button`,{class:`mobile-fs-done-btn`,onClick:_},` 完成編輯 `)])]),I(`div`,VS,[I(`div`,HS,[(P(),F(N,null,Fr(C,(e,t)=>I(`button`,{key:t,class:`symbol-chip`,onMousedown:Uo(t=>ee(e,t),[`prevent`]),onTouchstart:Uo(t=>ee(e,t),[`prevent`])},D(e.label),41,US)),64))])]),I(`div`,{class:`mobile-fs-editor-wrapper`,style:pe({fontSize:`${y.value}px`})},[I(`div`,WS,[(P(!0),F(N,null,Fr(S.value,e=>(P(),F(`span`,{key:e,class:`gutter-num`},D(e),1))),128))]),Nn(I(`textarea`,{ref_key:`mobileTextareaRef`,ref:o,class:`code-textarea font-mono`,"onUpdate:modelValue":t[6]||=e=>r.value=e,onInput:ne,onKeydown:T,spellcheck:`false`,placeholder:`在此輸入 Vue 與 HTML 程式碼...`},null,544),[[Io,r.value]])],4)])):ma(``,!0)])),v.value===`editor`?(P(),F(`button`,{key:0,class:`floating-view-toggle`,onClick:t[7]||=e=>v.value=`output`,title:`查看執行成果`},[L(M(Cs),{size:15}),t[21]||=I(`span`,null,`查看成果 →`,-1)])):v.value===`output`?(P(),F(`button`,{key:1,class:`floating-view-toggle`,onClick:t[8]||=e=>v.value=`editor`,title:`返回修改代碼`},[L(M(_s),{size:15}),t[22]||=I(`span`,null,`繼續改代碼 →`,-1)])):ma(``,!0)],2))}},[[`__scopeId`,`data-v-83e0bbd8`]]),KS=[{id:`all`,name:`全部術語條目`},{id:`tools-ecosystem`,name:`常用工具庫與樣式生態`},{id:`vue-core`,name:`Vue 3 核心語法與響應式`},{id:`component`,name:`組件化設計與通訊`},{id:`router-spa`,name:`單頁應用 (SPA) 與路由`},{id:`state-api`,name:`狀態管理與網路請求`},{id:`architecture`,name:`架構演進與工程化實戰`}],qS=[{id:`jquery`,category:`tools-ecosystem`,en:`jQuery`,zh:`jQuery (傳統 DOM 操作霸主)`,phonetic:`/ˈdʒeɪkwɪəri/`,pinyin:`勾-扣-瑞`,definition:`於 2006 年發布的革命性 JavaScript 工具函式庫，以「$」符號與鏈式調用聞名。透過封裝跨瀏覽器相容性，極大簡化了 HTML DOM 操作、事件監聽與 Ajax 網路通訊。然而因其依賴「命令式手動抓取並修改 DOM」，在現代以「狀態驅動視圖」為核心的 Vue 時代已退居幕後，是舊系統現代化重構時最關鍵的替換標的。`,analogy:`【手動到每盞燈前撥動開關 vs 智慧家庭中控面板】—— 以前要讓客廳燈亮，得拿梯子去每一盞燈手動開關 (jQuery 手動抓 DOM 節點改文字)；現代智慧家庭只要在面板按一下「回家模式」(Vue 變更狀態資料)，所有燈光自動依狀態點亮。`},{id:`tailwind-css`,category:`tools-ecosystem`,en:`Tailwind CSS`,zh:`Tailwind CSS (原子化 / 功能優先樣式框架)`,phonetic:`/ˈteɪlwɪnd siː-ɛs-ɛs/`,pinyin:`貼-爾-溫德 C-S-S`,definition:`一種 Utility-First (功能類優先 / 原子化) 的現代 CSS 框架。開發者無需在 .css 檔案中發明冗長的 class 名稱，而是直接在 HTML 標籤上組合諸如 "flex"、"items-center"、"p-4"、"bg-blue-600" 等微型工具類。具備 JIT (即時編譯) 引擎，能根據原始碼實際使用到的類別生成體積極小的生產環境 CSS，並透過 "md:"、"hover:" 前綴原生支援響應式與狀態變化。`,analogy:`【標準化樂高積木顆粒 vs 每次手工開模做塑膠零件】—— 傳統 CSS 就像每次要做新按鈕都要手工開一個專屬模具命名；Tailwind 則是直接給你紅藍黃綠、不同長寬的標準積木顆粒，在 HTML 上隨拼隨用，既快速又不會產生重複堆疊的 CSS 廢料。`},{id:`reactivity`,category:`vue-core`,en:`Reactivity`,zh:`響應性 / 響應式系統`,phonetic:`/ˌriːækˈtɪvəti/`,pinyin:`瑞-愛克-替-維-提`,definition:`一種程式設計範式，當底層資料狀態 (State) 發生變化時，依賴該資料的視圖 (DOM) 或衍生計算會由框架自動即時同步更新，無需開發者手動編寫命令式 DOM 操作。`,analogy:`【試算表 Excel 公式自動連動】—— 當你在 A1 格填入 10，B1 格公式是「=A1*2」，只要 A1 變成 20，B1 瞬間自動變成 40，完全不需要你手動去重寫 B1 的內容。`},{id:`declarative-rendering`,category:`vue-core`,en:`Declarative Rendering`,zh:`宣告式渲染`,phonetic:`/dɪˈklærətɪv ˈrɛndərɪŋ/`,pinyin:`地-克賴-惹-替夫 潤-德-令`,definition:`相對於傳統命令式 (Imperative) 操作（如 document.getElementById），宣告式只專注描述「最終畫面應該長成什麼樣」，具體如何操作底層 DOM、如何比對差異，全交由框架引擎處理。`,analogy:`【餐廳點餐 vs 親自下廚】—— 命令式就像走進廚房一步一步指示：開火、倒油、炒菜；而宣告式就像直接跟服務生點單「我要一份牛肉麵」，廚房會自動為你做好呈上來。`},{id:`single-file-component`,category:`vue-core`,en:`Single File Component (SFC)`,zh:`單文件組件 (.vue 檔)`,phonetic:`/ˈsɪŋɡl faɪl kəmˈpoʊnənt/`,pinyin:`辛-狗 伐-偶 肯-剖-能特`,definition:`Vue 特有的檔案組織格式（副檔名為 .vue），在同一個檔案內封裝了結構 (<template>)、邏輯 (<script>) 與專屬樣式 (<style scoped>)，實現高內聚的組件模組化開發。`,analogy:`【獨立封裝的樂高功能積木】—— 每一塊積木自己內部就自帶了骨架、電路開關與外觀顏色，直接插上主機就能運作，彼此互不干擾。`},{id:`composition-api`,category:`vue-core`,en:`Composition API`,zh:`組合式 API`,phonetic:`/ˌkɒmpəˈzɪʃn eɪ-piː-aɪ/`,pinyin:`康-珀-力-選 A-P-I`,definition:`Vue 3 推出的全新程式碼組織方式，透過 setup() 函式與 ref、reactive 等原語，讓開發者能夠依據「業務功能邏輯」將相關的代碼聚合在一起，取代舊版 Options API 依資料/方法切割導致的上下滾動跳躍痛點。`,analogy:`【按專案分類的檔案夾 vs 按文具種類放的大抽屜】—— 舊版像是所有筆放在一抽屜、所有紙放另一抽屜；組合式 API 則是把同一個客戶的所有文件、合約、發票打包在同一個專案袋，一拿就是完整一套。`},{id:`ref-and-reactive`,category:`vue-core`,en:`Ref & Reactive`,zh:`響應式參考與代理物件`,phonetic:`/rɛf ænd riˈæktɪv/`,pinyin:`瑞夫 安德 瑞-愛克-替夫`,definition:`Vue 3 宣告響應式狀態的兩大核心手段。ref() 接受任何型別並包裝成具備 .value 的物件，在模板中自動解包；reactive() 透過 ES6 Proxy 代理將整個純 JavaScript 物件轉換為深層響應式。`,analogy:`【帶有感測晶片的容器】—— ref 就像把普通數值放進一個智慧感測保溫杯，只要杯子裡的溫度改變，底座的感測器立刻通報大樓中控台。`},{id:`computed-property`,category:`vue-core`,en:`Computed Property`,zh:`計算屬性`,phonetic:`/kəmˈpjuːtɪd ˈprɒpəti/`,pinyin:`肯-偏-替德 普絡-珀-提`,definition:`基於其所依賴的響應式狀態進行計算的屬性。具備快取機制 (Cache)，只有當其依賴的來源狀態改變時才會重新執行運算，多次讀取時直接返回快取結果，效能顯著優於普通方法呼叫。`,analogy:`【收銀機的購物車總計欄】—— 只要購物車裡的商品種類和數量沒變，收銀螢幕上的總金額就一直保持原樣顯示，只有你新增或拿掉一件商品時，螢幕才會瞬間重新加總。`},{id:`watcher`,category:`vue-core`,en:`Watcher (watch / watchEffect)`,zh:`偵聽器 / 副作用監聽`,phonetic:`/ˈwɒtʃər/`,pinyin:`握-特-扯`,definition:`當特定響應式狀態改變時，主動執行自訂回呼函式以產生「副作用 (Side Effects)」的機制，常見於非同步網路請求、寫入 LocalStorage、修改 DOM 或發送日誌。`,analogy:`【大樓火災煙霧偵測器】—— 平常安靜無聲，只要監測到煙霧濃度數值超標，立即自動觸發一連串動作：警報響起、噴灑灑水系統、自動撥號報警。`},{id:`props`,category:`component`,en:`Props (Properties)`,zh:`父傳子屬性`,phonetic:`/prɒps/`,pinyin:`普絡-普斯`,definition:`父組件向子組件由外向內單向傳遞資料的自訂屬性。子組件僅具備唯讀權限，嚴格禁止直接竄改 Prop 數值，以確保單向資料流的可預測性。`,analogy:`【工廠配發給員工的規格工作單】—— 主管 (父層) 指派規格參數給員工 (子組件)，員工只能依照規格執行任務，不能私自塗改工作單上的標準。`},{id:`emits`,category:`component`,en:`Emits (Event Emitter)`,zh:`子傳父事件發射`,phonetic:`/iˈmɪts/`,pinyin:`依-密-次`,definition:`子組件向父組件發出通知的自訂事件通道。當子組件內部發生特定互動（如按鈕點擊、表單送出）時，透過 emit(eventName, payload) 通知父組件並傳遞參數。`,analogy:`【對講機回報頻道】—— 前線人員 (子組件) 發現異常狀況時，按下通話鈕向總指揮中心 (父層) 回報：「報告長官，閥門已開啟！」，由指揮中心決定下一步處置。`},{id:`slot`,category:`component`,en:`Slot`,zh:`組件插槽`,phonetic:`/slɒt/`,pinyin:`斯-絡特`,definition:`Vue 提供的內容分發機制，子組件在模板中以 <slot></slot> 作為佔位出口，允許父組件在呼叫時向其注入自訂的 HTML 片段或子組件，極度適合封裝通用外框。`,analogy:`【相框的留白窗口】—— 相框製造商 (子組件) 負責把木質邊框、壓克力保護板和吊繩做好，中間留空；買相框的人 (父層) 想放風景照、家庭照還是證書都可以自由填入。`},{id:`composable`,category:`component`,en:`Composable`,zh:`組合式函式 / 邏輯封裝`,phonetic:`/kəmˈpoʊzəbl/`,pinyin:`肯-剖-惹-伯`,definition:`在 Vue 3 中封裝具有響應式狀態的獨立功能函式（命名慣例為 useXxx）。相較於舊式 Mixins，具有明確的輸入輸出、無命名衝突且便於單元測試。`,analogy:`【瑞士軍刀的外接擴充模組】—— 想要有溫度計功能就插上 useTemperature，想要有藍牙連線就插上 useBluetooth，隨插即用且完全不會搞混。`},{id:`virtual-dom`,category:`component`,en:`Virtual DOM (VDOM)`,zh:`虛擬 DOM`,phonetic:`/ˈvɜːrtʃuəl dɒm/`,pinyin:`威-秋-偶 滴-歐-姆`,definition:`在記憶體中以輕量純 JavaScript 物件結構模擬真實 HTML DOM 樹的技術。每次狀態變更時，先在記憶體中比對前後差異 (Diffing 演算法)，最後只將真正改變的部分打補丁 (Patch) 到真實 DOM 上。`,analogy:`【室內裝潢設計藍圖】—— 如果你想挪動客廳沙發的位置，不需要直接把真的百公斤沙發搬來搬去試位置；先在平板藍圖上移好位置確定最佳方案，最後工人只需進去搬動一次到位。`},{id:`spa`,category:`router-spa`,en:`Single Page Application (SPA)`,zh:`單頁應用程式`,phonetic:`/ˈsɪŋɡl peɪdʒ ˌæplɪˈkeɪʃn/`,pinyin:`辛-狗 胚-居 愛-普-哩-肯-選`,definition:`一種現代 Web 架構，整座網站僅載入單一 index.html 頁面，後續所有畫面切換皆由 JavaScript 攔截路由並動態局部抽換內容，瀏覽器不觸發整頁重新整理，提供如原生桌面 App 般絲滑的操作體驗。`,analogy:`【現代投影片簡報播放器 vs 傳統每看一頁就換一本新書】—— 整個演講都在同一個螢幕前進行，切換章節時只是簡報頁面平滑淡入淡出，不需要把整個演講廳拆掉重蓋。`},{id:`iframe-architecture`,category:`router-spa`,en:`Iframe Architecture`,zh:`Iframe 巢狀導航架構 (傳統舊架構)`,phonetic:`/ˈaɪfreɪm ˈɑːrkɪtɛktʃər/`,pinyin:`愛-服-瑞姆 阿-客-替克-扯`,definition:`傳統後台常見做法，外框 index.html 內嵌 <iframe> 標籤加載各子頁面。其致命缺點包括：阻斷 RWD 媒體查詢響應、子頁無法感知外部視窗尺寸、跨頁通信被迫使用 window.parent 形成高耦合技術債。`,analogy:`【在潛水艇內部架設電視機看外景】—— 電視機 (iframe) 裡面的畫面完全不知道潛水艇外部的真實天氣與水壓，彼此隔著一道厚牆，傳遞信號極度困難且笨重。`},{id:`hash-history`,category:`router-spa`,en:`Hash History (createWebHashHistory)`,zh:`雜湊路由模式`,phonetic:`/hæʃ ˈhɪstri/`,pinyin:`海-許 希-斯-翠`,definition:`利用 URL 中 # 符號（井字號錨點）實現前端路由的方式。# 後方的路徑改變不會被瀏覽器發送至後端 Web 伺服器，因此在沒有設定 SPA Rewrite 規則的舊式伺服器環境中，頁面刷新絕對不會拋出 404 錯誤。`,analogy:`【百科全書的書籤夾頁】—— 你在同一本書第 50 頁夾了「#設備」書籤，只是給讀者自己眼睛看跳到哪一章，不需要跑去圖書館櫃檯重新登記換借一本新書。`},{id:`navigation-guard`,category:`router-spa`,en:`Navigation Guard (beforeEach)`,zh:`路由導航守衛`,phonetic:`/ˌnævɪˈɡeɪʃn ɡɑːrd/`,pinyin:`奈-維-給-選 尬-爾-德`,definition:`Vue Router 提供的全域/路由級攔截鉤子。在每次路由跳轉發生前進行前置檢查，若未登入或無權限，可立即攔截並轉址至登入頁面，同時記錄原始目標路由以便登入後精準還原。`,analogy:`【高鐵月台剪票閘門】—— 乘客想要走到月台 (目標頁面)，閘門 (beforeEach) 會先掃描車票憑證 (Token)，有票放行；沒票自動引導至補票售票處 (登入頁)。`},{id:`pinia`,category:`state-api`,en:`Pinia (State Management)`,zh:`Pinia 全局狀態管理庫`,phonetic:`/piˈnjɑː/`,pinyin:`皮-尼-亞`,definition:`Vue 官方推薦的現代狀態管理庫，取代舊版 Vuex。專門存放跨組件、跨頁面需要共享的全局資料（如使用者 Token、個人權限、即時設備清單），支援 TypeScript 自動推導且結構極度簡潔。`,analogy:`【社區管理委員會的中央公告欄】—— 誰當選主委、目前停水停電通知都在中控公布欄更新，各棟住戶打開門看一眼就知道最新狀況，不用一家一家敲門傳話。`},{id:`interceptor`,category:`state-api`,en:`Axios Interceptor`,zh:`HTTP 請求/回應攔截器`,phonetic:`/ˌɪntərˈsɛptər/`,pinyin:`硬-特-誰-普-特`,definition:`在 HTTP 請求送出前 (Request) 或收到後端回應後 (Response) 預先進行全域處理的管道。常見用途包括：自動在請求頭補上 Authorization Token、統一攔截 401 憑證過期並強制登出、統一過濾錯誤格式。`,analogy:`【國際機場的海關與安檢通道】—— 出境時 (Request) 安檢員檢查所有人護照並蓋核准章；入境時 (Response) 檢查行李，發現違禁品立即沒收遣返。`},{id:`mock-mode`,category:`state-api`,en:`Mock Mode`,zh:`模擬假資料開發模式`,phonetic:`/mɒk moʊd/`,pinyin:`莫-克 某-德`,definition:`在後端 API 尚未開發完成或現場硬體設備無法連線時，前端在本地端透過模擬資料結構進行介面開發與互動驗證的工程化機制。藉由環境變數開關切換，上線時無痛接入真實 API。`,analogy:`【飛行員的地面座艙模擬器】—— 不必冒險把真的飛機開上天，在地面模擬器中就能把起飛、降落、遭遇亂流的儀表板操作訓練得滾瓜爛熟。`},{id:`websocket-stomp`,category:`state-api`,en:`WebSocket & STOMP`,zh:`全雙工長連線與訊息發布訂閱協定`,phonetic:`/ˈwɛbˌsɒkɪt stɒmp/`,pinyin:`網-巴-克特 斯-燙-普`,definition:`WebSocket 建立客戶端與伺服器之間的 TCP 長連線雙向管道；STOMP 則是運行於其上的文字導向訊息協定，提供如 /topic/xxx 的標準「發布/訂閱 (Pub/Sub)」機制，實現感測器數值的秒級即時推播。`,analogy:`【警用無線電廣播頻道】—— 基地台與警車保持全天候連線通話，指揮中心一發布特定頻道的廣播，所有收聽該頻道的員警耳機瞬間同時收到最新指令。`},{id:`strangler-pattern`,category:`architecture`,en:`Strangler Pattern`,zh:`絞殺者架構遷移模式`,phonetic:`/ˈstræŋɡlər ˈpætərn/`,pinyin:`斯-寸-格-勒 拍-騰`,definition:`經典的系統現代化改造架構模式。不推翻重寫既有營運中的舊系統，而是建立新系統與舊系統「並存」運作，透過抽出共用 API、逐步將頁面由舊轉新，最終如同絞殺藤纏繞古樹般無痛替換完成。`,analogy:`【行駛中的火車在軌道上逐節更換現代化車廂】—— 火車保持穩定前進不耽誤旅客行程，工程團隊趁停靠站時一節一節更換成高鐵車廂，不知不覺中整列車換新完畢。`},{id:`design-tokens`,category:`architecture`,en:`Design Tokens (CSS Variables)`,zh:`設計代碼 / 設計變數體系`,phonetic:`/dɪˈzaɪn ˈtoʊkənz/`,pinyin:`地-賽 偷-肯-斯`,definition:`將介面設計規範中的原子化屬性（顏色、字級、圓角、間距）抽象為標準變數（如 --primary, --surface-bg）。系統只需切換最頂層的變數值，全站所有元件即可自動切換多品牌或深淺色主題。`,analogy:`【連鎖便利商店的企業識別手冊 (CIS)】—— 定義好標準色號代碼，全台幾千家分店的招牌、制服、宣傳單只要套用該代碼，改色時只需總部改一份參數。`},{id:`mobile-first`,category:`architecture`,en:`Mobile-First Design`,zh:`行動端優先設計`,phonetic:`/ˈmoʊbl fɜːrst dɪˈzaɪn/`,pinyin:`某-波 佛-斯特 地-賽`,definition:`一種由小螢幕向大螢幕漸進增強的介面設計思維。優先考量行動裝置上的拇指觸控熱區 (最小 44x44px)、防止 iOS 自動放大的輸入框字級 (>=16px)、以及瀏海/底線的安全區 (safe-area-inset)。`,analogy:`【先設計瑞士刀隨身工具，再擴充為整套維修工具箱】—— 確保在最極端受限的手機掌中環境依然順手可用，放到大桌面上只會更游刃有餘。`},{id:`pwa-service-worker`,category:`architecture`,en:`PWA (Progressive Web App)`,zh:`漸進式網頁應用`,phonetic:`/proʊˈɡrɛsɪv wɛb æp/`,pinyin:`普絡-貴-西夫 網-愛普`,definition:`利用現代瀏覽器技術讓 Web 網頁具備類似原生 App 體驗的一系列標準。包含可新增至桌面圖示 (Manifest) 與離線資源快取 (Service Worker)，但在瀏覽器資安限制下，必須在 HTTPS 安全上下文環境方能完全啟用。`,analogy:`【自備離線急救包與專屬通行證的網頁】—— 只要拜訪過一次，急救物資就放在背包 (快取)，就算走到沒有手機信號的地下室，依然能拿出地圖離線查看。`}],JS={class:`glossary-container`},YS={class:`glossary-header`},XS={class:`header-main-row`},ZS={class:`glossary-brand`},QS={class:`search-control-bar`},$S={class:`search-input-wrap`},eC={class:`cat-nav-pills`},tC=[`onClick`],nC={class:`cat-badge`},rC={class:`terms-viewport`},iC={class:`terms-grid`},aC={class:`term-header`},oC={class:`term-name-group`},sC={class:`term-en`},cC={class:`term-zh`},lC=[`onClick`,`title`],uC={class:`pronunciation-bar`},dC={class:`phonetic-code`},fC={class:`pinyin-text`},pC={class:`term-section`},mC={class:`section-text definition-text`},hC={class:`term-section analogy-box`},gC={class:`section-text analogy-text`},_C={key:0,class:`empty-results`},vC=cx({__name:`GlossaryView`,emits:[`close`],setup(e,{emit:t}){let n=t,r=j(``),i=j(`all`),a=j(null),o=typeof window<`u`&&`speechSynthesis`in window,s=e=>{if(!o)return;window.speechSynthesis.cancel();let t=new SpeechSynthesisUtterance(e);t.lang=`en-US`,t.rate=.9,t.onstart=()=>{a.value=e},t.onend=()=>{a.value=null},t.onerror=()=>{a.value=null},window.speechSynthesis.speak(t)},c=()=>{o&&(window.speechSynthesis.cancel(),a.value=null)};Tr(()=>{o&&window.speechSynthesis.cancel()});let l=R(()=>{let e=r.value.trim().toLowerCase();return qS.filter(t=>i.value!==`all`&&t.category!==i.value?!1:!e||t.en.toLowerCase().includes(e)||t.zh.toLowerCase().includes(e)||t.pinyin.toLowerCase().includes(e)||t.definition.toLowerCase().includes(e)||t.analogy.toLowerCase().includes(e))}),u=e=>e===`all`?qS.length:qS.filter(t=>t.category===e).length;return(e,t)=>(P(),F(`div`,JS,[I(`header`,YS,[I(`div`,XS,[I(`div`,ZS,[L(M(os),{size:22,class:`brand-icon`}),t[2]||=I(`div`,{class:`brand-titles`},[I(`h2`,{class:`glossary-title`},`前端與系統架構專業名詞字典`),I(`span`,{class:`glossary-subtitle`},`附真人發音、軟工核心定義與白話生活比喻`)],-1)]),I(`button`,{class:`close-glossary-btn`,onClick:t[0]||=e=>n(`close`),title:`返回課程學習`},[L(M(Ks),{size:18}),t[3]||=I(`span`,null,`返回課程`,-1)])]),I(`div`,QS,[I(`div`,$S,[L(M(Is),{size:16,class:`search-icon`}),Nn(I(`input`,{type:`search`,"onUpdate:modelValue":t[1]||=e=>r.value=e,placeholder:`搜尋英文術語、中文意義或比喻關鍵字...`,class:`search-input`},null,512),[[Io,r.value]])]),a.value?(P(),F(`button`,{key:0,class:`stop-tts-btn`,onClick:c,title:`停止當前語音朗讀`},[L(M(Ws),{size:15}),t[4]||=I(`span`,null,`停止朗讀`,-1)])):ma(``,!0)]),I(`nav`,eC,[(P(!0),F(N,null,Fr(M(KS),e=>(P(),F(`button`,{key:e.id,class:E([`cat-pill`,{active:i.value===e.id}]),onClick:t=>i.value=e.id},[I(`span`,null,D(e.name),1),I(`span`,nC,D(u(e.id)),1)],10,tC))),128))])]),I(`main`,rC,[I(`div`,iC,[(P(!0),F(N,null,Fr(l.value,e=>(P(),F(`article`,{key:e.id,class:`term-card`},[I(`div`,aC,[I(`div`,oC,[I(`h3`,sC,D(e.en),1),I(`span`,cC,D(e.zh),1)]),I(`button`,{class:E([`speak-btn`,{"is-speaking":a.value===e.en}]),onClick:t=>s(e.en),title:`朗讀 `+e.en+` 發音`},[L(M(Us),{size:16}),t[5]||=I(`span`,{class:`speak-label`},`發音`,-1)],10,lC)]),I(`div`,uC,[t[6]||=I(`span`,{class:`tag-label`},`發音`,-1),I(`code`,dC,D(e.phonetic),1),I(`span`,fC,`(`+D(e.pinyin)+`)`,1)]),I(`div`,pC,[t[7]||=I(`div`,{class:`section-label-row`},[I(`span`,{class:`section-badge badge-definition`},`軟工意義`)],-1),I(`p`,mC,D(e.definition),1)]),I(`div`,hC,[t[8]||=I(`div`,{class:`section-label-row`},[I(`span`,{class:`section-badge badge-analogy`},`通俗比喻`)],-1),I(`p`,gC,D(e.analogy),1)])]))),128))]),l.value.length===0?(P(),F(`div`,_C,[I(`p`,null,`查無符合「`+D(r.value)+`」的專業術語，請嘗試其他關鍵字。`,1)])):ma(``,!0)])]))}},[[`__scopeId`,`data-v-85c943e3`]]),yC={class:`welcome-container`},bC={class:`welcome-hero`},xC={class:`hero-badge`},SC={class:`hero-actions`},CC={class:`info-section`},wC={class:`pipeline-grid`},TC={class:`pipeline-step`},EC={class:`step-icon-wrap icon-code`},DC={class:`pipeline-arrow`},OC={class:`pipeline-step`},kC={class:`step-icon-wrap icon-parse`},AC={class:`pipeline-arrow`},jC={class:`pipeline-step`},MC={class:`step-icon-wrap icon-paint`},NC={class:`pipeline-arrow`},PC={class:`pipeline-step`},FC={class:`step-icon-wrap icon-engine`},IC={class:`info-section`},LC={class:`roles-cards-grid`},RC={class:`role-card-top`},zC={class:`role-icon-box`},BC={class:`role-footer-action`},VC={class:`role-card-top`},HC={class:`role-icon-box`},UC={class:`role-footer-action`},WC={class:`role-card-top`},GC={class:`role-icon-box`},KC={class:`role-footer-action`},qC={class:`role-card-top`},JC={class:`role-icon-box`},YC={class:`role-footer-action`},XC={class:`info-section interactive-demo-section`},ZC={class:`interactive-sandbox`},QC={class:`sandbox-controls`},$C={class:`control-toggle`},ew={class:`toggle-name`},tw={class:`control-toggle`},nw=[`disabled`],rw={class:`toggle-name`},iw={class:`control-toggle`},aw=[`disabled`],ow={class:`toggle-name`},sw={class:`sandbox-stage`},cw={key:0,class:`empty-stage-state`},lw={key:1,class:`raw-html-preview`},uw={key:2,class:`styled-preview-card`},dw={class:`preview-card-body`},fw={class:`preview-counter-display`},pw={class:`counter-val-wrap`},mw={class:`counter-num`},hw={class:`preview-card-footer`},gw={class:`welcome-cta`},_w={class:`cta-inner`},vw={class:`cta-buttons`},yw=cx({__name:`WelcomeView`,emits:[`start-track`,`open-lessons`],setup(e,{emit:t}){let n=t,r=j(!0),i=j(!0),a=j(!0),o=j(10),s=()=>{a.value&&(o.value+=5)},c=()=>{a.value&&(o.value=0)};return(e,t)=>(P(),F(`div`,yC,[I(`section`,bC,[I(`div`,xC,[L(M(Rs),{size:14,class:`badge-icon`}),t[11]||=I(`span`,null,`新手前端導引入門`,-1)]),t[14]||=I(`h1`,{class:`hero-title`},`如何寫出你的第一個網站？`,-1),t[15]||=I(`p`,{class:`hero-subtitle`},` 拋開艱澀的技術術語。用最清晰直觀的方式，搞懂網頁在瀏覽器裡的運作原理，以及 HTML、CSS、JavaScript 與 Vue 如何協力打造現代網路世界！ `,-1),I(`div`,SC,[I(`button`,{class:`primary-action-btn`,onClick:t[0]||=e=>n(`start-track`,`vue`)},[L(M(Ns),{size:16}),t[12]||=I(`span`,null,`直接進入 Vue 3 實戰課程`,-1)]),I(`button`,{class:`secondary-action-btn`,onClick:t[1]||=e=>n(`start-track`,`html`)},[L(M(os),{size:16}),t[13]||=I(`span`,null,`從 HTML 基礎開始打底`,-1)])])]),I(`section`,CC,[t[28]||=I(`div`,{class:`section-header`},[I(`div`,{class:`section-tag`},`核心底層觀念`),I(`h2`,{class:`section-title`},`1. 網頁是怎麼在瀏覽器跑起來的？`),I(`p`,{class:`section-desc`},` 你在電腦上寫的網頁，本質上只是純文字檔案。瀏覽器就像一位技藝高超的建築師，負責將這些文字轉譯成你在螢幕上看到的豐富畫面。 `)],-1),I(`div`,wC,[I(`div`,TC,[t[16]||=I(`div`,{class:`step-num`},`01`,-1),I(`div`,EC,[L(M(ws),{size:24})]),t[17]||=I(`h3`,{class:`step-title`},`撰寫文字源碼`,-1),t[18]||=I(`p`,{class:`step-desc`},[fa(` 工程師使用編輯器，編寫以 `),I(`code`,null,`.html`),fa(`、`),I(`code`,null,`.css`),fa(`、`),I(`code`,null,`.js`),fa(` 為結尾的純文字檔案。 `)],-1)]),I(`div`,DC,[L(M(as),{size:20})]),I(`div`,OC,[t[19]||=I(`div`,{class:`step-num`},`02`,-1),I(`div`,kC,[L(M(Es),{size:24})]),t[20]||=I(`h3`,{class:`step-title`},`瀏覽器解析結構`,-1),t[21]||=I(`p`,{class:`step-desc`},` 瀏覽器讀入 HTML 生成骨架（DOM 樹），讀入 CSS 建立樣式規則（CSSOM 樹），並將兩者合成為渲染樹。 `,-1)]),I(`div`,AC,[L(M(as),{size:20})]),I(`div`,jC,[t[22]||=I(`div`,{class:`step-num`},`03`,-1),I(`div`,MC,[L(M(As),{size:24})]),t[23]||=I(`h3`,{class:`step-title`},`排版與繪製畫面`,-1),t[24]||=I(`p`,{class:`step-desc`},` 計算每個元素在螢幕上的精確座標與幾何尺寸（Layout），最後把顏色、文字與陰影逐像素繪製出來（Paint）。 `,-1)]),I(`div`,NC,[L(M(as),{size:20})]),I(`div`,PC,[t[25]||=I(`div`,{class:`step-num`},`04`,-1),I(`div`,FC,[L(M(xs),{size:24})]),t[26]||=I(`h3`,{class:`step-title`},`JavaScript 注入靈魂`,-1),t[27]||=I(`p`,{class:`step-desc`},` JS 引擎隨時待命，當使用者點擊按鈕、輸入文字或滾動滑鼠時，即時更新資料並重新驅動畫面變換！ `,-1)])])]),I(`section`,IC,[t[49]||=I(`div`,{class:`section-header`},[I(`div`,{class:`section-tag`},`分工與定位`),I(`h2`,{class:`section-title`},`2. 前端四劍客各自在做什麼？`),I(`p`,{class:`section-desc`},` 如果把建立一個網站比喻成「建造一棟現代智慧住宅」，那麼四套技術的分工一目了然： `)],-1),I(`div`,LC,[I(`div`,{class:`role-card card-html`,onClick:t[2]||=e=>n(`start-track`,`html`)},[I(`div`,RC,[I(`div`,zC,[L(M(ws),{size:22})]),t[29]||=I(`span`,{class:`role-sublabel`},`骨架與磚瓦`,-1)]),t[31]||=I(`h3`,{class:`role-name`},`HTML`,-1),t[32]||=I(`div`,{class:`role-metaphor`},`負責定義網頁「有什麼內容」`,-1),t[33]||=I(`p`,{class:`role-body`},[fa(` 負責建立房屋的樑柱、隔間與樓層。在網頁中用來標註文章標題（`),I(`code`,null,`h1`),fa(`）、段落文字（`),I(`code`,null,`p`),fa(`）、按鈕（`),I(`code`,null,`button`),fa(`）與表單輸入欄位。 `)],-1),I(`div`,BC,[t[30]||=I(`span`,null,`探索 HTML 專題 (5 單元)`,-1),L(M(as),{size:14})])]),I(`div`,{class:`role-card card-css`,onClick:t[3]||=e=>n(`start-track`,`css`)},[I(`div`,VC,[I(`div`,HC,[L(M(Ms),{size:22})]),t[34]||=I(`span`,{class:`role-sublabel`},`裝潢與外觀`,-1)]),t[36]||=I(`h3`,{class:`role-name`},`CSS`,-1),t[37]||=I(`div`,{class:`role-metaphor`},`負責定義網頁「長什麼模樣」`,-1),t[38]||=I(`p`,{class:`role-body`},` 負責房間的粉刷配色、壁紙挑選、採光與家具擺放排版（Flexbox 與 Grid）。讓網頁不只美觀，還能自動適應手機與電腦螢幕（RWD 響應式）。 `,-1),I(`div`,UC,[t[35]||=I(`span`,null,`探索 CSS 專題 (7 單元)`,-1),L(M(as),{size:14})])]),I(`div`,{class:`role-card card-js`,onClick:t[4]||=e=>n(`start-track`,`javascript`)},[I(`div`,WC,[I(`div`,GC,[L(M(cs),{size:22})]),t[39]||=I(`span`,{class:`role-sublabel`},`水電智慧神經`,-1)]),t[41]||=I(`h3`,{class:`role-name`},`JavaScript`,-1),t[42]||=I(`div`,{class:`role-metaphor`},`負責定義網頁「如何動態互動」`,-1),t[43]||=I(`p`,{class:`role-body`},` 就像房屋裡的智慧開關與水電網絡。點擊電燈會發光、自動感應門會開啟、冷氣會依室溫調整。在網頁中負責處理點擊、算錢、驗證與傳輸資料。 `,-1),I(`div`,KC,[t[40]||=I(`span`,null,`探索 JS 專題 (8 單元)`,-1),L(M(as),{size:14})])]),I(`div`,{class:`role-card card-vue`,onClick:t[5]||=e=>n(`start-track`,`vue`)},[I(`div`,qC,[I(`div`,JC,[L(M(Ds),{size:22})]),t[44]||=I(`span`,{class:`role-sublabel`},`現代工業化引擎`,-1)]),t[46]||=I(`h3`,{class:`role-name`},`Vue 3`,-1),t[47]||=I(`div`,{class:`role-metaphor`},`用「資料驅動」擺脫繁瑣手工操作`,-1),t[48]||=I(`p`,{class:`role-body`},` 傳統 JS 每次資料改變都要手動查找 DOM 節點並逐一修改。Vue 引入「響應式資料 (Reactivity)」：只要狀態變了，畫面自動精密同步更新，是現代大型專案的標準利器！ `,-1),I(`div`,YC,[t[45]||=I(`span`,null,`探索 Vue 3 核心 (28 單元)`,-1),L(M(as),{size:14})])])])]),I(`section`,XC,[t[62]||=I(`div`,{class:`section-header`},[I(`div`,{class:`section-tag`},`動手親身體會`),I(`h2`,{class:`section-title`},`3. 網頁三要素疊加威力演示`),I(`p`,{class:`section-desc`},` 切換下方的開關，親眼觀察「只有骨架」、「加上樣式」以及「賦予動態響應」的畫面演進過程！ `)],-1),I(`div`,ZC,[I(`div`,QC,[I(`label`,$C,[Nn(I(`input`,{type:`checkbox`,"onUpdate:modelValue":t[6]||=e=>r.value=e},null,512),[[Lo,r.value]]),I(`span`,ew,[L(M(ws),{size:15}),t[50]||=fa(` 1. HTML 骨架 `,-1)])]),I(`label`,tw,[Nn(I(`input`,{type:`checkbox`,"onUpdate:modelValue":t[7]||=e=>i.value=e,disabled:!r.value},null,8,nw),[[Lo,i.value]]),I(`span`,rw,[L(M(Ms),{size:15}),t[51]||=fa(` 2. CSS 裝潢樣式 `,-1)])]),I(`label`,iw,[Nn(I(`input`,{type:`checkbox`,"onUpdate:modelValue":t[8]||=e=>a.value=e,disabled:!r.value},null,8,aw),[[Lo,a.value]]),I(`span`,ow,[L(M(qs),{size:15}),t[52]||=fa(` 3. JS / Vue 響應動能 `,-1)])])]),I(`div`,sw,[r.value?i.value?(P(),F(`div`,uw,[t[61]||=I(`div`,{class:`preview-card-header`},[I(`div`,{class:`preview-badge-status`},[I(`span`,{class:`status-dot`}),I(`span`,null,`系統運轉中`)]),I(`span`,{class:`preview-chip`},`現代設計系統`)],-1),I(`div`,dw,[t[59]||=I(`h3`,{class:`preview-title`},`儲能與發電監控儀表`,-1),t[60]||=I(`p`,{class:`preview-desc`},`透過 CSS 彈性排版與漸層配色，將原本單調的文字轉化為極具質感的科技介面。`,-1),I(`div`,fw,[t[58]||=I(`span`,{class:`counter-label`},`即時電力回饋點數`,-1),I(`div`,pw,[I(`span`,mw,D(o.value),1),t[57]||=I(`span`,{class:`counter-unit`},`kW`,-1)])])]),I(`div`,hw,[I(`button`,{class:E([`btn-interactive`,{"is-disabled":!a.value}]),onClick:s},[L(M(qs),{size:15}),I(`span`,null,D(a.value?`點我增加 +5 點（Vue 驅動）`:`JS 未啟動（按鈕無反應）`),1)],2),I(`button`,{class:E([`btn-reset`,{"is-disabled":!a.value}]),onClick:c},` 重設 `,2)])])):(P(),F(`div`,lw,[t[54]||=I(`div`,{class:`raw-note`},`提示：這是只有 HTML 的狀態（無任何 CSS 樣式修飾）`,-1),t[55]||=I(`h1`,null,`設備能源監控卡片`,-1),t[56]||=I(`p`,null,`主機狀態：運轉中 (已連線)`,-1),I(`p`,null,`累計發電功率點數：`+D(o.value)+` 點`,1),I(`button`,{onClick:s},` 點我累積功率 (`+D(a.value?`JS 動態響應有效`:`無 JS，點擊無反應`)+`) `,1),I(`button`,{onClick:c,style:{"margin-left":`5px`}},`歸零`)])):(P(),F(`div`,cw,[L(M(_s),{size:32,class:`empty-icon`}),t[53]||=I(`p`,null,`沒有 HTML，畫面就是一片虛無，不存在任何可見的內容或結構。`,-1)]))])])]),t[67]||=pa(`<section class="info-section" data-v-e013c53e><div class="section-header" data-v-e013c53e><div class="section-tag" data-v-e013c53e>實戰起步路線</div><h2 class="section-title" data-v-e013c53e>4. 如何自己動手開始寫網站？</h2><p class="section-desc" data-v-e013c53e> 寫網頁的門檻比你想像的還要低！你不需要昂貴的付費軟體，只需要按照以下三步驟即可展開旅程： </p></div><div class="start-steps-grid" data-v-e013c53e><div class="start-step-card" data-v-e013c53e><div class="step-card-header" data-v-e013c53e><span class="step-badge" data-v-e013c53e>第一步：最簡單起手式</span><span class="step-tool" data-v-e013c53e>零門檻安裝</span></div><h3 class="step-card-title" data-v-e013c53e>建立一個 index.html 檔案</h3><p class="step-card-body" data-v-e013c53e> 在電腦桌面建立一個純文字檔案，將檔名改為 <code data-v-e013c53e>index.html</code>。用記事本打開，貼上一段 <code data-v-e013c53e>&lt;h1&gt;哈囉世界&lt;/h1&gt;</code>，存檔後對著它雙擊滑鼠左鍵，瀏覽器就會立刻為你打開第一個網頁！ </p><div class="step-links" data-v-e013c53e><a href="https://developer.mozilla.org/zh-TW/docs/Learn/Getting_started_with_the_web/HTML_basics" target="_blank" rel="noopener noreferrer" class="step-link-btn" data-v-e013c53e><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-v-e013c53e><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" data-v-e013c53e></path><polyline points="15 3 21 3 21 9" data-v-e013c53e></polyline><line x1="10" y1="14" x2="21" y2="3" data-v-e013c53e></line></svg> MDN 官方 HTML 入門教學 </a></div></div><div class="start-step-card" data-v-e013c53e><div class="step-card-header" data-v-e013c53e><span class="step-badge" data-v-e013c53e>第二步：工欲善其事</span><span class="step-tool" data-v-e013c53e>標準工程工具</span></div><h3 class="step-card-title" data-v-e013c53e>下載 VS Code 專業編輯器</h3><p class="step-card-body" data-v-e013c53e> 前往微軟官方下載免費的 <strong data-v-e013c53e>VS Code</strong> 編輯器，並安裝 <strong data-v-e013c53e>Live Server</strong> 擴充套件。它能讓你每次儲存代碼時，瀏覽器自動即時重新整理，體驗流暢的寫代碼節奏！ </p><div class="step-links" data-v-e013c53e><a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer" class="step-link-btn" data-v-e013c53e><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-v-e013c53e><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" data-v-e013c53e></path><polyline points="15 3 21 3 21 9" data-v-e013c53e></polyline><line x1="10" y1="14" x2="21" y2="3" data-v-e013c53e></line></svg> VS Code 微軟官網下載 </a><a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer" target="_blank" rel="noopener noreferrer" class="step-link-btn sub" data-v-e013c53e> Live Server 擴充外掛 </a></div></div><div class="start-step-card" data-v-e013c53e><div class="step-card-header" data-v-e013c53e><span class="step-badge" data-v-e013c53e>第三步：邁向現代化</span><span class="step-tool" data-v-e013c53e>企業級標準</span></div><h3 class="step-card-title" data-v-e013c53e>安裝 Node.js 與啟動 Vite + Vue 3</h3><p class="step-card-body" data-v-e013c53e> 下載 Node.js LTS 穩定版，在終端機輸入 <code data-v-e013c53e>npm create vite@latest my-app -- --template vue</code>，你就擁有了包含熱重載（Hot Reload）、組件化與最新打包工具的現代化專業前端環境！ </p><div class="step-links" data-v-e013c53e><a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer" class="step-link-btn" data-v-e013c53e><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-v-e013c53e><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" data-v-e013c53e></path><polyline points="15 3 21 3 21 9" data-v-e013c53e></polyline><line x1="10" y1="14" x2="21" y2="3" data-v-e013c53e></line></svg> Node.js 官方載點 (LTS) </a><a href="https://vite.dev/" target="_blank" rel="noopener noreferrer" class="step-link-btn sub" data-v-e013c53e> Vite 官方網站 </a><a href="https://vuejs.org/" target="_blank" rel="noopener noreferrer" class="step-link-btn sub" data-v-e013c53e> Vue.js 官方文件 </a></div></div></div></section>`,1),I(`section`,gw,[I(`div`,_w,[t[65]||=I(`h2`,{class:`cta-title`},`準備好開啟你的前端學習之旅了嗎？`,-1),t[66]||=I(`p`,{class:`cta-desc`},` 本平台提供完整的「左側觀念文檔 + 右側即時互動代碼演練台 (Live Playground)」，無須在本機安裝任何環境，在瀏覽器裡就能邊看邊寫邊出結果！ `,-1),I(`div`,vw,[I(`button`,{class:`cta-btn cta-btn-vue`,onClick:t[9]||=e=>n(`start-track`,`vue`)},[L(M(Ds),{size:18}),t[63]||=I(`span`,null,`前往 Vue 3 實戰課程 (28 單元)`,-1)]),I(`button`,{class:`cta-btn cta-btn-base`,onClick:t[10]||=e=>n(`start-track`,`html`)},[L(M(ws),{size:18}),t[64]||=I(`span`,null,`先修基礎：HTML (5) / CSS (7) / JS (8)`,-1)])])])])]))}},[[`__scopeId`,`data-v-e013c53e`]]),bw=[{id:`html-01-structure`,category:`HTML 核心專題篇`,title:`HTML 01. 網頁標準骨架與 DOM 樹建構觀念`,summary:`從 DOCTYPE 到 body，全面理解 HTML 文件的底層骨架，以及瀏覽器如何將標籤解析為記憶體中的 DOM 樹狀結構。`,readTime:`7 分鐘`,concept:`
 ### 1. 什麼是 HTML 與文件類型宣告 (DOCTYPE)？
 HTML (HyperText Markup Language) 負責定義網頁的「結構與內容」。
 每一份符合現代標準的 HTML 文件，第一行必須是 \`<!DOCTYPE html>\`：
@@ -2038,6 +2038,249 @@ my-vue-app/
     └── components/   # 存放可重複使用的各個自訂小組件
 \`\`\`
 
+以下為您逐一拆解這 **6 大關鍵檔案的大概長相、職責與對應詳細課程**：
+
+<div class="file-spec-card">
+  <div class="file-spec-header">
+    <div class="file-spec-name">📄 index.html</div>
+    <span class="file-spec-role">單頁唯一宿主入口</span>
+  </div>
+  <div class="file-spec-desc">
+    整個 Vue 專案唯一的真實 HTML 網頁。在現代 Vite 體系中，它不再是被動模板，而是專案的第一等公民入口，負責提供 <code>&lt;div id="app"&gt;</code> 容器並載入 JS 引擎。
+  </div>
+\`\`\`html
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>我的 Vue 應用</title>
+  </head>
+  <body>
+    <!-- 核心容器：所有 Vue 畫面都會渲染替換至此 -->
+    <div id="app"></div>
+    
+    <!-- 啟動入口：直接載入 ESM 模組化的 JavaScript 主程式 -->
+    <script type="module" src="/src/main.js"><\/script>
+  </body>
+</html>
+\`\`\`
+  <div class="file-spec-jump">
+    <div class="file-spec-lesson-info">
+      詳細解密課程：<strong>工具 02 (Vite 入口)、HTML 01 (DOM 樹) 與 Vue 15 (SPA 單頁原理)</strong>
+    </div>
+    <button class="file-jump-btn" data-jump-track="vue" data-jump-lesson="vue-project-config-deepdive">
+      前往工具 02 專案工程化詳解 &rarr;
+    </button>
+  </div>
+</div>
+
+<div class="file-spec-card">
+  <div class="file-spec-header">
+    <div class="file-spec-name">📦 package.json</div>
+    <span class="file-spec-role">專案身分證與依賴中樞</span>
+  </div>
+  <div class="file-spec-desc">
+    定義專案名稱、啟動指令腳本 (scripts) 以及所有第三方套件依賴 (dependencies 與 devDependencies)。
+  </div>
+\`\`\`json
+{
+  "name": "my-vue-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",             // 本機啟動指令 (npm run dev)
+    "build": "vite build",     // 生產打包指令 (npm run build)
+    "preview": "vite preview"  // 本機預覽打包結果
+  },
+  "dependencies": {
+    "vue": "^3.5.0",           // 運行環境必須的套件 (Vue 核心)
+    "pinia": "^2.2.0"          // 全局狀態管理庫
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.0", // 開發編譯工具
+    "vite": "^5.4.0"                // 開發伺服器與打包器
+  }
+}
+\`\`\`
+  <div class="file-spec-jump">
+    <div class="file-spec-lesson-info">
+      詳細解密課程：<strong>工具 02. 專案工程化核心：package.json 依賴與 vite.config.js 深度配置</strong>
+    </div>
+    <button class="file-jump-btn" data-jump-track="vue" data-jump-lesson="vue-project-config-deepdive">
+      前往工具 02 專案工程化詳解 &rarr;
+    </button>
+  </div>
+</div>
+
+<div class="file-spec-card">
+  <div class="file-spec-header">
+    <div class="file-spec-name">⚙️ vite.config.js</div>
+    <span class="file-spec-role">建置與打包工具大腦</span>
+  </div>
+  <div class="file-spec-desc">
+    Vite 的配置文件。在此設定 Vue 編譯外掛、靜態部署基礎路徑 (base)、路徑別名 (alias) 以及前後端跨域代理 (server.proxy)。
+  </div>
+\`\`\`javascript
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import path from 'path';
+
+export default defineConfig({
+  plugins: [vue()],               // 1. 啟用 Vue 3 單文件組件編譯支援
+  base: './',                     // 2. 解決部署至 GitHub Pages 或子路徑 404 問題
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src') // 3. 設定 @ 指向 src 目錄
+    }
+  },
+  server: {
+    port: 5173,                   // 4. 指定開發伺服器埠號
+    proxy: {                      // 5. 跨域反向代理，解決本機開發 CORS
+      '/api': { target: 'http://localhost:8080', changeOrigin: true }
+    }
+  }
+});
+\`\`\`
+  <div class="file-spec-jump">
+    <div class="file-spec-lesson-info">
+      詳細解密課程：<strong>工具 02. 專案工程化核心：package.json 依賴與 vite.config.js 深度配置</strong>
+    </div>
+    <button class="file-jump-btn" data-jump-track="vue" data-jump-lesson="vue-project-config-deepdive">
+      前往工具 02 專案工程化詳解 &rarr;
+    </button>
+  </div>
+</div>
+
+<div class="file-spec-card">
+  <div class="file-spec-header">
+    <div class="file-spec-name">🚀 src/main.js</div>
+    <span class="file-spec-role">專案 JavaScript 引擎啟動點</span>
+  </div>
+  <div class="file-spec-desc">
+    專案執行時的第一行代碼在此生效。它負責透過 <code>createApp</code> 實例化 Vue 應用、引入根組件 <code>App.vue</code>、掛載 Pinia/Router 插件，最後將整個應用掛載到 <code>#app</code> 節點上。
+  </div>
+\`\`\`javascript
+import { createApp } from 'vue';
+import App from './App.vue';
+// 引入全局樣式或第三方 UI 套件
+import './style.css';
+
+// 1. 建立 Vue 應用實例
+const app = createApp(App);
+
+// 2. 註冊全局插件 (例如 Pinia 狀態庫或 Vue Router)
+// app.use(pinia);
+// app.use(router);
+
+// 3. 掛載至 index.html 中的 <div id="app"></div>
+app.mount('#app');
+\`\`\`
+  <div class="file-spec-jump">
+    <div class="file-spec-lesson-info">
+      詳細解密課程：<strong>01. 認識 Vue.js 與第一個應用 (createApp 與 mount 原理)</strong>
+    </div>
+    <button class="file-jump-btn" data-jump-track="vue" data-jump-lesson="intro-hello-world">
+      前往 01 課 createApp 詳解 &rarr;
+    </button>
+  </div>
+</div>
+
+<div class="file-spec-card">
+  <div class="file-spec-header">
+    <div class="file-spec-name">🌲 src/App.vue</div>
+    <span class="file-spec-role">整個系統的「根組件」</span>
+  </div>
+  <div class="file-spec-desc">
+    Vue 組件樹的最頂層（Root）。通常包含全局導覽列、頁尾、Layout 外框或路由出口 <code>&lt;router-view /&gt;</code>。採用 SFC（單文件組件）語法。
+  </div>
+\`\`\`vue
+<script setup>
+import { ref } from 'vue';
+import HeaderNav from './components/HeaderNav.vue';
+
+const siteTitle = ref('我的第一個 Vue 3 系統');
+<\/script>
+
+<template>
+  <div class="app-layout">
+    <HeaderNav :title="siteTitle" />
+    <main>
+      <h1>{{ siteTitle }}</h1>
+      <p>所有頁面與組件都在這裡組合！</p>
+    </main>
+  </div>
+</template>
+
+<style scoped>
+.app-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: sans-serif;
+}
+</style>
+\`\`\`
+  <div class="file-spec-jump">
+    <div class="file-spec-lesson-info">
+      詳細解密課程：<strong>01 課 (第一個應用)、02 課 (雙花括號) 與 11 課 (組件基礎與 Props)</strong>
+    </div>
+    <button class="file-jump-btn" data-jump-track="vue" data-jump-lesson="component-basics-props">
+      前往 11 課組件基礎詳解 &rarr;
+    </button>
+  </div>
+</div>
+
+<div class="file-spec-card">
+  <div class="file-spec-header">
+    <div class="file-spec-name">🧩 src/components/ (自訂組件庫)</div>
+    <span class="file-spec-role">可重複使用的各個自訂小組件</span>
+  </div>
+  <div class="file-spec-desc">
+    存放可重複利用的積木組件（例如按鈕、卡片、彈窗、列表項目）。以下以一個 <code>UserBadge.vue</code> 徽章組件為例：
+  </div>
+\`\`\`vue
+<!-- src/components/UserBadge.vue -->
+<script setup>
+// 定義接收父層傳入的參數 (Props)
+defineProps({
+  username: { type: String, required: true },
+  role: { type: String, default: '學員' }
+});
+
+// 定義回傳事件給父層 (Emits)
+const emit = defineEmits(['view-profile']);
+<\/script>
+
+<template>
+  <div class="badge-card" @click="emit('view-profile', username)">
+    <span class="name">{{ username }}</span>
+    <span class="tag">{{ role }}</span>
+  </div>
+</template>
+
+<style scoped>
+.badge-card {
+  display: inline-flex;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: #f0fdf4;
+  border: 1px solid #42b883;
+  cursor: pointer;
+}
+</style>
+\`\`\`
+  <div class="file-spec-jump">
+    <div class="file-spec-lesson-info">
+      詳細解密課程：<strong>11 課 (Props 傳值)、12 課 (Emits 事件通訊) 與 13 課 (Slots 插槽)</strong>
+    </div>
+    <button class="file-jump-btn" data-jump-track="vue" data-jump-lesson="component-basics-props">
+      前往 11 ~ 13 課組件系列特訓 &rarr;
+    </button>
+  </div>
+</div>
+
 #### 什麼是 \`.vue\` 檔案？（SFC 單文件組件）
 Vue 最強大的特色就是 **SFC (Single File Component)**，把一個介面需要的全部要素寫在同一個檔案內：
 1. **\`<template>\`**：寫 HTML 模板結構。
@@ -2358,7 +2601,356 @@ Tailwind CSS 反其道而行，提供數千個高度語意化的**微型原子�
     const cardEl = document.getElementById('device-card');
     cardEl.style.borderColor = '#16a34a';
   });
-<\/script>`,hints:[`舊系統重構的核心，就是把 jQuery 的命令式 DOM 抓取，轉換為 Vue 的資料響應式驅動。`,`Tailwind CSS 讓樣式直接在 template class 拼裝，省去頻繁在 vue 檔與 css 檔切換的時間。`]},{id:`intro-hello-world`,category:`基礎入門篇`,title:`01. 認識 Vue.js 與第一個應用`,summary:`了解宣告式渲染的核心理念，並使用 createApp 啟動第一個 Vue 應用程式。`,readTime:`3 分鐘`,concept:`
+<\/script>`,hints:[`舊系統重構的核心，就是把 jQuery 的命令式 DOM 抓取，轉換為 Vue 的資料響應式驅動。`,`Tailwind CSS 讓樣式直接在 template class 拼裝，省去頻繁在 vue 檔與 css 檔切換的時間。`]},{id:`vue-project-config-deepdive`,category:`生態工具庫篇`,title:`工具 02. 專案工程化核心：package.json 依賴與 vite.config.js 深度配置`,summary:`徹底搞懂現代前端專案骨架：拆解 package.json 腳本與依賴版本規則，掌握 vite.config.js 的別名 alias、部署路徑 base 與跨域 proxy 實戰配置。`,readTime:`7 分鐘`,concept:`
+### 1. 為什麼前端需要工程化設定檔？
+在傳統舊時代，寫前端只需要建立一個 \`index.html\`，透過 \`<script src="jquery.js">\` 引入函式庫就能寫網頁。
+但在現代企業級前端開發中，我們需要：
+- **代碼編譯**：將 \`.vue\` 單文件組件、JSX、TypeScript 轉譯成瀏覽器認識的標準代碼。
+- **套件依賴管理**：管理成百上千個第三方套件與版本。
+- **極速開發體驗**：修改一行代碼，畫面能在 50 毫秒內「熱重載 (HMR)」，不用手動按重新整理。
+- **打包最佳化**：上線前進行代碼壓縮、Tree-shaking（搖樹優化去除沒用的代碼）與分割加載。
+
+這正是 **\`package.json\`** 與 **\`vite.config.js\`** 存在的核心價值！
+
+---
+
+### 2. package.json：專案的心臟與套件指揮官
+
+每個前端專案的根目錄都一定有一份 \`package.json\`。以下是標準 Vue 3 專案的經典長相與關鍵欄位：
+
+\`\`\`json
+{
+  "name": "my-vue-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.5.0",
+    "pinia": "^2.2.0",
+    "axios": "^1.7.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.0",
+    "vite": "^5.4.0"
+  }
+}
+\`\`\`
+
+#### (1) \`scripts\`：定義專案指令
+當你在終端機執行 \`npm run dev\`，npm 就會去尋找 \`scripts.dev\` 所對應的指令 \`vite\` 並啟動本機伺服器。
+- \`npm run dev\`：啟動本機開發伺服器（預設 port 5173）。
+- \`npm run build\`：進行生產環境打包，產物會輸出到 \`dist/\` 資料夾。
+- \`npm run preview\`：在本機預覽打包後的 \`dist\` 靜態網頁。
+
+#### (2) \`dependencies\` vs \`devDependencies\`
+這是面試與專案建置中最常見的觀念：
+- **\`dependencies\`（生產依賴）**：**網頁上線在使用者瀏覽器執行時「絕對需要」的套件**。例如 \`vue\` 核心引擎、狀態庫 \`pinia\`、網路請求庫 \`axios\`。安裝時使用 \`npm install <套件名>\`。
+- **\`devDependencies\`（開發依賴）**：**只在你的電腦開發、編譯、打包時需要**，最終產出的網頁不會包含它們。例如打包工具 \`vite\`、Vue 編譯外掛 \`@vitejs/plugin-vue\`、語法檢查工具 \`eslint\`。安裝時使用 \`npm install -D <套件名>\`。
+
+#### (3) 語意化版本號（SemVer）與 \`package-lock.json\`
+在版本號前常見到符號：
+- **\`^3.5.0\` (Caret)**：允許安裝 **3.x.x** 的最新小版本（Minor/Patch），但不會升級到大版本 4.0.0。
+- **\`~3.5.0\` (Tilde)**：僅允許安裝 **3.5.x** 的補丁修復版本（Patch）。
+- **\`3.5.0\`**：鎖死此版本。
+> **為什麼有 package-lock.json？**  
+> 為了避免團隊成員 A 安裝時拉到 3.5.1，而成員 B 隔天拉到 3.5.2 導致不可預期的 Bug，\`package-lock.json\` 會精密記錄當前安裝的**具體精確版本與下載位址**，**絕對不能手動刪除它**！
+
+---
+
+### 3. vite.config.js：打包工具中樞大腦
+
+現代 Vue 3 官方推薦搭配 **Vite** 作為開發與建置工具。以下是一份最實用且標準的 \`vite.config.js\`：
+
+\`\`\`javascript
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import path from 'path';
+
+// https://vite.dev/config/
+export default defineConfig({
+  // 1. 必備外掛：讓 Vite 能夠解析並編譯 .vue 單文件組件
+  plugins: [vue()],
+
+  // 2. 部署基礎路徑（解決 GitHub Pages 或子路徑 404 問題）
+  base: './',
+
+  // 3. 路徑別名（告別 ../../../../ 相對路徑地獄）
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src')
+    }
+  },
+
+  // 4. 本機開發伺服器與跨域代理 (Proxy)
+  server: {
+    port: 5173,
+    open: true,
+    proxy: {
+      '/api': {
+        target: 'https://api.yourcompany.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\\/api/, '')
+      }
+    }
+  }
+});
+\`\`\`
+
+#### 實戰四大金剛配置深度解密：
+1. **\`plugins: [vue()]\`**：Vite 本身是通用建置工具，必須透過此外掛才能把 \`<template>\`、\`<script>\`、\`<style>\` 拆解並編譯成高效的 JavaScript 程式碼。
+2. **\`base\` 基礎路徑**：
+   - 預設是 \`'/'\`（根目錄）。如果你的網站部署在獨立網址（如 \`https://mycompany.com/\`），預設沒問題。
+   - 但若部署到 **GitHub Pages** 或公司內網子目錄（如 \`https://username.github.io/my-vue-app/\`），如果不設為 \`'./'\` 或 \`'/my-vue-app/'\`，瀏覽器去根目錄找不到靜態檔案就會整頁空白並報 **404 錯誤**！
+3. **\`resolve.alias\` 路徑別名**：
+   - 在深層組件引入模組時，不用再痛苦地算層級寫 \`import Nav from '../../../components/Nav.vue'\`。
+   - 配置 \`'@': path.resolve(__dirname, './src')\` 後，在專案任何角落都能優雅地寫：  
+     \`import Nav from '@/components/Nav.vue'\`！
+4. **\`server.proxy\` 本機代理（CORS 跨域終結者）**：
+   - 前後端分離開發時，前端在本機 \`localhost:5173\`，後端在 \`api.example.com\`，瀏覽器會因「同源政策 (Same-Origin Policy)」擋下請求（CORS 跨域錯誤）。
+   - 設定 \`server.proxy\` 後，瀏覽器請求直接發給本機 Vite 伺服器，再由本機 Vite 伺服器替你向後端抓取資料，完全繞過瀏覽器的跨域限制！
+
+---
+
+### 4. 專案是怎麼跑起來的？全流程啟動生命週期
+
+\`\`\`
+1. 終端機執行 npm run dev
+   ↓
+2. Vite 讀取 vite.config.js，啟用 @vitejs/plugin-vue 與別名
+   ↓
+3. 開發伺服器啟動於 http://localhost:5173/
+   ↓
+4. 瀏覽器訪問，首個加載 index.html (<div id="app"></div>)
+   ↓
+5. index.html 執行 <script type="module" src="/src/main.js">
+   ↓
+6. main.js 執行 createApp(App)，註冊插件並 .mount('#app')
+   ↓
+7. 根組件 App.vue 渲染完成，頁面璀璨登場！
+\`\`\`
+`,task:"\n**今日實戰任務：**\n1. 觀察右側編輯器模擬的「Vite 專案工程化控制台」。\n2. 切換「專案部屬模式」開關，觀察 `base` 路徑設定為 `'/'` 與 `'./'` 時，GitHub Pages 子目錄靜態資源載入路徑的差異。\n3. 嘗試在模擬的 `vite.config.js` 中開啟 `alias: { '@': './src' }`，體驗現代前端標準別名帶來的極簡引用！\n",starterCode:`<div id="app" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 16px; max-width: 600px;">
+  <h3 style="margin-top: 0; color: #1e293b; display: flex; align-items: center; gap: 8px;">
+    <span>🛠️ Vite & package.json 專案配置管理器</span>
+  </h3>
+
+  <!-- 模擬 vite.config.js 控制區 -->
+  <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 14px; margin-bottom: 16px; background: #f8fafc;">
+    <div style="font-weight: 700; color: #0f172a; margin-bottom: 8px; font-size: 14px;">
+      1. vite.config.js : base 部署路徑模擬
+    </div>
+    
+    <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+      <button @click="setBase('/')" :style="btnStyle(configBase === '/')">
+        部署至根網址 (base: '/')
+      </button>
+      <button @click="setBase('./')" :style="btnStyle(configBase === './')">
+        部署至子目錄/GitHub Pages (base: './')
+      </button>
+    </div>
+
+    <!-- 模擬資源解析結果 -->
+    <div style="background: #1e293b; color: #f8fafc; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 12px;">
+      <div>專案打包輸出資源路徑：</div>
+      <div style="color: #38bdf8; margin-top: 4px;">{{ assetPreviewUrl }}</div>
+      <div :style="{ color: isAsset404 ? '#ef4444' : '#10b981', marginTop: '6px', fontWeight: 'bold' }">
+        {{ isAsset404 ? '⚠️ 警告：在 GitHub Pages 子路徑部署時將發生 404 資源找不到！' : '✅ 正常：資源相對路徑正確解析！' }}
+      </div>
+    </div>
+  </div>
+
+  <!-- 模擬 package.json scripts 控制區 -->
+  <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 14px; background: #ffffff;">
+    <div style="font-weight: 700; color: #0f172a; margin-bottom: 8px; font-size: 14px;">
+      2. package.json : scripts 終端機模擬執行
+    </div>
+
+    <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+      <button @click="runScript('dev')" style="padding: 6px 12px; background: #42b883; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600;">
+        ▶ npm run dev
+      </button>
+      <button @click="runScript('build')" style="padding: 6px 12px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600;">
+        📦 npm run build
+      </button>
+    </div>
+
+    <div style="background: #0f172a; color: #a5f3fc; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 12px; min-height: 50px;">
+      <div style="color: #94a3b8;">$ {{ terminalCommand }}</div>
+      <div style="color: #4ade80; margin-top: 4px;">{{ terminalOutput }}</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const { createApp, ref, computed } = Vue;
+
+  createApp({
+    setup() {
+      const configBase = ref('/');
+      const isGitHubPages = ref(true); // 模擬部署環境為 GitHub Pages
+
+      const setBase = (b) => {
+        configBase.value = b;
+      };
+
+      const assetPreviewUrl = computed(() => {
+        return configBase.value === '/' 
+          ? 'https://my-name.github.io/assets/main-Dk28.js' 
+          : 'https://my-name.github.io/my-vue-app/assets/main-Dk28.js';
+      });
+
+      const isAsset404 = computed(() => {
+        return configBase.value === '/';
+      });
+
+      const terminalCommand = ref('npm run dev');
+      const terminalOutput = ref('VITE v5.4.0 ready in 158 ms -> Local: http://localhost:5173/');
+
+      const runScript = (type) => {
+        if (type === 'dev') {
+          terminalCommand.value = 'npm run dev';
+          terminalOutput.value = 'VITE v5.4.0 ready in 142 ms -> Local: http://localhost:5173/';
+        } else {
+          terminalCommand.value = 'npm run build';
+          terminalOutput.value = '✓ 42 modules transformed. dist/assets/index.js 86.4 kB (gzip: 28.1 kB)';
+        }
+      };
+
+      const btnStyle = (active) => ({
+        padding: '6px 12px',
+        background: active ? '#0284c7' : '#e2e8f0',
+        color: active ? '#ffffff' : '#334155',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        fontSize: '12px',
+        fontWeight: active ? '700' : '500'
+      });
+
+      return {
+        configBase,
+        setBase,
+        assetPreviewUrl,
+        isAsset404,
+        terminalCommand,
+        terminalOutput,
+        runScript,
+        btnStyle
+      };
+    }
+  }).mount('#app');
+<\/script>`,solutionCode:`<div id="app" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 16px; max-width: 600px;">
+  <h3 style="margin-top: 0; color: #1e293b; display: flex; align-items: center; gap: 8px;">
+    <span>🛠️ Vite & package.json 專案配置管理器</span>
+  </h3>
+
+  <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 14px; margin-bottom: 16px; background: #f8fafc;">
+    <div style="font-weight: 700; color: #0f172a; margin-bottom: 8px; font-size: 14px;">
+      1. vite.config.js : base 部署路徑模擬
+    </div>
+    
+    <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+      <button @click="setBase('/')" :style="btnStyle(configBase === '/')">
+        部署至根網址 (base: '/')
+      </button>
+      <button @click="setBase('./')" :style="btnStyle(configBase === './')">
+        部署至子目錄/GitHub Pages (base: './')
+      </button>
+    </div>
+
+    <div style="background: #1e293b; color: #f8fafc; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 12px;">
+      <div>專案打包輸出資源路徑：</div>
+      <div style="color: #38bdf8; margin-top: 4px;">{{ assetPreviewUrl }}</div>
+      <div :style="{ color: isAsset404 ? '#ef4444' : '#10b981', marginTop: '6px', fontWeight: 'bold' }">
+        {{ isAsset404 ? '⚠️ 警告：在 GitHub Pages 子路徑部署時將發生 404 資源找不到！' : '✅ 正常：資源相對路徑正確解析！' }}
+      </div>
+    </div>
+  </div>
+
+  <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 14px; background: #ffffff;">
+    <div style="font-weight: 700; color: #0f172a; margin-bottom: 8px; font-size: 14px;">
+      2. package.json : scripts 終端機模擬執行
+    </div>
+
+    <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+      <button @click="runScript('dev')" style="padding: 6px 12px; background: #42b883; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600;">
+        ▶ npm run dev
+      </button>
+      <button @click="runScript('build')" style="padding: 6px 12px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600;">
+        📦 npm run build
+      </button>
+    </div>
+
+    <div style="background: #0f172a; color: #a5f3fc; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 12px; min-height: 50px;">
+      <div style="color: #94a3b8;">$ {{ terminalCommand }}</div>
+      <div style="color: #4ade80; margin-top: 4px;">{{ terminalOutput }}</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const { createApp, ref, computed } = Vue;
+
+  createApp({
+    setup() {
+      const configBase = ref('./'); // 正確配置相對路徑
+      const isGitHubPages = ref(true);
+
+      const setBase = (b) => {
+        configBase.value = b;
+      };
+
+      const assetPreviewUrl = computed(() => {
+        return configBase.value === '/' 
+          ? 'https://my-name.github.io/assets/main-Dk28.js' 
+          : 'https://my-name.github.io/my-vue-app/assets/main-Dk28.js';
+      });
+
+      const isAsset404 = computed(() => {
+        return configBase.value === '/';
+      });
+
+      const terminalCommand = ref('npm run build');
+      const terminalOutput = ref('✓ 42 modules transformed. dist/assets/index.js 86.4 kB (gzip: 28.1 kB)');
+
+      const runScript = (type) => {
+        if (type === 'dev') {
+          terminalCommand.value = 'npm run dev';
+          terminalOutput.value = 'VITE v5.4.0 ready in 142 ms -> Local: http://localhost:5173/';
+        } else {
+          terminalCommand.value = 'npm run build';
+          terminalOutput.value = '✓ 42 modules transformed. dist/assets/index.js 86.4 kB (gzip: 28.1 kB)';
+        }
+      };
+
+      const btnStyle = (active) => ({
+        padding: '6px 12px',
+        background: active ? '#0284c7' : '#e2e8f0',
+        color: active ? '#ffffff' : '#334155',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        fontSize: '12px',
+        fontWeight: active ? '700' : '500'
+      });
+
+      return {
+        configBase,
+        setBase,
+        assetPreviewUrl,
+        isAsset404,
+        terminalCommand,
+        terminalOutput,
+        runScript,
+        btnStyle
+      };
+    }
+  }).mount('#app');
+<\/script>`,hints:[`在 vite.config.js 中將 base 設為 './' 能保證打包後的靜態檔案路徑採用相對路徑，不會因為上傳到非根目錄而 404。`,`package.json 中的 scripts 能定義日常高頻指令，避免每次都要手動敲長指令。`]},{id:`intro-hello-world`,category:`基礎入門篇`,title:`01. 認識 Vue.js 與第一個應用`,summary:`了解宣告式渲染的核心理念，並使用 createApp 啟動第一個 Vue 應用程式。`,readTime:`3 分鐘`,concept:`
 ### 什麼是 Vue.js？
 Vue（讀作 /vjuː/，類似 view）是一套用於構建使用者介面的**漸進式 JavaScript 框架**。
 在傳統 JavaScript (DOM 操作) 中，你必須手動找到元素並修改內容：
@@ -4622,4 +5214,4 @@ Service Worker 是一段獨立運行在瀏覽器後台的腳本，能攔截網�
       return { showReady };
     }
   }).mount('#app');
-<\/script>`,hints:[`熟記四階段進程（Phase 0~4）與三不原則（不動後端、不中斷線上營運、不盲目重寫），提案必勝！`]}],ww=[{id:`css`,label:`CSS`,title:`CSS 樣式與排版`,count:xw.length,badgeText:`7 單元`,description:`選擇器權重、盒模型、Flexbox/Grid、RWD 與 CSS 變數`,curriculum:xw},{id:`html`,label:`HTML`,title:`HTML 結構與語意`,count:bw.length,badgeText:`5 單元`,description:`標準骨架、DOM 樹、語意化標籤、現代表單與報表表格`,curriculum:bw},{id:`javascript`,label:`Javascript`,title:`JavaScript 邏輯與引擎`,count:Sw.length,badgeText:`8 單元`,description:`ES6+ 宣告、解構展開、箭頭函式、陣列方法、Promise/async、ESM`,curriculum:Sw},{id:`vue`,label:`Vue`,title:`Vue 3 實戰與架構遷移`,count:Cw.length,badgeText:`27 單元`,description:`Composition API、狀態驅動、組件化、Pinia、路由與企業架構重構`,curriculum:Cw}];[...Cw,...bw,...xw,...Sw];function Tw(e){let t=ww.find(t=>t.id===e);return t?t.curriculum:Cw}function Ew(e){return e.startsWith(`html-`)?`html`:e.startsWith(`css-`)?`css`:e.startsWith(`js-`)?`javascript`:`vue`}var Dw={class:`app-layout`},Ow={key:0,class:`welcome-wrapper`},kw={key:1,class:`glossary-wrapper`},Aw={key:2,class:`main-workspace`},jw={class:`workspace-main-area`},Mw={key:0,class:`mobile-subnav-tabs`},Nw={class:`workspace-split`},Pw={class:`doc-viewport`},Fw={class:`doc-inner-container`},Iw={key:0,class:`mobile-quick-jump`},Lw={class:`playground-viewport`},Rw={class:`playground-inner-container`},zw={class:`playground-banner`},Bw={class:`banner-title-wrap`};qo(cx({__name:`App`,setup(e){let t=j(`welcome`),n=e=>{if(t.value=e,localStorage.setItem(`program-study-last-view`,e),e===`welcome`){let e=document.querySelector(`.welcome-wrapper`);e&&e.scrollTo({top:0,behavior:`smooth`})}},r=j(`doc`),i=j(typeof window<`u`?window.innerWidth>960:!0),a=()=>{i.value=window.innerWidth>960,window.innerWidth<=1024&&(u.value=!1)},o=j(`vue`),s=R(()=>Tw(o.value)),c=j(!1),l=()=>{c.value=!c.value,c.value?(document.documentElement.setAttribute(`data-theme`,`dark`),localStorage.setItem(`vue-study-theme`,`dark`)):(document.documentElement.removeAttribute(`data-theme`),localStorage.setItem(`vue-study-theme`,`light`))},u=j(!0),d=()=>{u.value=!u.value},f=()=>{window.innerWidth<=1024&&(u.value=!1)},p=j(`project-overview-setup`),m=R(()=>{let e=s.value.findIndex(e=>e.id===p.value);return e>=0?e:0}),h=R(()=>s.value[m.value]||s.value[0]),g=R(()=>m.value>0),_=R(()=>m.value<s.value.length-1),v=e=>{o.value=e,localStorage.setItem(`program-study-last-track`,e),t.value!==`lessons`&&(t.value=`lessons`,localStorage.setItem(`program-study-last-view`,`lessons`));let n=Tw(e),r=localStorage.getItem(`program-study-last-lesson-${e}`);r&&n.some(e=>e.id===r)?p.value=r:n.length>0&&(p.value=n[0].id),S(),f()},y=e=>{v(e),t.value=`lessons`},b=({track:e,lessonId:t})=>{e&&e!==o.value&&(o.value=e,localStorage.setItem(`program-study-last-track`,e));let n=Tw(o.value);t&&n.some(e=>e.id===t)?p.value=t:n.length>0&&(p.value=n[0].id),localStorage.setItem(`program-study-last-lesson-${o.value}`,p.value),S(),f()},x=e=>{let t=Ew(e);t!==o.value&&(o.value=t,localStorage.setItem(`program-study-last-track`,t)),p.value=e,localStorage.setItem(`program-study-last-lesson-${o.value}`,e),localStorage.setItem(`vue-study-last-lesson`,e),f(),S(),i.value||(r.value=`doc`)},S=()=>{let e=document.querySelector(`.doc-viewport`);e&&e.scrollTo({top:0,behavior:`smooth`})},C=()=>{g.value&&x(s.value[m.value-1].id)},ee=()=>{_.value&&x(s.value[m.value+1].id)},w=j([]),te=e=>{let t=w.value.indexOf(e);t>-1?w.value.splice(t,1):w.value.push(e),localStorage.setItem(`vue-study-completed`,JSON.stringify(w.value))},ne=R(()=>s.value.filter(e=>w.value.includes(e.id)).length),T=R(()=>s.value.length);return xr(()=>{window.addEventListener(`resize`,a),a();let e=localStorage.getItem(`vue-study-theme`);(e===`dark`||!e&&window.matchMedia(`(prefers-color-scheme: dark)`).matches)&&(c.value=!0,document.documentElement.setAttribute(`data-theme`,`dark`));let n=localStorage.getItem(`program-study-last-view`);n&&[`lessons`,`glossary`,`welcome`].includes(n)&&(t.value=n);let r=localStorage.getItem(`program-study-last-track`);r&&ww.some(e=>e.id===r)&&(o.value=r);let i=Tw(o.value),s=localStorage.getItem(`program-study-last-lesson-${o.value}`)||localStorage.getItem(`vue-study-last-lesson`);s&&i.some(e=>e.id===s)?p.value=s:i.length>0&&(p.value=i[0].id);let l=localStorage.getItem(`vue-study-completed`);if(l)try{w.value=JSON.parse(l)}catch{w.value=[]}sx()}),Tr(()=>{window.removeEventListener(`resize`,a)}),(e,a)=>(P(),F(`div`,Dw,[L(Mx,{"is-dark":c.value,"sidebar-open":u.value,"current-view":t.value,"current-track":o.value,tracks:M(ww),"track-completed-count":ne.value,"track-total-lessons":T.value,onToggleTheme:l,onToggleSidebar:d,onToggleView:n,onSelectTrack:v},null,8,[`is-dark`,`sidebar-open`,`current-view`,`current-track`,`tracks`,`track-completed-count`,`track-total-lessons`]),t.value===`welcome`?(P(),F(`div`,Ow,[L(yw,{onStartTrack:y,onOpenLessons:a[0]||=e=>t.value=`lessons`})])):t.value===`glossary`?(P(),F(`div`,kw,[L(vC,{onClose:a[1]||=e=>t.value=`lessons`})])):(P(),F(`div`,Aw,[L(Jx,{curriculum:s.value,"current-lesson-id":p.value,"completed-ids":w.value,"is-open":u.value,"current-track":o.value,tracks:M(ww),onSelectLesson:x,onToggleComplete:te,onCloseSidebar:f,onSelectTrack:v},null,8,[`curriculum`,`current-lesson-id`,`completed-ids`,`is-open`,`current-track`,`tracks`]),I(`div`,jw,[i.value?ma(``,!0):(P(),F(`div`,Mw,[I(`button`,{class:E([`mobile-subnav-btn`,{"is-active":r.value===`doc`}]),onClick:a[2]||=e=>r.value=`doc`},[L(M(os),{size:15}),a[5]||=I(`span`,null,`課程教學文檔`,-1)],2),I(`button`,{class:E([`mobile-subnav-btn`,{"is-active":r.value===`playground`}]),onClick:a[3]||=e=>r.value=`playground`},[L(M(_s),{size:15}),a[6]||=I(`span`,null,`即時互動演練台`,-1)],2)])),I(`div`,Nw,[Nn(I(`div`,Pw,[I(`div`,Fw,[L(mS,{lesson:h.value,"is-completed":w.value.includes(h.value.id),"has-prev":g.value,"has-next":_.value,onPrevLesson:C,onNextLesson:ee,onToggleComplete:te,onJumpTrack:b},null,8,[`lesson`,`is-completed`,`has-prev`,`has-next`]),i.value?ma(``,!0):(P(),F(`div`,Iw,[I(`button`,{class:`quick-jump-btn`,onClick:a[4]||=e=>r.value=`playground`},[L(M(_s),{size:16}),a[7]||=I(`span`,null,`動手打代碼：切換至即時演練台 →`,-1)])]))])],512),[[eo,i.value||r.value===`doc`]]),Nn(I(`div`,Lw,[I(`div`,Rw,[I(`div`,zw,[I(`div`,Bw,[L(M(_s),{size:18,class:`banner-icon`}),a[8]||=I(`span`,{class:`banner-title`},`即時互動演練台 (Live Playground)`,-1)]),a[9]||=I(`span`,{class:`banner-subtext`},`邊看教學，邊在下方動手打代碼！`,-1)]),L(GS,{"starter-code":h.value.starterCode,"solution-code":h.value.solutionCode,"lesson-id":h.value.id},null,8,[`starter-code`,`solution-code`,`lesson-id`])])],512),[[eo,i.value||r.value===`playground`]])])])]))]))}},[[`__scopeId`,`data-v-d1fcb901`]])).mount(`#app`);
+<\/script>`,hints:[`熟記四階段進程（Phase 0~4）與三不原則（不動後端、不中斷線上營運、不盲目重寫），提案必勝！`]}],ww=[{id:`css`,label:`CSS`,title:`CSS 樣式與排版`,count:xw.length,badgeText:`${xw.length} 單元`,description:`選擇器權重、盒模型、Flexbox/Grid、RWD 與 CSS 變數`,curriculum:xw},{id:`html`,label:`HTML`,title:`HTML 結構與語意`,count:bw.length,badgeText:`${bw.length} 單元`,description:`標準骨架、DOM 樹、語意化標籤、現代表單與報表表格`,curriculum:bw},{id:`javascript`,label:`Javascript`,title:`JavaScript 邏輯與引擎`,count:Sw.length,badgeText:`${Sw.length} 單元`,description:`ES6+ 宣告、解構展開、箭頭函式、陣列方法、Promise/async、ESM`,curriculum:Sw},{id:`vue`,label:`Vue`,title:`Vue 3 實戰與架構遷移`,count:Cw.length,badgeText:`${Cw.length} 單元`,description:`Composition API、狀態驅動、組件化、Pinia、路由與企業架構重構`,curriculum:Cw}];[...Cw,...bw,...xw,...Sw];function Tw(e){let t=ww.find(t=>t.id===e);return t?t.curriculum:Cw}function Ew(e){return e.startsWith(`html-`)?`html`:e.startsWith(`css-`)?`css`:e.startsWith(`js-`)?`javascript`:`vue`}var Dw={class:`app-layout`},Ow={key:0,class:`welcome-wrapper`},kw={key:1,class:`glossary-wrapper`},Aw={key:2,class:`main-workspace`},jw={class:`workspace-main-area`},Mw={key:0,class:`mobile-subnav-tabs`},Nw={class:`workspace-split`},Pw={class:`doc-viewport`},Fw={class:`doc-inner-container`},Iw={key:0,class:`mobile-quick-jump`},Lw={class:`playground-viewport`},Rw={class:`playground-inner-container`},zw={class:`playground-banner`},Bw={class:`banner-title-wrap`};qo(cx({__name:`App`,setup(e){let t=j(`welcome`),n=e=>{if(t.value=e,localStorage.setItem(`program-study-last-view`,e),e===`welcome`){let e=document.querySelector(`.welcome-wrapper`);e&&e.scrollTo({top:0,behavior:`smooth`})}},r=j(`doc`),i=j(typeof window<`u`?window.innerWidth>960:!0),a=()=>{i.value=window.innerWidth>960,window.innerWidth<=1024&&(u.value=!1)},o=j(`vue`),s=R(()=>Tw(o.value)),c=j(!1),l=()=>{c.value=!c.value,c.value?(document.documentElement.setAttribute(`data-theme`,`dark`),localStorage.setItem(`vue-study-theme`,`dark`)):(document.documentElement.removeAttribute(`data-theme`),localStorage.setItem(`vue-study-theme`,`light`))},u=j(!0),d=()=>{u.value=!u.value},f=()=>{window.innerWidth<=1024&&(u.value=!1)},p=j(`project-overview-setup`),m=R(()=>{let e=s.value.findIndex(e=>e.id===p.value);return e>=0?e:0}),h=R(()=>s.value[m.value]||s.value[0]),g=R(()=>m.value>0),_=R(()=>m.value<s.value.length-1),v=e=>{o.value=e,localStorage.setItem(`program-study-last-track`,e),t.value!==`lessons`&&(t.value=`lessons`,localStorage.setItem(`program-study-last-view`,`lessons`));let n=Tw(e),r=localStorage.getItem(`program-study-last-lesson-${e}`);r&&n.some(e=>e.id===r)?p.value=r:n.length>0&&(p.value=n[0].id),S(),f()},y=e=>{v(e),t.value=`lessons`},b=({track:e,lessonId:t})=>{e&&e!==o.value&&(o.value=e,localStorage.setItem(`program-study-last-track`,e));let n=Tw(o.value);t&&n.some(e=>e.id===t)?p.value=t:n.length>0&&(p.value=n[0].id),localStorage.setItem(`program-study-last-lesson-${o.value}`,p.value),S(),f()},x=e=>{let t=Ew(e);t!==o.value&&(o.value=t,localStorage.setItem(`program-study-last-track`,t)),p.value=e,localStorage.setItem(`program-study-last-lesson-${o.value}`,e),localStorage.setItem(`vue-study-last-lesson`,e),f(),S(),i.value||(r.value=`doc`)},S=()=>{let e=document.querySelector(`.doc-viewport`);e&&e.scrollTo({top:0,behavior:`smooth`})},C=()=>{g.value&&x(s.value[m.value-1].id)},ee=()=>{_.value&&x(s.value[m.value+1].id)},w=j([]),te=e=>{let t=w.value.indexOf(e);t>-1?w.value.splice(t,1):w.value.push(e),localStorage.setItem(`vue-study-completed`,JSON.stringify(w.value))},ne=R(()=>s.value.filter(e=>w.value.includes(e.id)).length),T=R(()=>s.value.length);return xr(()=>{window.addEventListener(`resize`,a),a();let e=localStorage.getItem(`vue-study-theme`);(e===`dark`||!e&&window.matchMedia(`(prefers-color-scheme: dark)`).matches)&&(c.value=!0,document.documentElement.setAttribute(`data-theme`,`dark`));let n=localStorage.getItem(`program-study-last-view`);n&&[`lessons`,`glossary`,`welcome`].includes(n)&&(t.value=n);let r=localStorage.getItem(`program-study-last-track`);r&&ww.some(e=>e.id===r)&&(o.value=r);let i=Tw(o.value),s=localStorage.getItem(`program-study-last-lesson-${o.value}`)||localStorage.getItem(`vue-study-last-lesson`);s&&i.some(e=>e.id===s)?p.value=s:i.length>0&&(p.value=i[0].id);let l=localStorage.getItem(`vue-study-completed`);if(l)try{w.value=JSON.parse(l)}catch{w.value=[]}sx()}),Tr(()=>{window.removeEventListener(`resize`,a)}),(e,a)=>(P(),F(`div`,Dw,[L(Mx,{"is-dark":c.value,"sidebar-open":u.value,"current-view":t.value,"current-track":o.value,tracks:M(ww),"track-completed-count":ne.value,"track-total-lessons":T.value,onToggleTheme:l,onToggleSidebar:d,onToggleView:n,onSelectTrack:v},null,8,[`is-dark`,`sidebar-open`,`current-view`,`current-track`,`tracks`,`track-completed-count`,`track-total-lessons`]),t.value===`welcome`?(P(),F(`div`,Ow,[L(yw,{onStartTrack:y,onOpenLessons:a[0]||=e=>t.value=`lessons`})])):t.value===`glossary`?(P(),F(`div`,kw,[L(vC,{onClose:a[1]||=e=>t.value=`lessons`})])):(P(),F(`div`,Aw,[L(Jx,{curriculum:s.value,"current-lesson-id":p.value,"completed-ids":w.value,"is-open":u.value,"current-track":o.value,tracks:M(ww),onSelectLesson:x,onToggleComplete:te,onCloseSidebar:f,onSelectTrack:v},null,8,[`curriculum`,`current-lesson-id`,`completed-ids`,`is-open`,`current-track`,`tracks`]),I(`div`,jw,[i.value?ma(``,!0):(P(),F(`div`,Mw,[I(`button`,{class:E([`mobile-subnav-btn`,{"is-active":r.value===`doc`}]),onClick:a[2]||=e=>r.value=`doc`},[L(M(os),{size:15}),a[5]||=I(`span`,null,`課程教學文檔`,-1)],2),I(`button`,{class:E([`mobile-subnav-btn`,{"is-active":r.value===`playground`}]),onClick:a[3]||=e=>r.value=`playground`},[L(M(_s),{size:15}),a[6]||=I(`span`,null,`即時互動演練台`,-1)],2)])),I(`div`,Nw,[Nn(I(`div`,Pw,[I(`div`,Fw,[L(mS,{lesson:h.value,"is-completed":w.value.includes(h.value.id),"has-prev":g.value,"has-next":_.value,onPrevLesson:C,onNextLesson:ee,onToggleComplete:te,onJumpTrack:b},null,8,[`lesson`,`is-completed`,`has-prev`,`has-next`]),i.value?ma(``,!0):(P(),F(`div`,Iw,[I(`button`,{class:`quick-jump-btn`,onClick:a[4]||=e=>r.value=`playground`},[L(M(_s),{size:16}),a[7]||=I(`span`,null,`動手打代碼：切換至即時演練台 →`,-1)])]))])],512),[[eo,i.value||r.value===`doc`]]),Nn(I(`div`,Lw,[I(`div`,Rw,[I(`div`,zw,[I(`div`,Bw,[L(M(_s),{size:18,class:`banner-icon`}),a[8]||=I(`span`,{class:`banner-title`},`即時互動演練台 (Live Playground)`,-1)]),a[9]||=I(`span`,{class:`banner-subtext`},`邊看教學，邊在下方動手打代碼！`,-1)]),L(GS,{"starter-code":h.value.starterCode,"solution-code":h.value.solutionCode,"lesson-id":h.value.id},null,8,[`starter-code`,`solution-code`,`lesson-id`])])],512),[[eo,i.value||r.value===`playground`]])])])]))]))}},[[`__scopeId`,`data-v-d1fcb901`]])).mount(`#app`);
