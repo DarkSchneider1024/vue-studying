@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted, computed, nextTick } from 'vue';
+import { ref, watch, onMounted, onUnmounted, computed, nextTick } from 'vue';
 import { 
   Play, 
   RotateCcw, 
@@ -40,12 +40,43 @@ const emit = defineEmits(['solved']);
 const userCode = ref('');
 const iframeRef = ref(null);
 const textareaRef = ref(null);
+const mobileTextareaRef = ref(null);
 const consoleLogs = ref([]);
 const runtimeError = ref(null);
 const isCopied = ref(false);
 const isSolutionApplied = ref(false);
 const isAutoRun = ref(true);
 const showConsole = ref(false);
+
+// 手機全螢幕編輯模式
+const isMobile = ref(false);
+const isMobileEditMode = ref(false);
+
+const detectMobile = () => {
+  isMobile.value = window.innerWidth <= 768;
+};
+
+const enterMobileEdit = () => {
+  isMobileEditMode.value = true;
+  document.body.style.overflow = 'hidden';
+  nextTick(() => {
+    const textarea = mobileTextareaRef.value;
+    if (textarea) {
+      textarea.focus();
+    }
+  });
+};
+
+const exitMobileEdit = () => {
+  isMobileEditMode.value = false;
+  document.body.style.overflow = '';
+  if (mobileTextareaRef.value) {
+    mobileTextareaRef.value.blur();
+  }
+  if (isAutoRun.value) {
+    runCode();
+  }
+};
 
 // 行動端模式切換 ('split' | 'editor' | 'output')
 const viewMode = ref('split');
@@ -91,7 +122,8 @@ const insertSymbol = (sym, event) => {
   if (event) {
     event.preventDefault();
   }
-  const textarea = textareaRef.value;
+  // Use the correct textarea based on current mode
+  const textarea = isMobileEditMode.value ? mobileTextareaRef.value : textareaRef.value;
   if (!textarea) return;
 
   const start = textarea.selectionStart ?? userCode.value.length;
@@ -259,7 +291,15 @@ const handleWindowMessage = (event) => {
 
 onMounted(() => {
   window.addEventListener('message', handleWindowMessage);
+  detectMobile();
+  window.addEventListener('resize', detectMobile);
   runCode();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('message', handleWindowMessage);
+  window.removeEventListener('resize', detectMobile);
+  document.body.style.overflow = '';
 });
 
 // 重置為起始代碼
@@ -434,7 +474,7 @@ const copyCode = async () => {
       </div>
 
       <!-- 手機專屬快捷代碼符號列 (Mobile Quick-Symbol Bar) -->
-      <div class="mobile-symbol-bar">
+      <div class="mobile-symbol-bar" v-show="!isMobile || isMobileEditMode">
         <div class="symbol-scroll-track">
           <button 
             v-for="(sym, idx) in quickSymbols" 
@@ -461,8 +501,21 @@ const copyCode = async () => {
           @input="handleCodeChange"
           @keydown="handleKeyDown"
           spellcheck="false"
+          :readonly="isMobile && !isMobileEditMode"
           placeholder="在此輸入 Vue 與 HTML 程式碼..."
         ></textarea>
+
+        <!-- 手機端：點擊觸發全螢幕編輯 -->
+        <div 
+          v-if="isMobile && !isMobileEditMode" 
+          class="mobile-edit-overlay"
+          @click="enterMobileEdit"
+        >
+          <div class="mobile-edit-prompt">
+            <Code2 :size="18" />
+            <span>點擊此處開始編輯程式碼</span>
+          </div>
+        </div>
       </div>
 
       <!-- 底部解答狀態列 -->
@@ -470,6 +523,53 @@ const copyCode = async () => {
         <span>已載入參考解答，您可以點擊 <strong>Reset</strong> 重新自己挑戰！</span>
       </div>
     </div>
+
+    <!-- 手機全螢幕編輯模式 -->
+    <Teleport to="body">
+      <div v-if="isMobileEditMode" class="mobile-fullscreen-editor">
+        <div class="mobile-fs-toolbar">
+          <div class="mobile-fs-toolbar-left">
+            <span class="mobile-fs-title">全螢幕編輯模式</span>
+          </div>
+          <div class="mobile-fs-toolbar-right">
+            <button class="mobile-fs-done-btn" @click="exitMobileEdit">
+              完成編輯
+            </button>
+          </div>
+        </div>
+
+        <!-- 全螢幕快捷符號列 -->
+        <div class="mobile-symbol-bar mobile-fs-symbol-bar">
+          <div class="symbol-scroll-track">
+            <button 
+              v-for="(sym, idx) in quickSymbols" 
+              :key="idx"
+              class="symbol-chip"
+              @mousedown.prevent="insertSymbol(sym, $event)"
+              @touchstart.prevent="insertSymbol(sym, $event)"
+            >
+              {{ sym.label }}
+            </button>
+          </div>
+        </div>
+
+        <!-- 全螢幕代碼區 -->
+        <div class="mobile-fs-editor-wrapper" :style="{ fontSize: `${codeFontSize}px` }">
+          <div class="editor-gutter">
+            <span v-for="n in lineCount" :key="n" class="gutter-num">{{ n }}</span>
+          </div>
+          <textarea
+            ref="mobileTextareaRef"
+            class="code-textarea font-mono"
+            v-model="userCode"
+            @input="handleCodeChange"
+            @keydown="handleKeyDown"
+            spellcheck="false"
+            placeholder="在此輸入 Vue 與 HTML 程式碼..."
+          ></textarea>
+        </div>
+      </div>
+    </Teleport>
 
     <!-- 浮動預覽按鈕 (當在全螢幕編輯模式時，方便一鍵切到輸出) -->
     <button 
@@ -899,5 +999,130 @@ const copyCode = async () => {
   .desktop-only {
     display: none;
   }
+}
+
+/* 手機端唯讀模式下的編輯提示覆蓋層 */
+.mobile-edit-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(11, 15, 25, 0.5);
+  cursor: pointer;
+  z-index: 5;
+  backdrop-filter: blur(1px);
+}
+
+.mobile-edit-prompt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: rgba(66, 184, 131, 0.9);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s ease;
+}
+
+.mobile-edit-overlay:active .mobile-edit-prompt {
+  transform: scale(0.95);
+}
+
+/* 手機全螢幕編輯模式 */
+.mobile-fullscreen-editor {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-code, #0b0f19);
+}
+
+.mobile-fs-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #111827;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.mobile-fs-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobile-fs-title {
+  color: #e2e8f0;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.mobile-fs-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobile-fs-done-btn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: #42b883;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.mobile-fs-done-btn:active {
+  background: #38a37a;
+}
+
+.mobile-fs-symbol-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.mobile-fs-editor-wrapper {
+  display: flex;
+  flex: 1;
+  background: var(--bg-code, #0b0f19);
+  position: relative;
+  overflow-y: auto;
+}
+
+.mobile-fs-editor-wrapper .editor-gutter {
+  width: 36px;
+  background: var(--bg-editor-gutter, #111827);
+  padding: 10px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  user-select: none;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.mobile-fs-editor-wrapper .code-textarea {
+  flex: 1;
+  padding: 10px 12px;
+  background: transparent;
+  color: var(--text-code, #e2e8f0);
+  border: none;
+  outline: none;
+  resize: none;
+  line-height: 1.6;
+  white-space: pre;
+  tab-size: 2;
+  font-family: inherit;
 }
 </style>
