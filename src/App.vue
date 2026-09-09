@@ -11,9 +11,10 @@ import { initVisitorTracker } from './services/firebase';
 import { Code2, BookOpen } from 'lucide-vue-next';
 
 // 檢視模式 ('lessons' | 'glossary' | 'welcome')
-const currentView = ref('lessons');
+const currentView = ref('welcome');
 const setView = (view) => {
   currentView.value = view;
+  localStorage.setItem('program-study-last-view', view);
   // 切換檢視滾動回頂部
   if (view === 'welcome') {
     const welcomeWrap = document.querySelector('.welcome-wrapper');
@@ -88,6 +89,7 @@ const selectTrack = (trackId) => {
   // 如果目前在歡迎頁或字典，切回課程檢視
   if (currentView.value !== 'lessons') {
     currentView.value = 'lessons';
+    localStorage.setItem('program-study-last-view', 'lessons');
   }
 
   const trackCurr = getCurriculumByTrack(trackId);
@@ -197,6 +199,12 @@ onMounted(() => {
   if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     isDark.value = true;
     document.documentElement.setAttribute('data-theme', 'dark');
+  }
+
+  // 讀取上次記憶的檢視模式（首次進入預設 welcome）
+  const savedView = localStorage.getItem('program-study-last-view');
+  if (savedView && ['lessons', 'glossary', 'welcome'].includes(savedView)) {
+    currentView.value = savedView;
   }
 
   // 讀取上次記憶的領域與單元
