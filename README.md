@@ -4,24 +4,24 @@
 
 ![Vue 3 Tutorial Banner](https://vuejs.org/images/logo.png)
 
-## 🌟 核心特色
+##  核心特色
 
-- 📖 **MDN 風格排版**：深入淺出的觀念講解、重要語法拆解（Note / Tip / Warning）與實戰任務目標。
-- ⚡ **即時互動演練區 (Live Playground)**：
+-  **MDN 風格排版**：深入淺出的觀念講解、重要語法拆解（Note / Tip / Warning）與實戰任務目標。
+-  **即時互動演練區 (Live Playground)**：
   - **Live output**：獨立沙盒 iframe 即時編譯與渲染，點擊按鈕、輸入表單具備真實響應式動態！
   - **Editable code**：支援行號、Tab 縮排、即時自動編譯。
   - **Play / Reset / Show solution**：
     - ▶ **Play**：手動立即重新執行。
-    - 🔄 **Reset**：一鍵恢復為初始挑戰代碼。
-    - 💡 **Show solution**：卡關時一鍵載入參考解答。
-- 🎨 **現代質感 UI**：
+    -  **Reset**：一鍵恢復為初始挑戰代碼。
+    -  **Show solution**：卡關時一鍵載入參考解答。
+-  **現代質感 UI**：
   - 支援深色 / 淺色模式（Dark / Light Theme）一鍵切換。
   - 具備學習進度追蹤（自動保存在 LocalStorage，刷新不遺失）。
   - 支援行動裝置與平板響應式選單。
 
 ---
 
-## 📚 課程目錄 (Curriculum)
+##  課程目錄 (Curriculum)
 
 1. **基礎入門篇**
    - 01. 認識 Vue.js 與第一個應用（宣告式渲染、`createApp`、`.mount()`）
@@ -41,7 +41,7 @@
 
 ---
 
-## 🚀 本地開發與啟動
+##  本地開發與啟動
 
 ### 1. 安裝相依套件
 ```bash
@@ -61,7 +61,7 @@ npm run build
 
 ---
 
-## 🛠 技術棧
+##  技術棧
 
 - **Core**: Vue 3 (Composition API, `<script setup>`)
 - **Build Tool**: Vite

@@ -141,7 +141,7 @@ const formattedTask = computed(() => formatMarkdown(props.lesson.task));
 
         <ul v-if="showHints" class="hints-list">
           <li v-for="(hint, idx) in lesson.hints" :key="idx" class="hint-item">
-            💡 {{ hint }}
+            {{ hint }}
           </li>
         </ul>
       </div>
@@ -164,7 +164,7 @@ const formattedTask = computed(() => formatMarkdown(props.lesson.task));
         @click="emit('toggle-complete', lesson.id)"
       >
         <CheckCircle2 :size="17" />
-        <span>{{ isCompleted ? '已完成本單元 🎉' : '標記本單元為已完成' }}</span>
+        <span>{{ isCompleted ? '已完成本單元' : '標記本單元為已完成' }}</span>
       </button>
 
       <button 

@@ -360,7 +360,7 @@ const copyCode = async () => {
 
       <!-- 底部解答狀態列 -->
       <div v-if="isSolutionApplied" class="solution-status-bar">
-        <span>✨ 目前已載入「參考解答」，您可以點擊 <strong>Reset</strong> 重新自己挑戰！</span>
+        <span>目前已載入「參考解答」，您可以點擊 <strong>Reset</strong> 重新自己挑戰！</span>
       </div>
     </div>
   </div>

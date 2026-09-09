@@ -92,14 +92,14 @@ npm run dev       # 啟動開發伺服器
   <!-- 這是標準 Vue 組件的模板區塊 -->
   <div style="padding: 16px; border: 2px solid #42b883; border-radius: 8px; background: #f0fdf4;">
     <h2 style="color: #35495e; margin-bottom: 8px;">
-      🚀 歡迎踏上 Vue 3 實戰自學之旅！
+       歡迎踏上 Vue 3 實戰自學之旅！
     </h2>
     <p>目前學習者：<strong style="color: #42b883; font-size: 1.1rem;">{{ learner }}</strong></p>
     <p>核心學習心法：<em>{{ corePrinciple }}</em></p>
     
     <div style="margin-top: 15px;">
       <button @click="levelUp" style="background: #42b883; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">
-        🔥 點我累積學習點數：{{ exp }} 點
+         點我累積學習點數：{{ exp }} 點
       </button>
     </div>
   </div>
@@ -132,14 +132,14 @@ npm run dev       # 啟動開發伺服器
     solutionCode: `<div id="app">
   <div style="padding: 16px; border: 2px solid #42b883; border-radius: 8px; background: #f0fdf4;">
     <h2 style="color: #35495e; margin-bottom: 8px;">
-      🚀 歡迎踏上 Vue 3 實戰自學之旅！
+       歡迎踏上 Vue 3 實戰自學之旅！
     </h2>
     <p>目前學習者：<strong style="color: #42b883; font-size: 1.1rem;">{{ learner }}</strong></p>
     <p>核心學習心法：<em>{{ corePrinciple }}</em></p>
     
     <div style="margin-top: 15px;">
       <button @click="levelUp" style="background: #42b883; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">
-        🔥 點我累積學習點數：{{ exp }} 點
+         點我累積學習點數：{{ exp }} 點
       </button>
     </div>
   </div>
@@ -580,13 +580,13 @@ Vue 的 \`v-model\` 一次性幫你搞定！它會自動建立資料與表單輸
   <input type="text" placeholder="例如：Alex" />
 
   <p style="margin-top: 15px;">
-    你好，<strong>{{ username || '陌生訪客' }}</strong>！歡迎來到 Vue 的世界 🎉
+    你好，<strong>{{ username || '陌生訪客' }}</strong>！歡迎來到 Vue 的世界 
   </p>
   
   <label style="display: block; margin-top: 10px;">
     <input type="checkbox" v-model="agreeTerms" /> 我同意學習條款
   </label>
-  <p>條款狀態：{{ agreeTerms ? '✅ 已同意' : '❌ 尚未勾選' }}</p>
+  <p>條款狀態：{{ agreeTerms ? ' 已同意' : ' 尚未勾選' }}</p>
 </div>
 
 <script>
@@ -611,13 +611,13 @@ Vue 的 \`v-model\` 一次性幫你搞定！它會自動建立資料與表單輸
   <input type="text" v-model="username" placeholder="例如：Alex" />
 
   <p style="margin-top: 15px;">
-    你好，<strong>{{ username || '陌生訪客' }}</strong>！歡迎來到 Vue 的世界 🎉
+    你好，<strong>{{ username || '陌生訪客' }}</strong>！歡迎來到 Vue 的世界 
   </p>
   
   <label style="display: block; margin-top: 10px;">
     <input type="checkbox" v-model="agreeTerms" /> 我同意學習條款
   </label>
-  <p>條款狀態：{{ agreeTerms ? '✅ 已同意' : '❌ 尚未勾選' }}</p>
+  <p>條款狀態：{{ agreeTerms ? ' 已同意' : ' 尚未勾選' }}</p>
 </div>
 
 <script>
@@ -658,7 +658,7 @@ Vue 的 \`v-model\` 一次性幫你搞定！它會自動建立資料與表單輸
 ### v-if vs v-show 怎麼選？
 - **\`v-if\`**：真正的條件渲染。條件為假時，元素根本**不會存在於 DOM 結構中**。切換開銷較大。
 - **\`v-show\`**：無論條件真假，元素**都會渲染到 DOM 中**，僅僅是透過 CSS \`display: none\` 來控制隱藏。初次載入開銷稍高，但頻繁切換時效能極佳。
-> 💡 **經驗法則**：頻繁切換（如收合面板、Tab 標籤頁）用 \`v-show\`；條件很少變更（如使用者權限、登入狀態）用 \`v-if\`。
+>  **經驗法則**：頻繁切換（如收合面板、Tab 標籤頁）用 \`v-show\`；條件很少變更（如使用者權限、登入狀態）用 \`v-if\`。
     `,
     task: `
 **今日任務：**
@@ -676,12 +676,12 @@ Vue 的 \`v-model\` 一次性幫你搞定！它會自動建立資料與表單輸
   <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: #f0fdf4;">
     <!-- 任務：加上 v-if="isLoggedIn" -->
     <div>
-      🎉 歡迎回來，尊貴的 VIP 會員！這是您的專屬折扣代碼：<strong>VUE3_2026</strong>
+       歡迎回來，尊貴的 VIP 會員！這是您的專屬折扣代碼：<strong>VUE3_2026</strong>
     </div>
 
     <!-- 任務：加上 v-else -->
     <div>
-      🔒 您尚未登入，請點擊上方按鈕模擬登入以查看專屬內容。
+       您尚未登入，請點擊上方按鈕模擬登入以查看專屬內容。
     </div>
   </div>
 </div>
@@ -712,11 +712,11 @@ Vue 的 \`v-model\` 一次性幫你搞定！它會自動建立資料與表單輸
 
   <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: #f0fdf4;">
     <div v-if="isLoggedIn">
-      🎉 歡迎回來，尊貴的 VIP 會員！這是您的專屬折扣代碼：<strong>VUE3_2026</strong>
+       歡迎回來，尊貴的 VIP 會員！這是您的專屬折扣代碼：<strong>VUE3_2026</strong>
     </div>
 
     <div v-else>
-      🔒 您尚未登入，請點擊上方按鈕模擬登入以查看專屬內容。
+       您尚未登入，請點擊上方按鈕模擬登入以查看專屬內容。
     </div>
   </div>
 </div>
@@ -764,7 +764,7 @@ Vue 的 \`v-model\` 一次性幫你搞定！它會自動建立資料與表單輸
 ### 為什麼一定要綁定 :key？
 \`key\` 是 Vue 用來追蹤每個節點身份（Identity）的唯一識別標記。
 當陣列順序改變、新增或刪除項目時，Vue 的虛擬 DOM (Virtual DOM) 可以透過 \`key\` 進行精準高效的複用，避免不必要的重新渲染或表單狀態錯亂。
-> ⚠️ **新手陷阱**：盡量使用唯一的 \`id\`（如 \`:key="item.id"\`），避免使用 \`index\` 作為 key，尤其是當列表會動態排序或刪除時。
+>  **新手陷阱**：盡量使用唯一的 \`id\`（如 \`:key="item.id"\`），避免使用 \`index\` 作為 key，尤其是當列表會動態排序或刪除時。
     `,
     task: `
 **今日任務：**
@@ -860,7 +860,7 @@ const name = ref('Vue');
 const state = reactive({ count: 0, title: '測試' });
 state.count++; // 不需要寫 .value
 \`\`\`
-> 💡 **最佳實踐**：Vue 官方推薦在多數情況下優先使用 \`ref()\`，因為它支援基本型別（number, string, boolean），且解構時不易遺失響應性。
+>  **最佳實踐**：Vue 官方推薦在多數情況下優先使用 \`ref()\`，因為它支援基本型別（number, string, boolean），且解構時不易遺失響應性。
     `,
     task: `
 **今日任務：**
@@ -1098,7 +1098,7 @@ watch(search, (newVal, oldVal) => {
   <input v-model="question" placeholder="例如：Vue 3 好學嗎？" style="width: 250px;" />
 
   <p style="margin-top: 15px; color: #6366f1;">
-    💡 小幫手回應：{{ answer }}
+     小幫手回應：{{ answer }}
   </p>
 </div>
 
@@ -1132,7 +1132,7 @@ watch(search, (newVal, oldVal) => {
   <input v-model="question" placeholder="例如：Vue 3 好學嗎？" style="width: 250px;" />
 
   <p style="margin-top: 15px; color: #6366f1;">
-    💡 小幫手回應：{{ answer }}
+     小幫手回應：{{ answer }}
   </p>
 </div>
 
@@ -1205,9 +1205,9 @@ Props 是你可以在組件上註冊的自定義屬性。當一個值被傳遞�
   const app = createApp({
     setup() {
       const courses = ref([
-        { id: 1, name: 'HTML & CSS 基礎', status: '已精通 ✅' },
-        { id: 2, name: 'JavaScript ES6+', status: '已掌握 🚀' },
-        { id: 3, name: 'Vue 3 全面啟航', status: '現正學習中 🔥' }
+        { id: 1, name: 'HTML & CSS 基礎', status: '已精通 ' },
+        { id: 2, name: 'JavaScript ES6+', status: '已掌握 ' },
+        { id: 3, name: 'Vue 3 全面啟航', status: '現正學習中 ' }
       ]);
 
       return { courses };
@@ -1243,9 +1243,9 @@ Props 是你可以在組件上註冊的自定義屬性。當一個值被傳遞�
   const app = createApp({
     setup() {
       const courses = ref([
-        { id: 1, name: 'HTML & CSS 基礎', status: '已精通 ✅' },
-        { id: 2, name: 'JavaScript ES6+', status: '已掌握 🚀' },
-        { id: 3, name: 'Vue 3 全面啟航', status: '現正學習中 🔥' }
+        { id: 1, name: 'HTML & CSS 基礎', status: '已精通 ' },
+        { id: 2, name: 'JavaScript ES6+', status: '已掌握 ' },
+        { id: 3, name: 'Vue 3 全面啟航', status: '現正學習中 ' }
       ]);
 
       return { courses };
