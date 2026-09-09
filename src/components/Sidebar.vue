@@ -36,7 +36,19 @@ const props = defineProps({
   isOpen: {
     type: Boolean,
     default: true
+  },
+  currentTrack: {
+    type: String,
+    default: 'vue'
+  },
+  tracks: {
+    type: Array,
+    default: () => []
   }
+});
+
+const currentTrackMeta = computed(() => {
+  return props.tracks.find(t => t.id === props.currentTrack) || { label: '課程', count: props.curriculum.length };
 });
 
 const emit = defineEmits(['select-lesson', 'toggle-complete', 'close-sidebar']);
@@ -98,7 +110,10 @@ const getCategoryIcon = (category) => {
     <div class="sidebar-header">
       <div class="sidebar-title">
         <Compass :size="18" class="title-icon" />
-        <span>學習章節總覽</span>
+        <div class="sidebar-track-info">
+          <span class="track-title-text">{{ currentTrackMeta.label }} 單元列表</span>
+          <span class="track-total-badge">{{ curriculum.length }} 篇</span>
+        </div>
       </div>
       <button 
         class="close-btn" 
@@ -188,8 +203,31 @@ const getCategoryIcon = (category) => {
   color: var(--text-main);
 }
 
+.sidebar-track-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.track-title-text {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--text-main);
+}
+
+.track-total-badge {
+  font-size: 0.7rem;
+  padding: 1px 6px;
+  border-radius: 9999px;
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  font-weight: 600;
+  border: 1px solid var(--border-color);
+}
+
 .title-icon {
   color: var(--primary);
+  flex-shrink: 0;
 }
 
 .close-btn {

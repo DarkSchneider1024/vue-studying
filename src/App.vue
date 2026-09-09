@@ -5,15 +5,23 @@ import Sidebar from './components/Sidebar.vue';
 import LessonContent from './components/LessonContent.vue';
 import CodePlayground from './components/CodePlayground.vue';
 import GlossaryView from './components/GlossaryView.vue';
-import { curriculum } from './data/curriculum';
+import { TRACKS, getCurriculumByTrack, findTrackByLessonId } from './data/tracks.js';
 import { initVisitorTracker } from './services/firebase';
-import { Code2, BookOpen, Columns, Maximize2 } from 'lucide-vue-next';
+import { Code2 } from 'lucide-vue-next';
 
 // 檢視模式 ('lessons' | 'glossary')
 const currentView = ref('lessons');
 const setView = (view) => {
   currentView.value = view;
 };
+
+// 當前選中的技術領域 ('css' | 'html' | 'javascript' | 'vue')
+const currentTrack = ref('vue');
+
+// 當前領域對應的完整課綱列表
+const activeCurriculum = computed(() => {
+  return getCurriculumByTrack(currentTrack.value);
+});
 
 // 主題切換 (Dark / Light)
 const isDark = ref(false);
@@ -39,24 +47,77 @@ const closeSidebar = () => {
   }
 };
 
-// 當前選中單元
-const currentLessonId = ref(curriculum[0].id);
+// 當前選中單元 ID
+const currentLessonId = ref('project-overview-setup');
+
 const currentLessonIndex = computed(() => {
-  return curriculum.findIndex(l => l.id === currentLessonId.value);
+  const list = activeCurriculum.value;
+  const idx = list.findIndex(l => l.id === currentLessonId.value);
+  return idx >= 0 ? idx : 0;
 });
+
 const currentLesson = computed(() => {
-  return curriculum[currentLessonIndex.value] || curriculum[0];
+  return activeCurriculum.value[currentLessonIndex.value] || activeCurriculum.value[0];
 });
 
 const hasPrev = computed(() => currentLessonIndex.value > 0);
-const hasNext = computed(() => currentLessonIndex.value < curriculum.length - 1);
+const hasNext = computed(() => currentLessonIndex.value < activeCurriculum.value.length - 1);
 
+// 領域切換邏輯
+const selectTrack = (trackId) => {
+  currentTrack.value = trackId;
+  localStorage.setItem('program-study-last-track', trackId);
+
+  const trackCurr = getCurriculumByTrack(trackId);
+  const savedLesson = localStorage.getItem(`program-study-last-lesson-${trackId}`);
+
+  if (savedLesson && trackCurr.some(l => l.id === savedLesson)) {
+    currentLessonId.value = savedLesson;
+  } else if (trackCurr.length > 0) {
+    currentLessonId.value = trackCurr[0].id;
+  }
+
+  // 滾動回頂部
+  scrollDocToTop();
+  closeSidebar();
+};
+
+// 跨領域或導讀跳轉 (例如 Vue 導讀點擊 HTML/CSS/JS 卡片)
+const handleJumpTrack = ({ track, lessonId }) => {
+  if (track && track !== currentTrack.value) {
+    currentTrack.value = track;
+    localStorage.setItem('program-study-last-track', track);
+  }
+
+  const trackCurr = getCurriculumByTrack(currentTrack.value);
+  if (lessonId && trackCurr.some(l => l.id === lessonId)) {
+    currentLessonId.value = lessonId;
+  } else if (trackCurr.length > 0) {
+    currentLessonId.value = trackCurr[0].id;
+  }
+
+  localStorage.setItem(`program-study-last-lesson-${currentTrack.value}`, currentLessonId.value);
+  scrollDocToTop();
+  closeSidebar();
+};
+
+// 單元切換邏輯
 const selectLesson = (id) => {
+  // 自動偵測單元所屬領域，避免跨領域單元被誤選
+  const detectedTrack = findTrackByLessonId(id);
+  if (detectedTrack !== currentTrack.value) {
+    currentTrack.value = detectedTrack;
+    localStorage.setItem('program-study-last-track', detectedTrack);
+  }
+
   currentLessonId.value = id;
+  localStorage.setItem(`program-study-last-lesson-${currentTrack.value}`, id);
   localStorage.setItem('vue-study-last-lesson', id);
   closeSidebar();
-  
-  // 文檔區滾動回頂部
+  scrollDocToTop();
+};
+
+const scrollDocToTop = () => {
   const docContainer = document.querySelector('.doc-viewport');
   if (docContainer) {
     docContainer.scrollTo({ top: 0, behavior: 'smooth' });
@@ -65,13 +126,13 @@ const selectLesson = (id) => {
 
 const prevLesson = () => {
   if (hasPrev.value) {
-    selectLesson(curriculum[currentLessonIndex.value - 1].id);
+    selectLesson(activeCurriculum.value[currentLessonIndex.value - 1].id);
   }
 };
 
 const nextLesson = () => {
   if (hasNext.value) {
-    selectLesson(curriculum[currentLessonIndex.value + 1].id);
+    selectLesson(activeCurriculum.value[currentLessonIndex.value + 1].id);
   }
 };
 
@@ -87,6 +148,15 @@ const toggleComplete = (id) => {
   localStorage.setItem('vue-study-completed', JSON.stringify(completedIds.value));
 };
 
+// 當前領域完成進度計算
+const trackCompletedCount = computed(() => {
+  return activeCurriculum.value.filter(l => completedIds.value.includes(l.id)).length;
+});
+
+const trackTotalLessons = computed(() => {
+  return activeCurriculum.value.length;
+});
+
 onMounted(() => {
   // 讀取儲存的主題
   const savedTheme = localStorage.getItem('vue-study-theme');
@@ -95,10 +165,19 @@ onMounted(() => {
     document.documentElement.setAttribute('data-theme', 'dark');
   }
 
-  // 讀取上次學習章節
-  const savedLesson = localStorage.getItem('vue-study-last-lesson');
-  if (savedLesson && curriculum.some(l => l.id === savedLesson)) {
+  // 讀取上次記憶的領域與單元
+  const savedTrack = localStorage.getItem('program-study-last-track');
+  if (savedTrack && TRACKS.some(t => t.id === savedTrack)) {
+    currentTrack.value = savedTrack;
+  }
+
+  const trackCurr = getCurriculumByTrack(currentTrack.value);
+  const savedLesson = localStorage.getItem(`program-study-last-lesson-${currentTrack.value}`) || localStorage.getItem('vue-study-last-lesson');
+
+  if (savedLesson && trackCurr.some(l => l.id === savedLesson)) {
     currentLessonId.value = savedLesson;
+  } else if (trackCurr.length > 0) {
+    currentLessonId.value = trackCurr[0].id;
   }
 
   // 讀取完成進度
@@ -123,16 +202,19 @@ onMounted(() => {
 
 <template>
   <div class="app-layout">
-    <!-- 頂部導航 -->
+    <!-- 頂部導航 (包含 Program Studying 主標題與 CSS/HTML/Javascript/Vue 四大領域標籤) -->
     <HeaderNav 
       :is-dark="isDark"
       :sidebar-open="sidebarOpen"
       :current-view="currentView"
-      :completed-ids="completedIds"
-      :total-lessons="curriculum.length"
+      :current-track="currentTrack"
+      :tracks="TRACKS"
+      :track-completed-count="trackCompletedCount"
+      :track-total-lessons="trackTotalLessons"
       @toggle-theme="toggleTheme"
       @toggle-sidebar="toggleSidebar"
       @toggle-view="setView"
+      @select-track="selectTrack"
     />
 
     <!-- 技術名詞字典全螢幕檢視模式 -->
@@ -144,13 +226,16 @@ onMounted(() => {
     <div v-else class="main-workspace">
       <!-- 左側章節目錄導覽列 -->
       <Sidebar 
-        :curriculum="curriculum"
+        :curriculum="activeCurriculum"
         :current-lesson-id="currentLessonId"
         :completed-ids="completedIds"
         :is-open="sidebarOpen"
+        :current-track="currentTrack"
+        :tracks="TRACKS"
         @select-lesson="selectLesson"
         @toggle-complete="toggleComplete"
         @close-sidebar="closeSidebar"
+        @select-track="selectTrack"
       />
 
       <!-- 核心雙欄工作台：左為教學說明，右為即時編輯與輸出 -->
@@ -166,6 +251,7 @@ onMounted(() => {
               @prev-lesson="prevLesson"
               @next-lesson="nextLesson"
               @toggle-complete="toggleComplete"
+              @jump-track="handleJumpTrack"
             />
           </div>
         </div>
@@ -208,14 +294,14 @@ onMounted(() => {
   display: flex;
   flex: 1;
   width: 100%;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 90px);
   position: relative;
   overflow: hidden;
 }
 
 .glossary-wrapper {
   flex: 1;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 90px);
   overflow: hidden;
 }
 
@@ -228,51 +314,48 @@ onMounted(() => {
   overflow: hidden;
 }
 
-/* 左欄：教學文檔 */
+/* 左欄：教學課程文檔視口 */
 .doc-viewport {
   flex: 1;
-  min-width: 380px;
   height: 100%;
   overflow-y: auto;
+  min-width: 320px;
+  background-color: var(--bg-surface);
   border-right: 1px solid var(--border-color);
-  background: var(--bg-app);
 }
 
 .doc-inner-container {
   max-width: 760px;
   margin: 0 auto;
-  padding: 1rem 1.25rem 3rem;
+  padding: 1.75rem 2rem 4rem;
 }
 
-/* 右欄：即時演練與編輯器 */
+/* 右欄：即時演練台視口 */
 .playground-viewport {
   flex: 1.15;
-  min-width: 440px;
   height: 100%;
-  overflow-y: auto;
-  background: var(--bg-surface);
-  padding: 1rem 1.25rem 3rem;
+  background-color: #0f172a;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
 .playground-inner-container {
-  max-width: 900px;
-  width: 100%;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  width: 100%;
 }
 
 .playground-banner {
+  height: 38px;
+  background: #1e293b;
+  border-bottom: 1px solid #334155;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.65rem 1rem;
-  background: var(--primary-light);
-  border: 1px solid rgba(66, 184, 131, 0.25);
-  border-radius: var(--radius-sm);
-  margin-bottom: 0.85rem;
+  padding: 0 1rem;
+  flex-shrink: 0;
 }
 
 .banner-title-wrap {
@@ -282,31 +365,26 @@ onMounted(() => {
 }
 
 .banner-icon {
-  color: var(--primary);
+  color: #38bdf8;
 }
 
 .banner-title {
-  font-weight: 700;
-  font-size: 0.9rem;
-  color: var(--text-main);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  letter-spacing: 0.02em;
 }
 
 .banner-subtext {
-  font-size: 0.75rem;
-  color: var(--text-muted);
+  font-size: 0.72rem;
+  color: #94a3b8;
 }
 
-/* 平板與手機版響應式切換為上下堆疊 */
+/* 響應式佈局 (平板與手機切換為單欄垂直佈局) */
 @media (max-width: 1024px) {
-  .app-layout {
-    height: auto;
-    min-height: 100vh;
-    overflow-y: auto;
-  }
-
   .main-workspace {
-    height: auto;
-    overflow: visible;
+    height: calc(100vh - 90px);
+    overflow-y: auto;
   }
 
   .workspace-split {
@@ -316,19 +394,26 @@ onMounted(() => {
   }
 
   .doc-viewport {
-    min-width: 100%;
     height: auto;
-    overflow: visible;
     border-right: none;
-    border-bottom: 2px dashed var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    overflow: visible;
+  }
+
+  .doc-inner-container {
+    padding: 1.25rem 1.25rem 2rem;
   }
 
   .playground-viewport {
-    min-width: 100%;
-    height: auto;
-    overflow: visible;
+    height: 720px;
+    flex: none;
   }
+}
 
+@media (max-width: 640px) {
+  .playground-viewport {
+    height: 640px;
+  }
   .banner-subtext {
     display: none;
   }

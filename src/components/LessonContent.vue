@@ -32,9 +32,18 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['prev-lesson', 'next-lesson', 'toggle-complete']);
+const emit = defineEmits(['prev-lesson', 'next-lesson', 'toggle-complete', 'jump-track']);
 
 const showHints = ref(false);
+
+const handleBodyClick = (e) => {
+  const btn = e.target.closest('[data-jump-track]');
+  if (btn) {
+    const track = btn.getAttribute('data-jump-track');
+    const lessonId = btn.getAttribute('data-jump-lesson');
+    emit('jump-track', { track, lessonId });
+  }
+};
 
 // 簡單安全地解析概念文字為 HTML（支援標題、代碼塊、粗體、清單與區塊引用）
 const formatMarkdown = (text) => {
@@ -110,7 +119,7 @@ const formattedTask = computed(() => formatMarkdown(props.lesson.task));
 
     <!-- 觀念正文 -->
     <section class="lesson-body">
-      <div class="markdown-body" v-html="formattedConcept"></div>
+      <div class="markdown-body" v-html="formattedConcept" @click="handleBodyClick"></div>
     </section>
 
     <!-- 實戰任務卡片（Task Card） -->
