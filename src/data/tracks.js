@@ -11,7 +11,7 @@ export const TRACKS = [
     label: 'CSS',
     title: 'CSS 樣式與排版',
     count: cssCurriculum.length,
-    badgeText: '7 單元',
+    badgeText: `${cssCurriculum.length} 單元`,
     description: '選擇器權重、盒模型、Flexbox/Grid、RWD 與 CSS 變數',
     curriculum: cssCurriculum
   },
@@ -20,7 +20,7 @@ export const TRACKS = [
     label: 'HTML',
     title: 'HTML 結構與語意',
     count: htmlCurriculum.length,
-    badgeText: '5 單元',
+    badgeText: `${htmlCurriculum.length} 單元`,
     description: '標準骨架、DOM 樹、語意化標籤、現代表單與報表表格',
     curriculum: htmlCurriculum
   },
@@ -29,7 +29,7 @@ export const TRACKS = [
     label: 'Javascript',
     title: 'JavaScript 邏輯與引擎',
     count: jsCurriculum.length,
-    badgeText: '8 單元',
+    badgeText: `${jsCurriculum.length} 單元`,
     description: 'ES6+ 宣告、解構展開、箭頭函式、陣列方法、Promise/async、ESM',
     curriculum: jsCurriculum
   },
@@ -38,7 +38,7 @@ export const TRACKS = [
     label: 'Vue',
     title: 'Vue 3 實戰與架構遷移',
     count: vueCurriculum.length,
-    badgeText: '27 單元',
+    badgeText: `${vueCurriculum.length} 單元`,
     description: 'Composition API、狀態驅動、組件化、Pinia、路由與企業架構重構',
     curriculum: vueCurriculum
   }

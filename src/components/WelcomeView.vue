@@ -218,7 +218,7 @@ const handleReset = () => {
             傳統 JS 每次資料改變都要手動查找 DOM 節點並逐一修改。Vue 引入「響應式資料 (Reactivity)」：只要狀態變了，畫面自動精密同步更新，是現代大型專案的標準利器！
           </p>
           <div class="role-footer-action">
-            <span>探索 Vue 3 核心 (27 單元)</span>
+            <span>探索 Vue 3 核心 (28 單元)</span>
             <ArrowRight :size="14" />
           </div>
         </div>
@@ -348,6 +348,12 @@ const handleReset = () => {
           <p class="step-card-body">
             在電腦桌面建立一個純文字檔案，將檔名改為 <code>index.html</code>。用記事本打開，貼上一段 <code>&lt;h1&gt;哈囉世界&lt;/h1&gt;</code>，存檔後對著它雙擊滑鼠左鍵，瀏覽器就會立刻為你打開第一個網頁！
           </p>
+          <div class="step-links">
+            <a href="https://developer.mozilla.org/zh-TW/docs/Learn/Getting_started_with_the_web/HTML_basics" target="_blank" rel="noopener noreferrer" class="step-link-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              MDN 官方 HTML 入門教學
+            </a>
+          </div>
         </div>
 
         <div class="start-step-card">
@@ -359,6 +365,15 @@ const handleReset = () => {
           <p class="step-card-body">
             前往微軟官方下載免費的 <strong>VS Code</strong> 編輯器，並安裝 <strong>Live Server</strong> 擴充套件。它能讓你每次儲存代碼時，瀏覽器自動即時重新整理，體驗流暢的寫代碼節奏！
           </p>
+          <div class="step-links">
+            <a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer" class="step-link-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              VS Code 微軟官網下載
+            </a>
+            <a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer" target="_blank" rel="noopener noreferrer" class="step-link-btn sub">
+              Live Server 擴充外掛
+            </a>
+          </div>
         </div>
 
         <div class="start-step-card">
@@ -370,6 +385,18 @@ const handleReset = () => {
           <p class="step-card-body">
             下載 Node.js LTS 穩定版，在終端機輸入 <code>npm create vite@latest my-app -- --template vue</code>，你就擁有了包含熱重載（Hot Reload）、組件化與最新打包工具的現代化專業前端環境！
           </p>
+          <div class="step-links">
+            <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer" class="step-link-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              Node.js 官方載點 (LTS)
+            </a>
+            <a href="https://vite.dev/" target="_blank" rel="noopener noreferrer" class="step-link-btn sub">
+              Vite 官方網站
+            </a>
+            <a href="https://vuejs.org/" target="_blank" rel="noopener noreferrer" class="step-link-btn sub">
+              Vue.js 官方文件
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -384,7 +411,7 @@ const handleReset = () => {
         <div class="cta-buttons">
           <button class="cta-btn cta-btn-vue" @click="emit('start-track', 'vue')">
             <Layers :size="18" />
-            <span>前往 Vue 3 實戰課程 (27 單元)</span>
+            <span>前往 Vue 3 實戰課程 (28 單元)</span>
           </button>
           <button class="cta-btn cta-btn-base" @click="emit('start-track', 'html')">
             <FileCode :size="18" />
@@ -1013,6 +1040,46 @@ const handleReset = () => {
   border-radius: 4px;
   font-size: 0.8em;
   color: var(--primary);
+}
+
+.step-links {
+  margin-top: auto;
+  padding-top: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.step-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: var(--radius-sm, 6px);
+  background: var(--bg-subtle);
+  color: var(--primary);
+  border: 1px solid var(--border-color);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.step-link-btn:hover {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.step-link-btn.sub {
+  color: var(--text-muted);
+}
+
+.step-link-btn.sub:hover {
+  color: #ffffff;
+  background: #3b82f6;
+  border-color: #3b82f6;
 }
 
 /* 底部 CTA */

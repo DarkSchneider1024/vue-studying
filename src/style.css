@@ -187,3 +187,95 @@ code, pre, .font-mono {
   border-color: var(--primary);
 }
 
+/* 專案檔案架構卡片與專題傳送門 */
+.file-spec-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 10px);
+  padding: 16px;
+  margin: 18px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.file-spec-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.file-spec-name {
+  font-family: var(--font-mono, monospace);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.file-spec-role {
+  font-size: 12px;
+  color: var(--text-muted);
+  background: var(--bg-subtle);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.file-spec-desc {
+  font-size: 13.5px;
+  color: var(--text-main);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.file-spec-jump {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-subtle);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm, 6px);
+}
+
+.file-spec-lesson-info {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.file-spec-lesson-info strong {
+  color: var(--text-main);
+}
+
+.file-jump-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-surface);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-sm, 6px);
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.file-jump-btn:hover {
+  background: var(--primary);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+
