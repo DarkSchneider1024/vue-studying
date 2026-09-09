@@ -9,12 +9,14 @@ import WelcomeView from './components/WelcomeView.vue';
 import { TRACKS, getCurriculumByTrack, findTrackByLessonId } from './data/tracks.js';
 import { initVisitorTracker } from './services/firebase';
 import { Code2, BookOpen } from 'lucide-vue-next';
+import { trackPageView, trackLessonSelect, trackLessonComplete } from './services/analytics';
 
 // 檢視模式 ('lessons' | 'glossary' | 'welcome')
 const currentView = ref('welcome');
 const setView = (view) => {
   currentView.value = view;
   localStorage.setItem('program-study-last-view', view);
+  trackPageView(`View: ${view} - Program Studying`, `/${view}`);
   // 切換檢視滾動回頂部
   if (view === 'welcome') {
     const welcomeWrap = document.querySelector('.welcome-wrapper');
@@ -144,6 +146,12 @@ const selectLesson = (id) => {
   closeSidebar();
   scrollDocToTop();
 
+  // 發送 GA4 事件
+  if (currentLesson.value) {
+    trackLessonSelect(currentTrack.value, id, currentLesson.value.title);
+    trackPageView(`${currentLesson.value.title} - Program Studying`, `/${currentTrack.value}/${id}`);
+  }
+
   // 手機版切換單元時，預設顯示文檔
   if (!isDesktop.value) {
     mobileTab.value = 'doc';
@@ -177,6 +185,7 @@ const toggleComplete = (id) => {
     completedIds.value.splice(index, 1);
   } else {
     completedIds.value.push(id);
+    trackLessonComplete(currentTrack.value, id);
   }
   localStorage.setItem('vue-study-completed', JSON.stringify(completedIds.value));
 };
@@ -234,6 +243,13 @@ onMounted(() => {
 
   // 初始化 Firebase 即時線上人數與瀏覽量追蹤
   initVisitorTracker();
+
+  // 初始 Google Analytics 上報
+  if (currentView.value === 'welcome') {
+    trackPageView('歡迎首頁 - Program Studying', '/welcome');
+  } else if (currentLesson.value) {
+    trackPageView(`${currentLesson.value.title} - Program Studying`, `/${currentTrack.value}/${currentLessonId.value}`);
+  }
 });
 
 onUnmounted(() => {
