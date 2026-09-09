@@ -7,8 +7,10 @@ import {
   CheckCircle2, 
   Menu, 
   ExternalLink,
-  Sparkles
+  Users,
+  Eye
 } from 'lucide-vue-next';
+import { onlineCount, totalViews, isRealtimeConnected } from '../services/firebase';
 
 const props = defineProps({
   isDark: Boolean,
@@ -75,6 +77,22 @@ const progressPercentage = computed(() => {
     </div>
 
     <div class="header-right">
+      <!-- 訪客與即時在線狀態儀表 (Firebase Realtime Database) -->
+      <div class="visitor-stats-badge" :title="isRealtimeConnected ? '已連線 Firebase 即時統計' : 'Firebase 連線中...'">
+        <div class="stat-item online-stat">
+          <span class="pulse-dot" :class="{ 'is-active': isRealtimeConnected }"></span>
+          <Users :size="13" class="stat-icon" />
+          <span class="stat-val">{{ onlineCount }}</span>
+          <span class="stat-unit">在線</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item views-stat" title="全站累計瀏覽人次">
+          <Eye :size="13" class="stat-icon" />
+          <span class="stat-val">{{ totalViews > 0 ? totalViews.toLocaleString() : '...' }}</span>
+          <span class="stat-unit">次瀏覽</span>
+        </div>
+      </div>
+
       <!-- 技術名詞字典切換按鈕 -->
       <button 
         class="nav-toggle-btn"
@@ -296,6 +314,95 @@ const progressPercentage = computed(() => {
     display: none;
   }
   .nav-link-text {
+    display: none;
+  }
+}
+
+/* 訪客與在線統計儀表樣式 */
+.visitor-stats-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.visitor-stats-badge:hover {
+  border-color: var(--primary);
+  background: var(--bg-surface);
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.stat-icon {
+  opacity: 0.8;
+  color: var(--text-muted);
+}
+
+.stat-val {
+  font-weight: 700;
+  color: var(--text-main);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-unit {
+  font-size: 0.7rem;
+  opacity: 0.85;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 12px;
+  background: var(--border-color);
+}
+
+.pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #94a3b8;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.pulse-dot.is-active {
+  background-color: #10b981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulse-ring 2s infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+@media (max-width: 640px) {
+  .visitor-stats-badge {
+    padding: 0.25rem 0.5rem;
+    gap: 0.35rem;
+  }
+  .stat-unit {
     display: none;
   }
 }

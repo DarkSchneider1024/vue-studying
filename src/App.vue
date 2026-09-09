@@ -6,6 +6,7 @@ import LessonContent from './components/LessonContent.vue';
 import CodePlayground from './components/CodePlayground.vue';
 import GlossaryView from './components/GlossaryView.vue';
 import { curriculum } from './data/curriculum';
+import { initVisitorTracker } from './services/firebase';
 import { Code2, BookOpen, Columns, Maximize2 } from 'lucide-vue-next';
 
 // 檢視模式 ('lessons' | 'glossary')
@@ -114,6 +115,9 @@ onMounted(() => {
   if (window.innerWidth <= 1024) {
     sidebarOpen.value = false;
   }
+
+  // 初始化 Firebase 即時線上人數與瀏覽量追蹤
+  initVisitorTracker();
 });
 </script>
 
